@@ -7,11 +7,17 @@ const app = express();
 
 app.use(express.json());
 
+const uri =
+  "mongodb+srv://partumUser:17RDNpjdHj87wBTj@Partum-Cluster.mongodb.net/test";
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
+//test route
 app.get("/", (req, res) => {
   res.send("Backend is running!");
 });
