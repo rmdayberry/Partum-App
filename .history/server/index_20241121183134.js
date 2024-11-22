@@ -16,7 +16,6 @@ app.get("/", (req, res) => {
   res.send("Backend is running!");
 });
 
-//test route
 app.get("/api/test", (req, res) => {
   res.json({ message: "Frontend and backend are connected!" });
 });
