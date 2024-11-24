@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Pressable } from "react-native";
 
-const DashboardScreen = () => {
+const Dashboard = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashboardScreen;
+export default Dashboard;
