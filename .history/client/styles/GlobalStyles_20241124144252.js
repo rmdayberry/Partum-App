@@ -14,7 +14,7 @@ export const Border = {
 /* Font Sizes */
 export const FontSize = {
   size_5xl: 24,
-  size_xs: 12,
+  size_xs:
 };
 
 /* Font Families */

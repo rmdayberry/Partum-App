@@ -24,22 +24,14 @@ const Dashboard = () => {
         </Text>
       </View>
 
-      <View style={[DashboardStyles.frame, DashboardStyles.frameLayout1]}>
-        <View
-          style={[
-            DashboardStyles.pregnancyOverviewContainer,
-            DashboardStyles.frameLayout1,
-          ]}
-        >
-          <Text
-            style={[
-              DashboardStyles.pregnancyOverview,
-              DashboardStyles.pregnancyTypo,
-            ]}
-          >
-            Pregnancy Overview
-          </Text>
-        </View>
+      <View
+        style={[DashboardStyles.frame, DashboardStyles.frameLayout1]}
+      >
+        <View style= {[styles.pregnancyOverviewContainer, styles.pregnancyTypo]}
+      </View>
+
+      <View>
+        <Text>What You Can Expect This Week:</Text>
       </View>
     </ScrollView>
   );

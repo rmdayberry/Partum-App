@@ -41,6 +41,10 @@ const Dashboard = () => {
           </Text>
         </View>
       </View>
+
+      <View>
+        <Text>What You Can Expect This Week:</Text>
+      </View>
     </ScrollView>
   );
 };

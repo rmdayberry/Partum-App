@@ -74,10 +74,7 @@ const DashboardStyles = StyleSheet.create({
     fontWeight: "700",
     position: "absolute",
   },
-  pregnancyTypo: {
-    fontSize: FontSize.size_xs,
-    textAlign: "center",
-  },
+  pregnancyTypo: {},
 });
 
 export default DashboardStyles;

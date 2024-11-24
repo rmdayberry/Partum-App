@@ -54,16 +54,7 @@ const DashboardStyles = StyleSheet.create({
     overflow: "hidden",
     position: "absolute",
   },
-  pregnancyOverviewContainer: {
-    width: 349,
-    borderRadius: Border.br_3xs,
-    left: 13,
-    backgroundColor: Color.graysWhite,
-    top: 0,
-    borderWidth: 1,
-    borderColor: Color.colorGray_100,
-    borderStyle: "solid",
-  },
+  pregnancyOverviewContainer: {},
   pregnancyOverview: {
     top: 31,
     left: 93,
@@ -74,10 +65,7 @@ const DashboardStyles = StyleSheet.create({
     fontWeight: "700",
     position: "absolute",
   },
-  pregnancyTypo: {
-    fontSize: FontSize.size_xs,
-    textAlign: "center",
-  },
+  pregnancyTypo: {},
 });
 
 export default DashboardStyles;

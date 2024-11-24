@@ -55,28 +55,13 @@ const DashboardStyles = StyleSheet.create({
     position: "absolute",
   },
   pregnancyOverviewContainer: {
-    width: 349,
-    borderRadius: Border.br_3xs,
-    left: 13,
-    backgroundColor: Color.graysWhite,
-    top: 0,
-    borderWidth: 1,
-    borderColor: Color.colorGray_100,
-    borderStyle: "solid",
+    
   },
-  pregnancyOverview: {
-    top: 31,
-    left: 93,
-    color: "#696969",
-    height: 17,
-    width: 162,
-    fontFamily: FontFamily.monstserratBold,
-    fontWeight: "700",
-    position: "absolute",
+  pregnancyOverview{
+
   },
   pregnancyTypo: {
-    fontSize: FontSize.size_xs,
-    textAlign: "center",
+
   },
 });
 

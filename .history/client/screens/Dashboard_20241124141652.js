@@ -32,14 +32,15 @@ const Dashboard = () => {
           ]}
         >
           <Text
-            style={[
-              DashboardStyles.pregnancyOverview,
-              DashboardStyles.pregnancyTypo,
-            ]}
+            style={[styles.pregnancyOverviewContainer, styles.pregnancyTypo]}
           >
             Pregnancy Overview
           </Text>
         </View>
+      </View>
+
+      <View>
+        <Text>What You Can Expect This Week:</Text>
       </View>
     </ScrollView>
   );
