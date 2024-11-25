@@ -237,17 +237,7 @@ const DashboardStyles = StyleSheet.create({
     top: 123,
     position: "absolute",
   },
-  needARide: {
-    color: "#3f80ff",
-    width: 50,
-    fontSize: FontSize.size_5xs,
-    textDecoration: "underline",
-  },
-  needARideTypo: {
-    height: 11,
-    fontFamily: FontFamily.arial,
-    textAlign: "center",
-  },
+  needARide: {},
 });
 
 export default DashboardStyles;

@@ -83,7 +83,7 @@ const Dashboard = () => {
           <Image
             style={[DashboardStyles.calIcon, DashboardStyles.calIconPosition]}
             contentFit="cover"
-            source={require("../assets/cal-icon.png")}
+            source={require("../assets/calendar_month_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg")}
           />
         </View>
       </View>

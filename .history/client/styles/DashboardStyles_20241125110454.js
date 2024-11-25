@@ -243,11 +243,6 @@ const DashboardStyles = StyleSheet.create({
     fontSize: FontSize.size_5xs,
     textDecoration: "underline",
   },
-  needARideTypo: {
-    height: 11,
-    fontFamily: FontFamily.arial,
-    textAlign: "center",
-  },
 });
 
 export default DashboardStyles;

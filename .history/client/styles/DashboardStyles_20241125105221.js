@@ -198,56 +198,7 @@ const DashboardStyles = StyleSheet.create({
   daysNumber: {
     color: Color.colorDarkslateblue_200,
   },
-  in: {
-    fontFamily: FontFamily.arial,
-  },
-  text: {
-    fontWeight: "700",
-  },
-  text2: {
-    color: "#b5448a",
-  },
-  daysText: {
-    fontFamily: FontFamily.arial,
-    color: Color.colorDarkslateblue_200,
-  },
-  apptNotesBtn: {
-    top: 167,
-    left: 46,
-    backgroundColor: "#adabab",
-    width: 70,
-    borderRadius: Border.br_8xs,
-    height: 16,
-    position: "absolute",
-  },
-  appointmentNotes: {
-    left: 52,
-    color: Color.nEW,
-    width: 50,
-    height: 7,
-    fontSize: FontSize.size_7xs,
-    top: 4,
-    fontFamily: FontFamily.arial,
-    textAlign: "center",
-    fontWeight: "700",
-    position: "absolute",
-  },
-  needARideContainer: {
-    left: 53,
-    top: 123,
-    position: "absolute",
-  },
-  needARide: {
-    color: "#3f80ff",
-    width: 50,
-    fontSize: FontSize.size_5xs,
-    textDecoration: "underline",
-  },
-  needARideTypo: {
-    height: 11,
-    fontFamily: FontFamily.arial,
-    textAlign: "center",
-  },
+  in: {},
 });
 
 export default DashboardStyles;

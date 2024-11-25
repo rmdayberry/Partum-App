@@ -75,7 +75,7 @@ const Dashboard = () => {
           <Text
             style={[
               DashboardStyles.upcomingAppointments,
-              DashboardStyles.upcomingAppointmentTypo,
+              DashboardStyles.appointmentTypo,
             ]}
           >
             Upcoming Appointments

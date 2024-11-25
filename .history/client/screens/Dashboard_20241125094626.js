@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import ProgressBar from "../components/ProgressBar";
@@ -75,7 +75,7 @@ const Dashboard = () => {
           <Text
             style={[
               DashboardStyles.upcomingAppointments,
-              DashboardStyles.upcomingAppointmentTypo,
+              DashboardStyles.AppointmentTypo,
             ]}
           >
             Upcoming Appointments
@@ -115,38 +115,6 @@ const Dashboard = () => {
               source={require("../assets/location-on-24dp-5f6368-fill0-wght400-grad0-opsz24-1.png")}
             />
           </View>
-          <Text
-            style={[
-              DashboardStyles.daysCountdownContainer,
-              DashboardStyles.containerFlexBox,
-            ]}
-          >
-            <Text style={DashboardStyles.daysCountdownContainer2}>
-              <Text style={DashboardStyles.daysNumber}>
-                <Text style={DashboardStyles.in}>In</Text>
-              </Text>
-              <Text style={[DashboardStyles.text, DashboardStyles.textTypo]}>
-                <Text style={DashboardStyles.daysNumber}>{` `}</Text>
-                <Text style={DashboardStyles.text2}>{`2 `}</Text>
-              </Text>
-              <Text style={DashboardStyles.daysText}>Days</Text>
-            </Text>
-          </Text>
-          <View style={DashboardStyles.apptNotesBtn}>
-            <Text style={DashboardStyles.appointmentNotes}>
-              Appoointment Notes
-            </Text>
-          </View>
-          <Pressable
-            style={DashboardStyles.needARideContainer}
-            onPress={() => navigation.navigate("CommunnityResources")}
-          >
-            <Text
-              style={[DashboardStyles.needARide, DashboardStyles.needARideTypo]}
-            >
-              Need a ride?
-            </Text>
-          </Pressable>
         </View>
       </View>
     </ScrollView>

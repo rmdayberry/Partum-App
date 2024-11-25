@@ -20,8 +20,6 @@ export const FontSize = {
   size_xs: 12,
   size_3xs: 10,
   size_lg: 18,
-  size_7xs: 6,
-  size_5xs: 8,
 };
 
 /* Font Families */

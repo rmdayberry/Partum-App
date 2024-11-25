@@ -83,7 +83,7 @@ const Dashboard = () => {
           <Image
             style={[DashboardStyles.calIcon, DashboardStyles.calIconPosition]}
             contentFit="cover"
-            source={require("../assets/cal-icon.png")}
+            source={require("../assets/calendar_month_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg")}
           />
         </View>
       </View>
@@ -112,7 +112,7 @@ const Dashboard = () => {
                 DashboardStyles.appointmentUnknown,
               ]}
               contentFit="cover"
-              source={require("../assets/location-on-24dp-5f6368-fill0-wght400-grad0-opsz24-1.png")}
+              source={require("../assets/cal-icon.png")}
             />
           </View>
           <Text
