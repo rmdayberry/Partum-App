@@ -7,7 +7,8 @@ import DashboardStyles from "../styles/DashboardStyles";
 
 const Dashboard = () => {
   const navigation = useNavigation();
-  const [pregnancyData, setPregnancyData] = useState(null);
+  const [weeks, setWeeks] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPregnancyData = async () => {
@@ -18,7 +19,7 @@ const Dashboard = () => {
         const data = await response.json();
         setPregnancyData(data);
       } catch (error) {
-        console.error("Error fetching pregnancy data:", error);
+        console.error("Erro fetching pregnancy data:", error);
       }
     };
 
@@ -57,17 +58,11 @@ const Dashboard = () => {
         >
           Pregnancy Overview
         </Text>
-        <View>
-          {" "}
-          {pregnancyData ? (
-            <ProgressBar
-              currentWeek={pregnancyData.currentWeek}
-              totalWeeks={pregnancyData.totalWeeks}
-            />
-          ) : (
-            <Text> Loading...</Text>
-          )}
-        </View>
+
+        <ProgressBar
+          currentWeek={pregnancyData.currentWeek}
+          totalWeeks={pregnancyData.totalWeeks}
+        />
       </View>
     </ScrollView>
   );

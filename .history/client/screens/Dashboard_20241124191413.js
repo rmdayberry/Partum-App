@@ -18,7 +18,7 @@ const Dashboard = () => {
         const data = await response.json();
         setPregnancyData(data);
       } catch (error) {
-        console.error("Error fetching pregnancy data:", error);
+        console.error("Erro fetching pregnancy data:", error);
       }
     };
 

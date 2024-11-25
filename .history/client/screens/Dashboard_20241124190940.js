@@ -18,7 +18,7 @@ const Dashboard = () => {
         const data = await response.json();
         setPregnancyData(data);
       } catch (error) {
-        console.error("Error fetching pregnancy data:", error);
+        console.error("Erro fetching pregnancy data:", error);
       }
     };
 
@@ -57,17 +57,11 @@ const Dashboard = () => {
         >
           Pregnancy Overview
         </Text>
-        <View>
-          {" "}
-          {pregnancyData ? (
-            <ProgressBar
-              currentWeek={pregnancyData.currentWeek}
-              totalWeeks={pregnancyData.totalWeeks}
-            />
-          ) : (
-            <Text> Loading...</Text>
-          )}
-        </View>
+        <View> {pregnancyData ?
+        <ProgressBar
+          currentWeek={pregnancyData.currentWeek}
+          totalWeeks={pregnancyData.totalWeeks}
+        />
       </View>
     </ScrollView>
   );

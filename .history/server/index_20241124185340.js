@@ -26,12 +26,12 @@ const userPregnancyData = {
 //Endpoint to retrieve pregnancy data
 app.get("/api/pregnancy-data", (req, res) => {
   const { userId } = req.query; //Expect userId from query params
-  if (userId !== userPregnancyData.userId) {
+  if (userId !== mockPregnancyData.userId) {
     return res.status(404).json({ error: "User not found" });
   }
   res.json({
-    currentWeek: userPregnancyData.currentWeek,
-    totalWeeks: userPregnancyData.totalWeeks,
+    currentWeek: mockPregnancyData.currentWeek,
+    totalWeeks: mockPregnancyData.totalWeeks,
   });
 });
 

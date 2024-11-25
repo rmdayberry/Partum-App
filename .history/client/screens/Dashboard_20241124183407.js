@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
@@ -7,23 +7,6 @@ import DashboardStyles from "../styles/DashboardStyles";
 
 const Dashboard = () => {
   const navigation = useNavigation();
-  const [pregnancyData, setPregnancyData] = useState(null);
-
-  useEffect(() => {
-    const fetchPregnancyData = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:5001/api/pregnancy-data?userId=123"
-        );
-        const data = await response.json();
-        setPregnancyData(data);
-      } catch (error) {
-        console.error("Error fetching pregnancy data:", error);
-      }
-    };
-
-    fetchPregnancyData();
-  }, []);
 
   return (
     <ScrollView
@@ -48,25 +31,16 @@ const Dashboard = () => {
             DashboardStyles.pregnancyOverviewContainer,
             DashboardStyles.frameLayout1,
           ]}
-        />
-        <Text
-          style={[
-            DashboardStyles.pregnancyOverview,
-            DashboardStyles.pregnancyTypo,
-          ]}
         >
-          Pregnancy Overview
-        </Text>
-        <View>
-          {" "}
-          {pregnancyData ? (
-            <ProgressBar
-              currentWeek={pregnancyData.currentWeek}
-              totalWeeks={pregnancyData.totalWeeks}
-            />
-          ) : (
-            <Text> Loading...</Text>
-          )}
+          <Text
+            style={[
+              DashboardStyles.pregnancyOverview,
+              DashboardStyles.pregnancyTypo,
+            ]}
+          >
+            Pregnancy Overview
+          </Text>
+          <Text>You're X Weeks Along</Text>
         </View>
       </View>
     </ScrollView>

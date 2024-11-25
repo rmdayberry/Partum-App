@@ -23,16 +23,9 @@ const userPregnancyData = {
   currentWeek: 20,
   totalWeeks: 40,
 };
-//Endpoint to retrieve pregnancy data
+
 app.get("/api/pregnancy-data", (req, res) => {
-  const { userId } = req.query; //Expect userId from query params
-  if (userId !== userPregnancyData.userId) {
-    return res.status(404).json({ error: "User not found" });
-  }
-  res.json({
-    currentWeek: userPregnancyData.currentWeek,
-    totalWeeks: userPregnancyData.totalWeeks,
-  });
+  res.json(userPregnancyData);
 });
 
 const PORT = 5001;

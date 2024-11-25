@@ -7,23 +7,28 @@ import DashboardStyles from "../styles/DashboardStyles";
 
 const Dashboard = () => {
   const navigation = useNavigation();
-  const [pregnancyData, setPregnancyData] = useState(null);
+  const [weeks, setWeeks] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPregnancyData = async () => {
-      try {
+      try{
         const response = await fetch(
-          "http://localhost:5001/api/pregnancy-data?userId=123"
-        );
-        const data = await response.json();
-        setPregnancyData(data);
-      } catch (error) {
-        console.error("Error fetching pregnancy data:", error);
+          
+        )
       }
+      setLoading(true);
+      const data = await fetchPregnancyData();
+      if (data) {
+        setWeeks(data.currentWeek); // Update with current week from API
+      }
+      setLoading(false);
     };
-
-    fetchPregnancyData();
   }, []);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <ScrollView
@@ -48,25 +53,17 @@ const Dashboard = () => {
             DashboardStyles.pregnancyOverviewContainer,
             DashboardStyles.frameLayout1,
           ]}
-        />
-        <Text
-          style={[
-            DashboardStyles.pregnancyOverview,
-            DashboardStyles.pregnancyTypo,
-          ]}
         >
-          Pregnancy Overview
-        </Text>
-        <View>
-          {" "}
-          {pregnancyData ? (
-            <ProgressBar
-              currentWeek={pregnancyData.currentWeek}
-              totalWeeks={pregnancyData.totalWeeks}
-            />
-          ) : (
-            <Text> Loading...</Text>
-          )}
+          <Text
+            style={[
+              DashboardStyles.pregnancyOverview,
+              DashboardStyles.pregnancyTypo,
+            ]}
+          >
+            Pregnancy Overview
+          </Text>
+          <Text>You're {weeks} Weeks Along</Text>
+          <ProgressBar progress={(weeks / 40) * 100} />
         </View>
       </View>
     </ScrollView>
