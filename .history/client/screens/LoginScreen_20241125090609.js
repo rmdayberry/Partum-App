@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import API_URL from "../config";
-import LoginStyles from "../styles/LoginStyles";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -28,17 +27,17 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={LoginStyles.container}>
-      <Text style={LoginStyles.title}>Login</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Login</Text>
       <TextInput
-        style={LoginStyles.input}
+        style={styles.input}
         placeholder="Email"
         keyboardType="email-address"
         value={email}
         onChangeText={setEmail}
       />
       <TextInput
-        style={LoginStyles.input}
+        style={styles.input}
         placeholder="Password"
         secureTextEntry
         value={password}
