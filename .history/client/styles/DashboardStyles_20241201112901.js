@@ -69,7 +69,7 @@ const DashboardStyles = StyleSheet.create({
     fontFamily: FontFamily.montserratBold,
     fontWeight: "700",
     textAlign: "center",
-    width: "100%",
+    marginBottom: 8,
   },
   pregnancyTypo: {
     fontSize: FontSize.size_xs,

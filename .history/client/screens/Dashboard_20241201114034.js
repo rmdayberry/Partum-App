@@ -52,25 +52,6 @@ const Dashboard = () => {
           >
             Pregnancy Overview
           </Text>
-          <Text style={DashboardStyles.howFarAlongText}>
-            You're X Weeks Along!
-          </Text>
-          <Image
-            style={Dashstyles.screenshot20241107At215}
-            contentFit="cover"
-            source={require("../assets/Progress.png")}
-          />
-          <Text
-            style={DashboardStyles.whatYouCan}
-          >{`What you can expect this week:
-`}</Text>
-          <Text
-            style={[
-              DashboardStyles.yourBabyIs,
-              DashboardStyles.yourBabyIsLayout,
-            ]}
-          >{`Your baby is the size of a blueberry! 💙 
-It’s time to start incorporating a bit more folate into your diet. Drink plenty of water and aim for balanced meals as your energy needs rise!`}</Text>
         </View>
       </View>
 

@@ -43,35 +43,20 @@ const Dashboard = () => {
       </View>
 
       <View style={[DashboardStyles.frame, DashboardStyles.frameLayout1]}>
-        <View style={DashboardStyles.pregnancyOverviewContainer}>
-          <Text
-            style={[
-              DashboardStyles.pregnancyOverview,
-              DashboardStyles.pregnancyTypo,
-            ]}
-          >
-            Pregnancy Overview
-          </Text>
-          <Text style={DashboardStyles.howFarAlongText}>
-            You're X Weeks Along!
-          </Text>
-          <Image
-            style={Dashstyles.screenshot20241107At215}
-            contentFit="cover"
-            source={require("../assets/Progress.png")}
-          />
-          <Text
-            style={DashboardStyles.whatYouCan}
-          >{`What you can expect this week:
-`}</Text>
-          <Text
-            style={[
-              DashboardStyles.yourBabyIs,
-              DashboardStyles.yourBabyIsLayout,
-            ]}
-          >{`Your baby is the size of a blueberry! 💙 
-It’s time to start incorporating a bit more folate into your diet. Drink plenty of water and aim for balanced meals as your energy needs rise!`}</Text>
-        </View>
+        <View
+          style={[
+            DashboardStyles.pregnancyOverviewContainer,
+            DashboardStyles.frameLayout1,
+          ]}
+        />
+        <Text
+          style={[
+            DashboardStyles.pregnancyOverview,
+            DashboardStyles.pregnancyTypo,
+          ]}
+        >
+          Pregnancy Overview
+        </Text>
       </View>
 
       <View style={DashboardStyles.frame1}>
@@ -146,7 +131,7 @@ It’s time to start incorporating a bit more folate into your diet. Drink plent
           </Pressable>
         </View>
       </View>
-      <View style={[DashboardStyles.frame3, DashboardStyles.frameLayout]}>
+      <View style={[DashboardStyles.frame3, styles.frameLayout]}>
         <View
           style={[
             DashboardStyles.todaysPregnancyTipFrame,
@@ -162,37 +147,18 @@ It’s time to start incorporating a bit more folate into your diet. Drink plent
             Today's Pregnancy Tips
           </Text>
           <Text style={DashboardStyles.tipDate}>Nov 13, 2024</Text>
-          <View
-            style={[
-              DashboardStyles.horizontalfullWidth,
-              DashboardStyles.horizontalfullWidthLayout,
-            ]}
-          >
-            <View style={DashboardStyles.divider} />
-          </View>
-          <View style={DashboardStyles.tip}>
-            <Text
-              style={[DashboardStyles.tipBoldTypo, DashboardStyles.tipTypo]}
-            >
-              Stay hydrated for Baby's Growth!
-            </Text>
-            <Text style={[DashboardStyles.tipText, DashboardStyles.tipTypo]}>
-              Did you know that staying hyrdated supports your baby's
-              development and helps keep amniotic fluid at healthy levels? Aim
-              for 8-10 glasses of water daily to help carry nutrients to your
-              baby, support placenta function, and reduce common pregnancy
-              symptoms like headaches and swelling. Try keeping a water bottle
-              close by and add a slice of lemon or cucumber for flavor!
-            </Text>
-            <Text style={DashboardStyles.moreTipsOn}>
-              More tips on staying hydrated ▶️
-            </Text>
-          </View>
+          <View style={[DashboardStyles.horizontalfullWidth, DashboardStyles.horizontalfullWidthLayout,]}>
+            <View style={DashboardStyles.divider}/>
         </View>
-        <Pressable
-          style={DashboardStyles.frameChild}
-          onPress={() => navigation.navigate("Education")}
-        ></Pressable>
+        <View style= {DashboardStyles.tip}>
+          <Text 
+          style={[DashboardStyles.tipBoldTypo, DashboardStyles.tipTypo]}>
+            Stay hydrated for Baby's Growth!
+          </Text>
+          <Text style= {[DashboardStyles.tipText, DashboardStyles.tipTypo]}>
+            Did you know that staying hyrdated supports 
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );

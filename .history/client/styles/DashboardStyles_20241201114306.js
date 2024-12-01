@@ -60,7 +60,7 @@ const DashboardStyles = StyleSheet.create({
     borderColor: Color.colorGray_100,
     borderStyle: "solid",
     padding: 16,
-    alignItems: "center",
+    minHeight: 100,
     justifyContent: "center",
   },
   pregnancyOverview: {

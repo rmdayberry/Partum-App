@@ -5,7 +5,7 @@ export const Color = {
   nEW: "#f9f4f4",
   colorDarkslateblue_200: "#3f2a56",
   colorBlack: "#000",
-  colorCoral_300: "rgba(243, 109, 53, 0.07)",
+  colorCoral_300: "",
 };
 
 /* Border Radius*/
@@ -23,13 +23,12 @@ export const FontSize = {
   size_lg: 18,
   size_7xs: 5.5,
   size_5xs: 8,
-  size_md: 16,
 };
 
 /* Font Families */
 export const FontFamily = {
-  montserratBold: "Montserrat-Bold",
+  monstserratBold: "Montserrat-Bold",
   arialBlack: "Arial Black",
   arial: "Arial",
-  montserratMedium: "Monterrat-Medium",
+  monstserratMedium: "Monsterrat-Medium",
 };

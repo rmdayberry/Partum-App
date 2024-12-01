@@ -58,7 +58,7 @@ const Dashboard = () => {
           <Image
             style={Dashstyles.screenshot20241107At215}
             contentFit="cover"
-            source={require("../assets/Progress.png")}
+            source={require("../assets/Progress.jpeg")}
           />
           <Text
             style={DashboardStyles.whatYouCan}

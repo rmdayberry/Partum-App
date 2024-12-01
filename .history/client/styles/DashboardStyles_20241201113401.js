@@ -46,6 +46,8 @@ const DashboardStyles = StyleSheet.create({
     height: 272,
     width: "100%",
     position: "absolute",
+    top: 0,
+    bottom: 0,
   },
   pregnancyOverviewContainer: {
     width: "90%",

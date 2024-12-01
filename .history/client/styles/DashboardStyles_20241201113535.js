@@ -40,7 +40,7 @@ const DashboardStyles = StyleSheet.create({
   },
   frame: {
     top: 129,
-    width: "100%",
+    width: "70%",
   },
   frameLayout1: {
     height: 272,
