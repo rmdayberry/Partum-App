@@ -103,7 +103,7 @@ const DashboardStyles = StyleSheet.create({
     height: 16,
     left: "50%",
     fontSize: FontSize.size_md,
-    fontFamily: FontFamily.montserratRegular,
+    fontFamily: fontFamily.montserratRegular,
     textAlign: "center",
     position: "absolute",
   },

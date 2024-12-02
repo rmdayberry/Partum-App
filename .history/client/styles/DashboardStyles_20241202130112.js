@@ -83,43 +83,9 @@ const DashboardStyles = StyleSheet.create({
     left: 0,
     position: "absolute",
   },
-  howFarAlongText: {
-    color: Color.colorBlack,
-    fontFamily: FontFamily.arial,
-    fontSize: 12,
-  },
-  progressImg: {
-    top: 101,
-    left: 72,
-    width: 205,
-    height: 38,
-    position: "absolute",
-  },
-  whatYouCan: {
-    marginLeft: -146.5,
-    top: 145,
-    color: "#727272",
-    width: 292,
-    height: 16,
-    left: "50%",
-    fontSize: FontSize.size_md,
-    fontFamily: FontFamily.montserratRegular,
-    textAlign: "center",
-    position: "absolute",
-  },
-  youBabyIs: {
-    top: 171,
-    width: 296,
-    left: 29,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.montserratRegular,
-    textAlign: "center",
-    fontSize: FontSize.size_xs,
-  },
-  yourBabyIsLayout: {
-    height: 67,
-    position: "absolute",
-  },
+  howFarAlongText:{
+    
+  }
   apptHead: {
     left: 51,
     width: 117,

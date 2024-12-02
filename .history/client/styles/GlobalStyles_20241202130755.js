@@ -24,6 +24,7 @@ export const FontSize = {
   size_7xs: 5.5,
   size_5xs: 8,
   size_md: 16,
+  m3LabelLarge_size:
 };
 
 /* Font Families */
@@ -32,5 +33,4 @@ export const FontFamily = {
   arialBlack: "Arial Black",
   arial: "Arial",
   montserratMedium: "Monterrat-Medium",
-  montserratRegular: "Montserrat Regular",
 };

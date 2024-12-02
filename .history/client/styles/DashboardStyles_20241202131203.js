@@ -103,7 +103,7 @@ const DashboardStyles = StyleSheet.create({
     height: 16,
     left: "50%",
     fontSize: FontSize.size_md,
-    fontFamily: FontFamily.montserratRegular,
+    fontFamily: fontFamily.montserratRegular,
     textAlign: "center",
     position: "absolute",
   },
@@ -116,10 +116,7 @@ const DashboardStyles = StyleSheet.create({
     textAlign: "center",
     fontSize: FontSize.size_xs,
   },
-  yourBabyIsLayout: {
-    height: 67,
-    position: "absolute",
-  },
+  yourBabyIsLayout: {},
   apptHead: {
     left: 51,
     width: 117,

@@ -56,7 +56,7 @@ const Dashboard = () => {
             You're X Weeks Along!
           </Text>
           <Image
-            style={DashboardStyles.progressImg}
+            style={Dashstyles.progressImg}
             contentFit="cover"
             source={require("../assets/Progress.png")}
           />

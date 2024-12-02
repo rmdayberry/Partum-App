@@ -32,5 +32,5 @@ export const FontFamily = {
   arialBlack: "Arial Black",
   arial: "Arial",
   montserratMedium: "Monterrat-Medium",
-  montserratRegular: "Montserrat Regular",
+  montserratRegular: 
 };
