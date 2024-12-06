@@ -193,14 +193,7 @@ It’s time to start incorporating a bit more folate into your diet. Drink plent
           style={DashboardStyles.frameChild}
           onPress={() => navigation.navigate("Education")}
         ></Pressable>
-        <View
-          style={[
-            DashboardStyles.navBarBottomInner,
-            DashboardStyles.frame1Layout,
-          ]}
-          contentFit="cover"
-          source={require("../assets/")}
-        >
+        <View style= {[DashboardStyles.navBarBottomInner, DashboardStyles.frame1Layout]} contentFit= "cover" source= {require("../assets/")}
       </View>
     </ScrollView>
   );

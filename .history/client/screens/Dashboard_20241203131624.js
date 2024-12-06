@@ -200,7 +200,7 @@ It’s time to start incorporating a bit more folate into your diet. Drink plent
           ]}
           contentFit="cover"
           source={require("../assets/")}
-        >
+        ></View>
       </View>
     </ScrollView>
   );
