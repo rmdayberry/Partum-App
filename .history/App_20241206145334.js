@@ -10,16 +10,6 @@ import Dashboard from "./screens/Dashboard";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const fetchFonts = async () => {
-  try {
-    await Font.loadAsync({
-      ArimoRegular: require("./assets/fonts/Arimo-Regular.ttf"),
-    });
-  } catch (error) {
-    console.warn("Font loading error:", error);
-  }
-};
-
 const App = () => {
   return (
     <NavigationContainer>
