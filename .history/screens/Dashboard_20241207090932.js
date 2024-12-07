@@ -9,7 +9,6 @@ const Dashboard = () => {
     contentContainerStyle={styles.contentContainer}
   >
     {/*Header*/}
-    <Header/>
   </ScrollView>
   );
 };
