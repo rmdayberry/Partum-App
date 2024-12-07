@@ -84,16 +84,12 @@ frame1: {
 pregnancyOverview: {
   fontSize: FontSize.size_xs,
   fontWeight: "700",
-  fontFamily: FontFamily.montserrat,
+  FontFamily: FontFamily.montserrat,
   color: "#696969",
   textAlign: "center",
   marginBottom: 20,
 },
-youreXWeeksContainer:{
-  fontSize: FontSize.m3BodyLarge_size,
-  fontFamily: FontFamily.montserrat,
-    textAlign: "center",
-}
+
   
 });
 

@@ -1,12 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
-import Header  from "../components/Header";
-import {FontSize,
-  FontFamily,
-  Color,
-  Gap,
-  Padding,
-  Border,} from "../GlobalStyles";
+import Header  from "../components/Header"
 
 const Dashboard = () => {
   return(
@@ -56,44 +50,9 @@ const styles= StyleSheet.create({
     justifyContent: "center",
     padding:16,
     backgroundColor: Color.graysWhite,
-    borderBottomWidth: 1,
-    borderBottomColor: Color.colorGray_100,
-  },
-riverland1Icon: {
-width:67,
-height:56,
-},
-partum: {
-  fontSize:FontSize.size_5xl,
-  fontWeight: '700',
-  fontFamily: FontFamily.montserrat,
-  color: Color.colorDarkslateblue_200,
-},
-pregnancyOverviewContainer: {
-  width: "90%",
-  backgroundColor: Color.graysWhite,
-  borderRadius: Border.br_xs,
-  borderColor: Color.colorGray_100
-},
-frame1: {
-  alignItems: "center",
-  marginBottom: 16,
-  marginHorizontal: 20,
-},
+    bo
+  }
 
-pregnancyOverview: {
-  fontSize: FontSize.size_xs,
-  fontWeight: "700",
-  fontFamily: FontFamily.montserrat,
-  color: "#696969",
-  textAlign: "center",
-  marginBottom: 20,
-},
-youreXWeeksContainer:{
-  fontSize: FontSize.m3BodyLarge_size,
-  fontFamily: FontFamily.montserrat,
-    textAlign: "center",
-}
   
 });
 

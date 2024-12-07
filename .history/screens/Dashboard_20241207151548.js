@@ -89,11 +89,7 @@ pregnancyOverview: {
   textAlign: "center",
   marginBottom: 20,
 },
-youreXWeeksContainer:{
-  fontSize: FontSize.m3BodyLarge_size,
-  fontFamily: FontFamily.montserrat,
-    textAlign: "center",
-}
+
   
 });
 

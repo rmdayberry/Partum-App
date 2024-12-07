@@ -74,25 +74,6 @@ pregnancyOverviewContainer: {
   backgroundColor: Color.graysWhite,
   borderRadius: Border.br_xs,
   borderColor: Color.colorGray_100
-},
-frame1: {
-  alignItems: "center",
-  marginBottom: 16,
-  marginHorizontal: 20,
-},
-
-pregnancyOverview: {
-  fontSize: FontSize.size_xs,
-  fontWeight: "700",
-  fontFamily: FontFamily.montserrat,
-  color: "#696969",
-  textAlign: "center",
-  marginBottom: 20,
-},
-youreXWeeksContainer:{
-  fontSize: FontSize.m3BodyLarge_size,
-  fontFamily: FontFamily.montserrat,
-    textAlign: "center",
 }
   
 });
