@@ -54,10 +54,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: "hidden", //Ensure no overflow
   },
-  progressBar: {
-    height: "100%",
-    backgroundColor: "#9083FC",
-  },
 });
 
 export default ProgressBar;

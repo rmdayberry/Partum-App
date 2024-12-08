@@ -58,7 +58,7 @@ const Dashboard = () => {
           <Text style= {styles.youre}>Weeks Along!</Text>
         </Text>
 
-        <ProgressBar userId={"6751f6871fb757c8ce3efb3d"} />
+        {/* Progress Bar */ }
         {/* Weekly Tip */ }
         <View style= {styles.weeklyTipContainer}/>
         <Text style={styles.tipHeader}>What you can expect this week:</Text>

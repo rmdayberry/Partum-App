@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Header  from "../components/Header";
-import ProgressBar from "../components/ProgressBar";
 import {fetchPregnancyProgress, fetchWeeklyTip} from "../api/api";
 import {FontSize,
   FontFamily,
@@ -58,7 +57,7 @@ const Dashboard = () => {
           <Text style= {styles.youre}>Weeks Along!</Text>
         </Text>
 
-        <ProgressBar userId={"6751f6871fb757c8ce3efb3d"} />
+        {/* Progress Bar */ }
         {/* Weekly Tip */ }
         <View style= {styles.weeklyTipContainer}/>
         <Text style={styles.tipHeader}>What you can expect this week:</Text>
@@ -156,11 +155,11 @@ tipText: {
 },
 youre:{
   fontFamily: FontFamily.montserrat, 
-  fontSize: 16,
+  fontSize: 18,
 },
 x:{
   fontFamily: FontFamily.montserrat, 
-  fontSize: 16,
+  fontSize: 18,
 }
   
 });
