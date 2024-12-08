@@ -7,9 +7,6 @@ import * as SplashScreen from "expo-splash-screen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import "react-native-reanimated";
 import Dashboard from "./screens/Dashboard";
-import Appointments from "./screens/Appointments";
-import Education from "./screens/Education";
-import MorePage from "./screens/MorePage";
 import SplashScreenComponent from "./screens/SplashScreen";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";

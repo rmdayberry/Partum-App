@@ -7,10 +7,6 @@ import * as SplashScreen from "expo-splash-screen";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import "react-native-reanimated";
 import Dashboard from "./screens/Dashboard";
-import Appointments from "./screens/Appointments";
-import Education from "./screens/Education";
-import MorePage from "./screens/MorePage";
-import SplashScreenComponent from "./screens/SplashScreen";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -52,47 +48,17 @@ const BottomTabs = () => {
         },
         tabBarActiveTintColor: "#007Aff", // Active icon color
         tabBarInactiveTintColor: "gray", //Inactive icon color
-        tabBarStyle: { backgroundColor: "#fff" },
+        tabBarStyle: { backgroundColor: "#fff"},
       })}
-    >
-      <Tab.Screen name="Home" component={Dashboard} />
-      <Tab.Screen name="Appointments" component={Appointments} />
-      <Tab.Screen name="Learn" component={Education} />
-      <Tab.Screen name="More" component={MorePage} />
-    </Tab.Navigator>
-  );
-};
+      >
+        
+      </Tab.Navigator>
 
 const App = () => {
-  const [fontsLoaded, setFontsLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    const loadResources = async () => {
-      try {
-        //Prevent splash screen from hiding automatically
-        await SplashScreen.preventAutoHideAsync();
-
-        //Load fonts/ other async tasks
-        await fetchFonts();
-        setFontsLoaded(true);
-      } catch (error) {
-        console.warn(error);
-      }
-    };
-
-    loadResources();
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    //show nothing while fonts are being loaded
-    return null;
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="HomeTabs" component={BottomTabs} />
-        <Stack.Screen name="SplashScreen" component={SplashScreenComponent} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
