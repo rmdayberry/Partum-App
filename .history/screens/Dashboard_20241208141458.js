@@ -110,10 +110,7 @@ pregnancyOverviewContainer: {
   width: "90%",
   backgroundColor: Color.graysWhite,
   borderRadius: Border.br_xs,
-  borderColor: Color.colorGray_100,
-  borderWidth: 1,
-  padding: 16,
-  marginTop: 20,
+  borderColor: Color.colorGray_100
 },
 frame1: {
   alignItems: "center",
