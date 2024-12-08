@@ -52,8 +52,8 @@ const Dashboard = () => {
       <View style={styles.frame1}>
         <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
         <Text style={styles.youreXWeeksContainer}>
-          <Text style={styles.youre}>You're </Text>
-          <Text style={styles.x}>{currentWeek} </Text>
+          <Text style={styles.youre}>You're</Text>
+          <Text style={styles.x}>X</Text>
           <Text style= {styles.youre}>Weeks Along!</Text>
         </Text>
 
@@ -61,17 +61,11 @@ const Dashboard = () => {
         {/* Weekly Tip */ }
         <View style= {styles.weeklyTipContainer}/>
         <Text style={styles.tipHeader}>What you can expect this week:</Text>
-        {loadingTip ? (
-          <Text>Loading...</Text>
-        ) : weeklyTip ? (
-          <>
-          <Text style = {styles.tipText}>{weeklyTip.tip}</Text>
-          </>
-        ) : (
-          <Text>No tip available for this week.</Text>
-        )}
+        {/* Tip goes here */}
       </View>
     </View>
+
+
   </ScrollView>
   );
 };
@@ -129,26 +123,7 @@ youreXWeeksContainer:{
   fontSize: FontSize.m3BodyLarge_size,
   fontFamily: FontFamily.montserrat,
     textAlign: "center",
-},
-weeklyTipContainer: {
-  marginTop: 0,
-  marginHorizontal: 10,
-  padding: 8,
-  alignItems: "center",
-},
-tipHeader: {
-  fontSize: FontSize.size_lg,
-  fontWeight: "bold",
-  marginBottom: 10,
-  textAlign: "center",
-  color: "#727272",
-},
-tipText: {
-  fontSize: FontSize.m3LabelLarge_size,
-  fontFamily: FontFamily.montserrat,
-  textAlign: "center",
-  marginHorizontal: 20,
-},
+}
   
 });
 

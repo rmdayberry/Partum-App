@@ -52,8 +52,8 @@ const Dashboard = () => {
       <View style={styles.frame1}>
         <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
         <Text style={styles.youreXWeeksContainer}>
-          <Text style={styles.youre}>You're </Text>
-          <Text style={styles.x}>{currentWeek} </Text>
+          <Text style={styles.youre}>You're</Text>
+          <Text style={styles.x}>{currentWeek}</Text>
           <Text style= {styles.youre}>Weeks Along!</Text>
         </Text>
 
@@ -129,26 +129,7 @@ youreXWeeksContainer:{
   fontSize: FontSize.m3BodyLarge_size,
   fontFamily: FontFamily.montserrat,
     textAlign: "center",
-},
-weeklyTipContainer: {
-  marginTop: 0,
-  marginHorizontal: 10,
-  padding: 8,
-  alignItems: "center",
-},
-tipHeader: {
-  fontSize: FontSize.size_lg,
-  fontWeight: "bold",
-  marginBottom: 10,
-  textAlign: "center",
-  color: "#727272",
-},
-tipText: {
-  fontSize: FontSize.m3LabelLarge_size,
-  fontFamily: FontFamily.montserrat,
-  textAlign: "center",
-  marginHorizontal: 20,
-},
+}
   
 });
 

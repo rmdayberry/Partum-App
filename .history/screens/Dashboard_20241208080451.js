@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Header  from "../components/Header";
-import {fetchPregnancyProgress, fetchWeeklyTip} from "../api/api";
+import {fetchPregancyProgress, fetchWeeklyTip, fetchProgressAndTip} from "../api/api";
 import {FontSize,
   FontFamily,
   Color,
@@ -19,10 +19,10 @@ const Dashboard = () => {
   const userId = "6751f6871fb757c8ce3efb3d" //test user from database
 
   useEffect(()=>{
-    const fetchProgressAndTip = async ()=> {
+    const fetchPregancyProgress = async ()=> {
       try{
         //fetch progress and calculate current week
-        const progress = await fetchPregnancyProgress(userId);
+        const progress = await fecthPregnancyProgress(userId);
         const week = Math.floor((progress / 100) * 40); // Convert progress % to week
         setCurrentWeek(week);
 
@@ -52,8 +52,8 @@ const Dashboard = () => {
       <View style={styles.frame1}>
         <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
         <Text style={styles.youreXWeeksContainer}>
-          <Text style={styles.youre}>You're </Text>
-          <Text style={styles.x}>{currentWeek} </Text>
+          <Text style={styles.youre}>You're</Text>
+          <Text style={styles.x}>X</Text>
           <Text style= {styles.youre}>Weeks Along!</Text>
         </Text>
 
@@ -61,17 +61,11 @@ const Dashboard = () => {
         {/* Weekly Tip */ }
         <View style= {styles.weeklyTipContainer}/>
         <Text style={styles.tipHeader}>What you can expect this week:</Text>
-        {loadingTip ? (
-          <Text>Loading...</Text>
-        ) : weeklyTip ? (
-          <>
-          <Text style = {styles.tipText}>{weeklyTip.tip}</Text>
-          </>
-        ) : (
-          <Text>No tip available for this week.</Text>
-        )}
+        {/* Tip goes here */}
       </View>
     </View>
+
+
   </ScrollView>
   );
 };
@@ -129,26 +123,7 @@ youreXWeeksContainer:{
   fontSize: FontSize.m3BodyLarge_size,
   fontFamily: FontFamily.montserrat,
     textAlign: "center",
-},
-weeklyTipContainer: {
-  marginTop: 0,
-  marginHorizontal: 10,
-  padding: 8,
-  alignItems: "center",
-},
-tipHeader: {
-  fontSize: FontSize.size_lg,
-  fontWeight: "bold",
-  marginBottom: 10,
-  textAlign: "center",
-  color: "#727272",
-},
-tipText: {
-  fontSize: FontSize.m3LabelLarge_size,
-  fontFamily: FontFamily.montserrat,
-  textAlign: "center",
-  marginHorizontal: 20,
-},
+}
   
 });
 
