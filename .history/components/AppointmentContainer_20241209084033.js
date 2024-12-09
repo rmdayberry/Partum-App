@@ -15,16 +15,7 @@ const AppointmentContainer = () => {
   const navigation = useNavigation();
 
   const handleGetDirections = () => {
-    const riverlandClinicAddress = "1026 7th St W, St Paul, MN 55102";
-    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      riverlandClinicAddress
-    )}`;
-    Linking.openURL(url).catch((err) =>
-      console.error("Error opening maps", err)
-    );
-  };
-  const handleAppointmentNotes = () => {
-    navigation.navigate("AppointmentNotes");
+    const riverlandClinicAddress = "";
   };
 
   return (
@@ -47,19 +38,16 @@ const AppointmentContainer = () => {
             <Text style={styles.needARide}>Need a ride?</Text>
           </Pressable>
           <View style={[styles.frame2, styles.frameLayout]}>
-            <Pressable
-              style={styles.appNotesBtn}
-              onPress={handleAppointmentNotes}
-            >
-              <View style={styles.notesButtonContent}>
-                <Image
-                  style={styles.notesIcon}
-                  contentFit="cover"
-                  source={require("../assets/notesIcon.png")}
-                />
-                <Text style={styles.appointmentNotes}>Appointment Notes</Text>
-              </View>
-            </Pressable>
+            <Image
+              style={styles.screenshot20241108At322}
+              contentFit="cover"
+              source={require("../assets/calendarIcon.png")}
+            />
+            <View style={styles.apptNotesBtn}>
+              <Text style={[styles.appointmentNotes, styles.textTypo]}>
+                Appointment Notes
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -74,16 +62,6 @@ const AppointmentContainer = () => {
           <Text style={styles.clinicName}>Riverland Community Health</Text>
         </View>
       </View>
-      {/* Get Directions Button */}
-      <Pressable style={styles.directionsButton} onPress={handleGetDirections}>
-        <View style={styles.directionsButtonContent}>
-          <Image
-            source={require("../assets/navigationIcon.png")}
-            style={styles.navigationIcon}
-          />
-          <Text style={styles.directionsButtonText}>Get Directions</Text>
-        </View>
-      </Pressable>
     </View>
   );
 };
@@ -156,30 +134,26 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.arial,
     textAlign: "center",
   },
-  notesIcon: {
-    marginRight: 4,
-    height: 10,
-    width: 10,
+  calendarIcon: {
+    borderRadius: Border.br_7xl,
+    height: 19,
+    width: 70,
   },
   appointmentNotes: {
     fontSize: FontSize.size_7xs,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.arial,
+    color: Color.nEW,
+    width: 59,
+    height: 7,
+    textAlign: "center",
   },
   appNotesBtn: {
-    flexDirection: "row",
-    justifyContent: "center",
-    borderRadius: Border.br_xs,
-    backgroundColor: "#D3D3D3",
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    borderRadius: Border.br_8xs,
+    backgroundColor: Color.colorDarkgray,
+    height: 16,
+    paddingHorizontal: 0,
+    paddingVertical: Padding.p_9xs,
+    width: 70,
     alignItems: "center",
-    margin: 4,
-  },
-  notesButtonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 4,
   },
   frame2: {
     height: 44,
@@ -235,29 +209,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "hidden",
     alignSelf: "stretch",
-  },
-  directionsButton: {
-    backgroundColor: "#D3D3D3",
-    paddingVertical: 6,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-    alignSelf: "center",
-  },
-  directionsButtonText: {
-    color: "#000",
-    fontSize: 6,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  navigationIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 4,
-  },
-  directionsButtonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 export default AppointmentContainer;

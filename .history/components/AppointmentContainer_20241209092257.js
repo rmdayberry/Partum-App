@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   navigationIcon: {
-    width: 10,
-    height: 10,
+    width: 12,
+    height: 12,
     marginRight: 4,
   },
   directionsButtonContent: {

@@ -174,12 +174,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     alignItems: "center",
-    margin: 4,
   },
   notesButtonContent: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 4,
+    padding: 6,
   },
   frame2: {
     height: 44,
@@ -238,20 +237,20 @@ const styles = StyleSheet.create({
   },
   directionsButton: {
     backgroundColor: "#D3D3D3",
-    paddingVertical: 6,
-    paddingHorizontal: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     borderRadius: 4,
     alignSelf: "center",
   },
   directionsButtonText: {
     color: "#000",
-    fontSize: 6,
+    fontSize: 8,
     fontWeight: "bold",
     textAlign: "center",
   },
   navigationIcon: {
-    width: 10,
-    height: 10,
+    width: 12,
+    height: 12,
     marginRight: 4,
   },
   directionsButtonContent: {
