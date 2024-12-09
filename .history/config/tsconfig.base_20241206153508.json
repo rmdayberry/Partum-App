@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // Modern JavaScript features
+    "lib": ["dom", "DOM.Iterable", "esnext"], // Libraries for browser and ESNext
+    "jsx": "react-native", // JSX support for React Native
+    "moduleResolution": "node", // Node-style module resolution
+    "esModuleInterop": true, // Compatibility with CommonJS modules
+    "types": ["jest", "jest-require"], // Jest typings
+    "typeRoots": [
+      "./ts-declarations",
+      "./node_modules/@types",
+      "../../node_modules/@types"
+    ], // Custom and node_modules types
+    "sourceMap": true, // Enables source maps
+    "declaration": true, // Generate declaration files
+    "declarationMap": true, // Maps for declaration files
+    "inlineSources": true, // Inline sources in maps
+    "strictNullChecks": true, // Null safety
+    "strictPropertyInitialization": true, // Strict class property checks
+    "strictFunctionTypes": true, // Strict function type checking
+    "skipLibCheck": true, // Skip type checking in node_modules
+    "noImplicitThis": true, // No `this`-type issues
+    "noImplicitReturns": true // Ensure all code paths return
+  }
+}
