@@ -168,7 +168,7 @@ x:{
   fontSize: 16,
 },
 appointmentSection: {
-  alignSelf: "screenLeft",
+  alignSelf: "center",
   width: "40%",
   marginTop: 20,
   margin: 20,

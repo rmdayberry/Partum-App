@@ -76,7 +76,7 @@ const Dashboard = () => {
     </View>
     {/* Appointment Container */}
     <View style={styles.appointmentSection}>
-<AppointmentContainer/>
+
     </View>
   </ScrollView>
   );
@@ -166,12 +166,6 @@ youre:{
 x:{
   fontFamily: FontFamily.montserrat, 
   fontSize: 16,
-},
-appointmentSection: {
-  alignSelf: "screenLeft",
-  width: "40%",
-  marginTop: 20,
-  margin: 20,
 }
   
 });

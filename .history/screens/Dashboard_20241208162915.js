@@ -166,12 +166,6 @@ youre:{
 x:{
   fontFamily: FontFamily.montserrat, 
   fontSize: 16,
-},
-appointmentSection: {
-  alignSelf: "screenLeft",
-  width: "40%",
-  marginTop: 20,
-  margin: 20,
 }
   
 });

@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Header  from "../components/Header";
 import ProgressBar from "../components/ProgressBar";
-import AppointmentContainer from "../components/AppointmentContainer";
 import {fetchPregnancyProgress, fetchWeeklyTip} from "../api/api";
 import {FontSize,
   FontFamily,
@@ -76,7 +75,7 @@ const Dashboard = () => {
     </View>
     {/* Appointment Container */}
     <View style={styles.appointmentSection}>
-<AppointmentContainer/>
+      
     </View>
   </ScrollView>
   );
@@ -166,12 +165,6 @@ youre:{
 x:{
   fontFamily: FontFamily.montserrat, 
   fontSize: 16,
-},
-appointmentSection: {
-  alignSelf: "screenLeft",
-  width: "40%",
-  marginTop: 20,
-  margin: 20,
 }
   
 });
