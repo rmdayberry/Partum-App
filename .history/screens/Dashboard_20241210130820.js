@@ -36,12 +36,16 @@ const Dashboard = () => {
 
         // Fetch daily tip
         const dailyTipData = await fetchDailyTip(userId);
-        console.log("Daily Tip Data:", dailyTipData); // Log the response
-        setDailyTip(dailyTipData);
+        setDailyTip(dailyTipData.data);
       } catch (error) {
-        console.error("Error fetching daily tip:", error);
-        setDailyTip({ tip: "No tip available today." });
+        console.error("Error fetching data:", error);
+        setCurrentWeek(0); // Default to 0 week in case of error
+        setWeeklyTip({ tip: "Unable to fetch tips. Please try again later." });
+        setDailyTip({
+          tip: "Unable to fetch daily tip. Please try again later.",
+        });
       } finally {
+        setLoadingTip(false);
         setLoadingDailyTip(false);
       }
     };
@@ -50,71 +54,65 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.dashboard}
+      contentContainerStyle={styles.contentContainer}
+    >
+      {/* Header */}
       <Header />
-      <ScrollView
-        style={styles.dashboard}
-        contentContainerStyle={styles.contentContainer}
-      >
-        {/* Pregnancy Overview */}
-        <View style={styles.pregnancyOverviewContainer}>
-          <View style={styles.frame1}>
-            <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
-            <Text style={styles.youreXWeeksContainer}>
-              <Text style={styles.youre}>You're </Text>
-              <Text style={styles.x}>
-                {currentWeek !== null && currentWeek !== undefined
-                  ? currentWeek
-                  : "Loading..."}{" "}
-              </Text>
-              <Text style={styles.youre}>Weeks Along!</Text>
+
+      {/* Pregnancy Overview */}
+      <View style={styles.pregnancyOverviewContainer}>
+        <View style={styles.frame1}>
+          <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
+          <Text style={styles.youreXWeeksContainer}>
+            <Text style={styles.youre}>You're </Text>
+            <Text style={styles.x}>
+              {currentWeek !== null && currentWeek !== undefined
+                ? currentWeek
+                : "Loading..."}{" "}
             </Text>
+            <Text style={styles.youre}>Weeks Along!</Text>
+          </Text>
 
-            <ProgressBar userId={userId} />
+          <ProgressBar userId={userId} />
 
-            {/* Weekly Tip */}
-            <View style={styles.weeklyTipContainer}>
-              <Text style={styles.tipHeader}>
-                What you can expect this week:
-              </Text>
-              {loadingTip ? (
-                <Text>Loading...</Text>
-              ) : weeklyTip ? (
-                <Text style={styles.tipText}>{weeklyTip.tip}</Text>
-              ) : (
-                <Text>No tip available for this week.</Text>
-              )}
-            </View>
+          {/* Weekly Tip */}
+          <View style={styles.weeklyTipContainer}>
+            <Text style={styles.tipHeader}>What you can expect this week:</Text>
+            {loadingTip ? (
+              <Text>Loading...</Text>
+            ) : weeklyTip ? (
+              <Text style={styles.tipText}>{weeklyTip.tip}</Text>
+            ) : (
+              <Text>No tip available for this week.</Text>
+            )}
           </View>
         </View>
+      </View>
 
-        {/* Appointment Container */}
-        <View style={styles.appointmentSection}>
-          <AppointmentContainer />
-        </View>
+      {/* Appointment Container */}
+      <View style={styles.appointmentSection}>
+        <AppointmentContainer />
+      </View>
 
-        {/* Pregnancy Tip of the Day */}
-        <View style={styles.dailyTipFrame}>
-          <Text style={styles.dailyTipHeader}>Today's Pregnancy Tip</Text>
-          {loadingDailyTip ? (
-            <Text>Loading...</Text>
-          ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.tipText}> {dailyTip.tip}</Text>
-          ) : (
-            <Text> No tip available for today.</Text>
-          )}
-        </View>
-        <ResourceSection />
-      </ScrollView>
-    </View>
+      {/* Pregnancy Tip of the Day */}
+      <View style={styles.dailyTipFrame}>
+        <Text style={styles.dailyTipHeader}>Today's Pregnancy Tip</Text>
+        {loadingDailyTip ? (
+          <Text>Loading...</Text>
+        ) : dailyTip && dailyTip.tip ? (
+          <Text style={styles.tipText}> {dailyTip.tip}</Text>
+        ) : (
+          <Text> No tip available for today.</Text>
+        )}
+      </View>
+      <ResourceSection />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.nEW,
-  },
   dashboard: {
     flex: 1,
     backgroundColor: Color.nEW,
