@@ -52,6 +52,7 @@ const Dashboard = () => {
   return (
     <View style={styles.container}>
       <Header />
+
       <ScrollView
         style={styles.dashboard}
         contentContainerStyle={styles.contentContainer}
@@ -96,13 +97,13 @@ const Dashboard = () => {
         {/* Pregnancy Tip of the Day */}
         <View style={styles.dailyTipFrame}>
           <Text style={styles.dailyTipHeader}>Today's Pregnancy Tip</Text>
-          {loadingDailyTip ? (
-            <Text>Loading...</Text>
-          ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.tipText}> {dailyTip.tip}</Text>
-          ) : (
-            <Text> No tip available for today.</Text>
-          )}
+          <Text style={styles.tipText}>
+            {loadingTip
+              ? "Loading..."
+              : weeklyTip
+              ? weeklyTip.tip
+              : "No tip available for this week."}
+          </Text>
         </View>
         <ResourceSection />
       </ScrollView>

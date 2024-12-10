@@ -52,6 +52,7 @@ const Dashboard = () => {
   return (
     <View style={styles.container}>
       <Header />
+
       <ScrollView
         style={styles.dashboard}
         contentContainerStyle={styles.contentContainer}
@@ -76,13 +77,11 @@ const Dashboard = () => {
             <View style={styles.weeklyTipContainer}>
               <Text style={styles.tipHeader}>
                 What you can expect this week:
+    
+                <Text style={styles.tipText}>
+                {loadingTip ? "Loading..." : weeklyTip ? weeklyTip.tip : "No tip available for this week."}
               </Text>
-              {loadingTip ? (
-                <Text>Loading...</Text>
-              ) : weeklyTip ? (
-                <Text style={styles.tipText}>{weeklyTip.tip}</Text>
-              ) : (
-                <Text>No tip available for this week.</Text>
+              
               )}
             </View>
           </View>

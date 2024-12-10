@@ -50,7 +50,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.cotainer}>
       <Header />
       <ScrollView
         style={styles.dashboard}
@@ -111,11 +111,11 @@ const Dashboard = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  dashboard: {
     flex: 1,
     backgroundColor: Color.nEW,
   },
-  dashboard: {
+  container: {
     flex: 1,
     backgroundColor: Color.nEW,
   },

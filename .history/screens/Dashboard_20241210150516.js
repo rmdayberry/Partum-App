@@ -52,6 +52,7 @@ const Dashboard = () => {
   return (
     <View style={styles.container}>
       <Header />
+
       <ScrollView
         style={styles.dashboard}
         contentContainerStyle={styles.contentContainer}
