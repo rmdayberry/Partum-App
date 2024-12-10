@@ -96,7 +96,7 @@ const Dashboard = () => {
       </View>
 
       {/* Pregnancy Tip of the Day */}
-      <View style={styles.dailyTipFrame}>
+      <View style={dailyTipFrame}>
         <Text style={styles.dailyTipHeader}>Today's Pregnancy Tip</Text>
         {loadingDailyTip ? (
           <Text>Loading...</Text>
@@ -200,31 +200,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     margin: 20,
   },
-  dailyTipFrame: {
-    marginTop: 20,
-    padding: 16,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-    width: "90%",
-    alignSelf: "center",
-  },
-  dailyTipHeader: {
-    fontSize: FontSize.size_lg,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-    color: "#555555",
-  },
-  tipText: {
-    fontSize: FontSize.m3LabelLarge_size,
-    fontFamily: FontFamily.montserrat,
-    textAlign: "center",
-    marginHorizontal: 20,
-  },
+  dailyTipFrame: {},
 });
 
 export default Dashboard;
