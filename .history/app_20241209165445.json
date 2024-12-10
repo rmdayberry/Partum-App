@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Riverland.png",
+      "image": "../assets/Riverland.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
