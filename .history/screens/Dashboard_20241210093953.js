@@ -107,7 +107,6 @@ const Dashboard = () => {
           <Text> No tip available for today.</Text>
         )}
       </View>
-      <ResourceSection />
     </ScrollView>
   );
 };
