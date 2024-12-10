@@ -217,13 +217,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
-    color: "#555555",
-  },
-  tipText: {
-    fontSize: FontSize.m3LabelLarge_size,
-    fontFamily: FontFamily.montserrat,
-    textAlign: "center",
-    marginHorizontal: 20,
   },
 });
 

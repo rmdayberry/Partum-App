@@ -4,45 +4,45 @@ import { useNavigation } from "@react-navigation/core";
 import Header from "../components/Header";
 import ProgressBar from "../components/ProgressBar";
 import AppointmentContainer from "../components/AppointmentContainer";
-import {
-  fetchPregnancyProgress,
-  fetchWeeklyTip,
-  fetchDailyTip,
-} from "../api/api";
+import { fetchPregnancyProgress, fetchWeeklyTip, fetchDailyTip } from "../api/api";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 
 const Dashboard = () => {
   const navigation = useNavigation();
   const [currentWeek, setCurrentWeek] = useState(null);
+  const [currentDay, setCurrentDay] = useState(null);
   const [weeklyTip, setWeeklyTip] = useState(null);
   const [dailyTip, setDailyTip] = useState(null);
   const [loadingTip, setLoadingTip] = useState(true);
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
-
+  const preferredLanguage = "en";
   const userId = "6751f6871fb757c8ce3efb3d"; // Test user from database
 
   useEffect(() => {
     const fetchProgressAndTips = async () => {
       try {
-        // Fetch progress and calculate current week
-        const progress = await fetchPregnancyProgress(userId);
-        const week = Math.floor((progress / 100) * 40); // Convert progress % to week
-        setCurrentWeek(week);
+        // Fetch pregnancy progress
+        const { progress } = await fetchPregnancyProgress(userId);
 
-        // Fetch weekly tip
-        const tipData = await fetchWeeklyTip(week);
-        setWeeklyTip(tipData);
+        if (progress !== undefined) {
+          // Calculate current week and day
+          const week = Math.floor((progress / 100) * 40); // Convert progress % to week
+          const day = Math.floor((progress / 100) * 280); // Convert progress % to day
+          setCurrentWeek(week);
+          setCurrentDay(day);
 
-        // Fetch daily tip
-        const dailyTipData = await fetchDailyTip(userId);
-        setDailyTip(dailyTipData);
+          // Fetch weekly tip
+          const weeklyTipData = await fetchWeeklyTip(week);
+          setWeeklyTip(weeklyTipData);
+
+          // Fetch daily tip
+          const dailyTipData = await fetchDailyTip(day);
+          setDailyTip(dailyTipData);
+        } else {
+          console.error("Progress is undefined or invalid.");
+        }
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setCurrentWeek(0); // Default to 0 week in case of error
-        setWeeklyTip({ tip: "Unable to fetch tips. Please try again later." });
-        setDailyTip({
-          tip: "Unable to fetch daily tip. Please try again later.",
-        });
+        console.error("Error fetching pregnancy data:", error);
       } finally {
         setLoadingTip(false);
         setLoadingDailyTip(false);
@@ -66,14 +66,9 @@ const Dashboard = () => {
           <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
           <Text style={styles.youreXWeeksContainer}>
             <Text style={styles.youre}>You're </Text>
-            <Text style={styles.x}>
-              {currentWeek !== null && currentWeek !== undefined
-                ? currentWeek
-                : "Loading..."}{" "}
-            </Text>
+            <Text style={styles.x}>{currentWeek} </Text>
             <Text style={styles.youre}>Weeks Along!</Text>
           </Text>
-
           <ProgressBar userId={userId} />
 
           {/* Weekly Tip */}
@@ -95,15 +90,17 @@ const Dashboard = () => {
         <AppointmentContainer />
       </View>
 
-      {/* Pregnancy Tip of the Day */}
-      <View style={styles.dailyTipFrame}>
-        <Text style={styles.dailyTipHeader}>Today's Pregnancy Tip</Text>
+      {/* Today's Pregnancy Tips */}
+      <View style={styles.todaysPregnancyTipFrame}>
+        <Text style={styles.todaysPregnancyTips}>Today’s Pregnancy Tips</Text>
         {loadingDailyTip ? (
           <Text>Loading...</Text>
         ) : dailyTip ? (
-          <Text style={styles.tipText}> {dailyTip.tip}</Text>
+          <Text style={styles.tipText}>
+            {preferredLanguage === "en" ? dailyTip.tip : dailyTip.tipSpanish}
+          </Text>
         ) : (
-          <Text> No tip available for today.</Text>
+          <Text>No daily tip available.</Text>
         )}
       </View>
     </ScrollView>
@@ -117,27 +114,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     alignItems: "center",
-    paddingBottom: 50, //Space for scrolling content
-  },
-  header: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: Color.graysWhite,
-    borderBottomWidth: 1,
-    borderBottomColor: Color.colorGray_100,
-  },
-  riverland1Icon: {
-    width: 67,
-    height: 56,
-  },
-  partum: {
-    fontSize: FontSize.size_5xl,
-    fontWeight: "700",
-    fontFamily: FontFamily.montserrat,
-    color: Color.colorDarkslateblue_200,
+    paddingBottom: 50,
   },
   pregnancyOverviewContainer: {
     width: "90%",
@@ -151,9 +128,7 @@ const styles = StyleSheet.create({
   frame1: {
     alignItems: "center",
     marginBottom: 16,
-    marginHorizontal: 20,
   },
-
   pregnancyOverview: {
     fontSize: FontSize.size_xs,
     fontWeight: "700",
@@ -168,9 +143,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   weeklyTipContainer: {
-    marginTop: 0,
-    marginHorizontal: 10,
-    padding: 8,
+    marginTop: 10,
     alignItems: "center",
   },
   tipHeader: {
@@ -186,45 +159,28 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginHorizontal: 20,
   },
-  youre: {
-    fontFamily: FontFamily.montserrat,
-    fontSize: 16,
-  },
-  x: {
-    fontFamily: FontFamily.montserrat,
-    fontSize: 16,
-  },
   appointmentSection: {
-    alignSelf: "screenLeft",
-    width: "40%",
+    alignSelf: "center",
+    width: "90%",
     marginTop: 20,
-    margin: 20,
   },
-  dailyTipFrame: {
-    marginTop: 20,
+  todaysPregnancyTipFrame: {
     padding: 16,
     backgroundColor: "#fff",
+    margin: 16,
     borderRadius: 8,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
-    width: "90%",
-    alignSelf: "center",
   },
-  dailyTipHeader: {
-    fontSize: FontSize.size_lg,
+  todaysPregnancyTips: {
+    fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
-    textAlign: "center",
-    color: "#555555",
-  },
-  tipText: {
-    fontSize: FontSize.m3LabelLarge_size,
-    fontFamily: FontFamily.montserrat,
-    textAlign: "center",
-    marginHorizontal: 20,
   },
 });
 
 export default Dashboard;
+
+

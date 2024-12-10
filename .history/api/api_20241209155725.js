@@ -25,7 +25,7 @@ export const fetchWeeklyTip = async (week) => {
   try {
     console.log("Fetching weekly tip for week:", week);
     const response = await axios.get(
-      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}` // Add a slash before `${week}`
+      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
     );
     console.log("Weekly Tip Response:", response.data);
     return response.data; // Assuming API response has { week: currentWeek, tip: "Your tip for the week" }
@@ -34,19 +34,6 @@ export const fetchWeeklyTip = async (week) => {
       "Error fetching weekly tip:",
       error.response || error.message
     );
-    throw error;
-  }
-};
-
-// Fetch daily tip
-export const fetchDailyTip = async (userId) => {
-  try {
-    console.log("Fetching daily tip for user:", userId);
-    const response = await axios.get(`${API_BASE_URL}/api/daily-tip/${userId}`);
-    console.log("Daily Tip Response:", response.data);
-    return response.data; // Assuming API response has { day: currentDay, tip: "Your daily tip" }
-  } catch (error) {
-    console.error("Error fetching daily tip:", error.response || error.message);
     throw error;
   }
 };

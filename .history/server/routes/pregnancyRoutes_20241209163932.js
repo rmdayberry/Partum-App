@@ -1,7 +1,6 @@
 const express = require("express");
 const User = require("../models/userModel");
 const WhatToExpectWeekly = require("../models/WhatToExpect");
-const DailyPregnancyTip = require("../models/DailyPregnancyTips");
 const router = express.Router();
 
 // Pregnancy progress endpoint
@@ -94,41 +93,6 @@ router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
     }
 
     res.json({ week, tip: weeklyTip.tip });
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
-});
-
-//Fetch daily pregnancy tip
-
-router.get("/daily-tip/:userId", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const dueDate = new Date(user.dueDate); // User's due date
-    const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000); // 280 days before due date
-    const currentDate = new Date();
-
-    const daysElapsed = Math.floor(
-      (currentDate - startDate) / (1000 * 60 * 60 * 24)
-    );
-
-    if (daysElapsed < 1 || daysElapsed > 280) {
-      return res
-        .status(400)
-        .json({ message: "Day of pregnancy is out of range (1-280)." });
-    }
-
-    const dailyTip = await DailyPregnancyTip.findOne({ day: daysElapsed });
-
-    if (!dailyTip) {
-      return res.status(404).json({ message: "Tip for this day not found" });
-    }
-
-    res.json({ day: daysElapsed, tip: dailyTip.tip });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
   }
