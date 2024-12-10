@@ -212,19 +212,6 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
   },
-  dailyTipHeader: {
-    fontSize: FontSize.size_lg,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-    color: "#555555",
-  },
-  tipText: {
-    fontSize: FontSize.m3LabelLarge_size,
-    fontFamily: FontFamily.montserrat,
-    textAlign: "center",
-    marginHorizontal: 20,
-  },
 });
 
 export default Dashboard;
