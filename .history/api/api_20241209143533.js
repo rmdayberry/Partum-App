@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5002"; // Replace with your server's URL if different
+const API_BASE_URL = "http://localhost:5002";
 
-// Fetch pregnancy progress
+//Fetch pregnancy progress
 export const fetchPregnancyProgress = async (userId) => {
   try {
     console.log("Fetching pregnancy progress for user:", userId);
@@ -20,15 +20,15 @@ export const fetchPregnancyProgress = async (userId) => {
   }
 };
 
-// Fetch weekly tip
+//Fetch weekly tip
 export const fetchWeeklyTip = async (week) => {
   try {
     console.log("Fetching weekly tip for week:", week);
     const response = await axios.get(
-      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}` // Add a slash before `${week}`
+      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
     );
     console.log("Weekly Tip Response:", response.data);
-    return response.data; // Assuming API response has { week: currentWeek, tip: "Your tip for the week" }
+    return response.data;
   } catch (error) {
     console.error(
       "Error fetching weekly tip:",

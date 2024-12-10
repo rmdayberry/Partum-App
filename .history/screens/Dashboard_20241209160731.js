@@ -39,7 +39,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <ScrollView style={styles.dashboard} contentContainerStyle={styles.contentContainer}>
+    <View style={styles.dashboard} contentContainerStyle={styles.contentContainer}>
       {/* Header */}
       <Header />
 
@@ -76,6 +76,7 @@ const Dashboard = () => {
       {/* Appointment Container */}
       <View style={styles.appointmentSection}>
         <AppointmentContainer/>
+      </View>
       </View>
     </ScrollView>
   );

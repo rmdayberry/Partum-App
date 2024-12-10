@@ -75,7 +75,7 @@ const Dashboard = () => {
 
       {/* Appointment Container */}
       <View style={styles.appointmentSection}>
-        <AppointmentContainer/>
+        <AppointmentContainer />
       </View>
     </ScrollView>
   );

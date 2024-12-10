@@ -25,7 +25,7 @@ export const fetchWeeklyTip = async (week) => {
   try {
     console.log("Fetching weekly tip for week:", week);
     const response = await axios.get(
-      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}` // Add a slash before `${week}`
+      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
     );
     console.log("Weekly Tip Response:", response.data);
     return response.data; // Assuming API response has { week: currentWeek, tip: "Your tip for the week" }

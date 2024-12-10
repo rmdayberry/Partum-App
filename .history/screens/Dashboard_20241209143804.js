@@ -1,35 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import Header from "../components/Header";
+import Header  from "../components/Header";
 import ProgressBar from "../components/ProgressBar";
 import AppointmentContainer from "../components/AppointmentContainer";
-import { fetchPregnancyProgress, fetchWeeklyTip } from "../api/api";
-import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
+import {fetchPregnancyProgress, fetchWeeklyTip} from "../api/api";
+import {FontSize,
+  FontFamily,
+  Color,
+  Gap,
+  Padding,
+  Border,} from "../GlobalStyles";
 
 const Dashboard = () => {
   const navigation = useNavigation();
   const [currentWeek, setCurrentWeek] = useState(null);
   const [weeklyTip, setWeeklyTip] = useState(null);
-  const [loadingTip, setLoadingTip] = useState(true);
+  const [loadingTip, setLoadingTip]= useState(true);
+ 
+  
 
-  const userId = "6751f6871fb757c8ce3efb3d"; // Test user from database
-
-  useEffect(() => {
-    const fetchProgressAndTip = async () => {
-      try {
-        // Fetch progress and calculate current week
+  const userId = "6751f6871fb757c8ce3efb3d" //test user from database
+ 
+  useEffect(()=>{
+    const fetchProgressAndTip = async ()=> {
+      try{
+        //fetch progress and calculate current week
         const progress = await fetchPregnancyProgress(userId);
         const week = Math.floor((progress / 100) * 40); // Convert progress % to week
         setCurrentWeek(week);
 
-        // Fetch weekly tip
+        //Fetch weekly tip
         const tipData = await fetchWeeklyTip(week);
         setWeeklyTip(tipData);
-      } catch (error) {
+      } catch(error){
         console.error("Error fetching weekly data:", error);
-        setCurrentWeek(0); // Default to 0 week in case of error
-        setWeeklyTip({ tip: "Unable to fetch tips. Please try again later." });
       } finally {
         setLoadingTip(false);
       }
@@ -38,45 +43,45 @@ const Dashboard = () => {
     fetchProgressAndTip();
   }, []);
 
-  return (
-    <ScrollView style={styles.dashboard} contentContainerStyle={styles.contentContainer}>
-      {/* Header */}
-      <Header />
+  return(
+  <ScrollView
+    style={styles.dashboard}
+    contentContainerStyle={styles.contentContainer}
+  >
+    {/*Header*/}
+    <Header/>
 
-      {/* Pregnancy Overview */}
-      <View style={styles.pregnancyOverviewContainer}>
-        <View style={styles.frame1}>
-          <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
-          <Text style={styles.youreXWeeksContainer}>
-            <Text style={styles.youre}>You're </Text>
-            <Text style={styles.x}>
-              {currentWeek !== null && currentWeek !== undefined
-                ? currentWeek
-                : "Loading..."}{" "}
-            </Text>
-            <Text style={styles.youre}>Weeks Along!</Text>
-          </Text>
+    {/*Pregancy Overview*/}
+    <View style={styles.pregnancyOverviewContainer}>
+      <View style={styles.frame1}>
+        <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
+        <Text style={styles.youreXWeeksContainer}>
+          <Text style={styles.youre}>You're </Text>
+          <Text style={styles.x}>{currentWeek} </Text>
+          <Text style= {styles.youre}>Weeks Along!</Text>
+        </Text>
 
-          <ProgressBar userId={userId} />
-
-          {/* Weekly Tip */}
-          <View style={styles.weeklyTipContainer}>
-            <Text style={styles.tipHeader}>What you can expect this week:</Text>
-            {loadingTip ? (
-              <Text>Loading...</Text>
-            ) : weeklyTip ? (
-              <Text style={styles.tipText}>{weeklyTip.tip}</Text>
-            ) : (
-              <Text>No tip available for this week.</Text>
-            )}
-          </View>
-        </View>
+        <ProgressBar userId={"6751f6871fb757c8ce3efb3d"} />
+        {/* Weekly Tip */ }
+        <View style= {styles.weeklyTipContainer}/>
+        <Text style={styles.tipHeader}>What you can expect this week:</Text>
+        {loadingTip ? (
+          <Text>Loading...</Text>
+        ) : weeklyTip ? (
+          <>
+          <Text style = {styles.tipText}>{weeklyTip.tip}</Text>
+          </>
+        ) : (
+          <Text>No tip available for this week.</Text>
+        )}
       </View>
-
-      {/* Appointment Container */}
-      <View style={styles.appointmentSection}>
-        <AppointmentContainer/>
-      </View>
+    </View>
+    {/* Appointment Container */}
+    <View style={styles.appointmentSection}>
+<AppointmentContainer/>
+    </View>
+     {/* Today's Pregnancy Tips */}
+    
     </ScrollView>
   );
 };

@@ -60,16 +60,7 @@ const Dashboard = () => {
           <ProgressBar userId={userId} />
 
           {/* Weekly Tip */}
-          <View style={styles.weeklyTipContainer}>
-            <Text style={styles.tipHeader}>What you can expect this week:</Text>
-            {loadingTip ? (
-              <Text>Loading...</Text>
-            ) : weeklyTip ? (
-              <Text style={styles.tipText}>{weeklyTip.tip}</Text>
-            ) : (
-              <Text>No tip available for this week.</Text>
-            )}
-          </View>
+         
         </View>
       </View>
 
