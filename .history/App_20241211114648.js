@@ -62,8 +62,6 @@ const MoreStack = () => (
 );
 
 const BottomTabs = () => {
-  const navigation = useNavigation(); // Ensure navigation context is accessible here.
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -71,6 +69,7 @@ const BottomTabs = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
+          // Assign icons based on route name
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Appointments") {
@@ -83,10 +82,11 @@ const BottomTabs = () => {
               : "ellipsis-horizontal-outline";
           }
 
+          // Return the icon component
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#007Aff",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: "#007Aff", // Active icon color
+        tabBarInactiveTintColor: "gray", // Inactive icon color
         tabBarStyle: { backgroundColor: "#fff" },
       })}
     >
@@ -98,16 +98,16 @@ const BottomTabs = () => {
             <TouchableOpacity
               {...props}
               onPress={() => {
-                // Navigate to 'DashboardHome' inside 'DashboardStack'
+                // Ensure navigation resets to DashboardHome
+                const navigation = props.navigation;
                 navigation.navigate("Home", {
-                  screen: "DashboardHome", // Target the screen inside the nested stack
+                  screen: "DashboardHome",
                 });
               }}
             />
           ),
         }}
       />
-
       <Tab.Screen name="Appointments" component={AppointmentsStack} />
       <Tab.Screen name="Learn" component={EducationStack} />
       <Tab.Screen name="More" component={MoreStack} />

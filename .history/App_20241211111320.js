@@ -1,7 +1,6 @@
 const Stack = createNativeStackNavigator();
 import * as React from "react";
-import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Font from "expo-font";
@@ -61,59 +60,57 @@ const MoreStack = () => (
   </Stack.Navigator>
 );
 
-const BottomTabs = () => {
-  const navigation = useNavigation(); // Ensure navigation context is accessible here.
+const BottomTabs = () => (
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      headerShown: false,
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
 
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+        // Assign icons based on route name
+        if (route.name === "Home") {
+          iconName = focused ? "home" : "home-outline";
+        } else if (route.name === "Appointments") {
+          iconName = focused ? "calendar" : "calendar-outline";
+        } else if (route.name === "Learn") {
+          iconName = focused ? "book" : "book-outline";
+        } else if (route.name === "More") {
+          iconName = focused
+            ? "ellipsis-horizontal"
+            : "ellipsis-horizontal-outline";
+        }
 
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Appointments") {
-            iconName = focused ? "calendar" : "calendar-outline";
-          } else if (route.name === "Learn") {
-            iconName = focused ? "book" : "book-outline";
-          } else if (route.name === "More") {
-            iconName = focused
-              ? "ellipsis-horizontal"
-              : "ellipsis-horizontal-outline";
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: "#007Aff",
-        tabBarInactiveTintColor: "gray",
-        tabBarStyle: { backgroundColor: "#fff" },
-      })}
-    >
-      <Tab.Screen
-        name="Home"
-        component={DashboardStack}
-        options={{
-          tabBarButton: (props) => (
-            <TouchableOpacity
-              {...props}
-              onPress={() => {
-                // Navigate to 'DashboardHome' inside 'DashboardStack'
-                navigation.navigate("Home", {
-                  screen: "DashboardHome", // Target the screen inside the nested stack
-                });
-              }}
-            />
-          ),
-        }}
-      />
-
-      <Tab.Screen name="Appointments" component={AppointmentsStack} />
-      <Tab.Screen name="Learn" component={EducationStack} />
-      <Tab.Screen name="More" component={MoreStack} />
-    </Tab.Navigator>
-  );
-};
+        // Return the icon component
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: "#007Aff", // Active icon color
+      tabBarInactiveTintColor: "gray", // Inactive icon color
+      tabBarStyle: { backgroundColor: "#fff" },
+    })}
+  >
+    <Tab.Screen
+      name="Home"
+      component={DashboardStack}
+      options={{
+        tabBarButton: (props) => (
+          <TouchableOpacity
+            {...props}
+            onPress={() => {
+              // Ensure navigation resets to DashboardHome
+              const navigation = props.navigation;
+              navigation.navigate("Home", {
+                screen: "DashboardHome",
+              });
+            }}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen name="Appointments" component={AppointmentsStack} />
+    <Tab.Screen name="Learn" component={EducationStack} />
+    <Tab.Screen name="More" component={MoreStack} />
+  </Tab.Navigator>
+);
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = React.useState(false);

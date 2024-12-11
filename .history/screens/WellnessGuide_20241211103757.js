@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 const topics = [
   {
     id: "1",
-    titleEnglish: "Sleep",
+    title: "Sleep",
     titleSpanish: "Dormir",
     image: require("../assets/Sleep.png"),
   },
@@ -126,26 +126,24 @@ const styles = StyleSheet.create({
     height: 150,
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
-    overflow: "hidden",
+    padding: 16,
+    justifyContent: "center",
+    alignItems: "center",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
   },
-  cardBackground: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    padding: 10,
+  icon: {
+    width: 60,
+    height: 60,
+    marginBottom: 12,
   },
   cardTitle: {
     fontSize: FontSize.size_md,
     fontFamily: FontFamily.montserrat,
-    color: "#fff",
-    textShadowColor: "rgba(0, 0, 0, 0.8)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 5,
     textAlign: "center",
+    color: Color.colorGray_700,
   },
 });
 export default WellnessGuide;

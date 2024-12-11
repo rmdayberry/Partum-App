@@ -1,7 +1,5 @@
 const Stack = createNativeStackNavigator();
 import * as React from "react";
-import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Font from "expo-font";
@@ -17,6 +15,7 @@ import GetSupport from "./screens/GetSupport";
 import Appointments from "./screens/Appointments";
 import Education from "./screens/Education";
 import MorePage from "./screens/MorePage";
+import SplashScreenComponent from "./screens/SplashScreen";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -32,38 +31,7 @@ const fetchFonts = async () => {
   }
 };
 
-const DashboardStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="DashboardHome" component={Dashboard} />
-    <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
-    <Stack.Screen name="CommunityResources" component={CommunityResources} />
-  </Stack.Navigator>
-);
-
-const AppointmentsStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="AppointmentsHome" component={Appointments} />
-  </Stack.Navigator>
-);
-
-const EducationStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="EducationHome" component={Education} />
-  </Stack.Navigator>
-);
-
-const MoreStack = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="MoreHome" component={MorePage} />
-    <Stack.Screen name="Settings" component={Settings} />
-    <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
-    <Stack.Screen name="GetSupport" component={GetSupport} />
-  </Stack.Navigator>
-);
-
 const BottomTabs = () => {
-  const navigation = useNavigation(); // Ensure navigation context is accessible here.
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -71,6 +39,7 @@ const BottomTabs = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
+          // Assign icons based on route name
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Appointments") {
@@ -83,34 +52,18 @@ const BottomTabs = () => {
               : "ellipsis-horizontal-outline";
           }
 
+          //Return the icon component
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "#007Aff",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: "#007Aff", // Active icon color
+        tabBarInactiveTintColor: "gray", //Inactive icon color
         tabBarStyle: { backgroundColor: "#fff" },
       })}
     >
-      <Tab.Screen
-        name="Home"
-        component={DashboardStack}
-        options={{
-          tabBarButton: (props) => (
-            <TouchableOpacity
-              {...props}
-              onPress={() => {
-                // Navigate to 'DashboardHome' inside 'DashboardStack'
-                navigation.navigate("Home", {
-                  screen: "DashboardHome", // Target the screen inside the nested stack
-                });
-              }}
-            />
-          ),
-        }}
-      />
-
-      <Tab.Screen name="Appointments" component={AppointmentsStack} />
-      <Tab.Screen name="Learn" component={EducationStack} />
-      <Tab.Screen name="More" component={MoreStack} />
+      <Tab.Screen name="Home" component={Dashboard} />
+      <Tab.Screen name="Appointments" component={Appointments} />
+      <Tab.Screen name="Learn" component={Education} />
+      <Tab.Screen name="More" component={MorePage} />
     </Tab.Navigator>
   );
 };
@@ -139,15 +92,26 @@ const App = () => {
   }, []);
 
   if (!fontsLoaded) {
-    // Show nothing while fonts are being loaded
+    //show nothing while fonts are being loaded
     return null;
   }
 
   return (
     <NavigationContainer>
-      <BottomTabs />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="HomeTabs" component={BottomTabs} />
+        <Stack.Screen name="SplashScreen" component={SplashScreenComponent} />
+        <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
+        <Stack.Screen
+          name="CommunityResources"
+          component={CommunityResources}
+        />
+        <Stack.Screen name="Education" component={Education} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
+        <Stack.Screen name="GetSupport" component={GetSupport} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
 export default App;

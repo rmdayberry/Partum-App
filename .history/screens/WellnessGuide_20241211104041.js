@@ -13,7 +13,7 @@ import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 const topics = [
   {
     id: "1",
-    titleEnglish: "Sleep",
+    title: "Sleep",
     titleSpanish: "Dormir",
     image: require("../assets/Sleep.png"),
   },

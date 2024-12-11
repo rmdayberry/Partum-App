@@ -34,7 +34,7 @@ const fetchFonts = async () => {
 
 const DashboardStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="DashboardHome" component={Dashboard} />
+    <Stack.Screen name="Dashboard" component={Dashboard} />
     <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
   </Stack.Navigator>
@@ -98,16 +98,13 @@ const BottomTabs = () => {
             <TouchableOpacity
               {...props}
               onPress={() => {
-                // Navigate to 'DashboardHome' inside 'DashboardStack'
-                navigation.navigate("Home", {
-                  screen: "DashboardHome", // Target the screen inside the nested stack
-                });
+                // Use `navigation` from context to navigate to "DashboardHome"
+                navigation.navigate("Dashboard");
               }}
             />
           ),
         }}
       />
-
       <Tab.Screen name="Appointments" component={AppointmentsStack} />
       <Tab.Screen name="Learn" component={EducationStack} />
       <Tab.Screen name="More" component={MoreStack} />
