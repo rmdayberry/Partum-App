@@ -23,24 +23,6 @@ const topics = [
     titleSpanish: "Nutrición",
     image: require("../assets/NutritionCardFinal.png"),
   },
-  {
-    id: "3",
-    titleEnglish: "Exercise",
-    titleSpanish: "Ejercicio",
-    image: require("../assets/ExerciseCard.png"),
-  },
-  {
-    id: "4",
-    titleEnglish: "Mental Health",
-    titleSpanish: "Salud Mental",
-    image: require("../assets/MentalHealthCard.png"),
-  },
-  {
-    id: "5",
-    titleEnglish: "Symptom Management",
-    titleSpanish: "Manejo de síntomas",
-    image: require("../assets/SymptomManagement.png"),
-  },
 ];
 
 const WellnessGuide = () => {

@@ -39,7 +39,7 @@ const topics = [
     id: "5",
     titleEnglish: "Symptom Management",
     titleSpanish: "Manejo de síntomas",
-    image: require("../assets/SymptomManagement.png"),
+    image: require("../assets/SymptomManagementCard.png"),
   },
 ];
 
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.arial,
     color: "#F36D35",
     textAlign: "center",
+    marginTop: 15,
   },
 });
 export default WellnessGuide;

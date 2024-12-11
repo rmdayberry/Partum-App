@@ -38,8 +38,8 @@ const topics = [
   {
     id: "5",
     titleEnglish: "Symptom Management",
-    titleSpanish: "Manejo de síntomas",
-    image: require("../assets/SymptomManagement.png"),
+    titleSpanish: "",
+    image: require("../assets/MentalHealthCard.png"),
   },
 ];
 

@@ -32,14 +32,8 @@ const topics = [
   {
     id: "4",
     titleEnglish: "Mental Health",
-    titleSpanish: "Salud Mental",
-    image: require("../assets/MentalHealthCard.png"),
-  },
-  {
-    id: "5",
-    titleEnglish: "Symptom Management",
-    titleSpanish: "Manejo de síntomas",
-    image: require("../assets/SymptomManagement.png"),
+    titleSpanish: "",
+    image: require("../assets/ExerciseCard.png"),
   },
 ];
 

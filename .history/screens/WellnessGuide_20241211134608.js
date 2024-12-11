@@ -17,30 +17,6 @@ const topics = [
     titleSpanish: "Dormir",
     image: require("../assets/Sleep.png"),
   },
-  {
-    id: "2",
-    titleEnglish: "Nutrition",
-    titleSpanish: "Nutrición",
-    image: require("../assets/NutritionCardFinal.png"),
-  },
-  {
-    id: "3",
-    titleEnglish: "Exercise",
-    titleSpanish: "Ejercicio",
-    image: require("../assets/ExerciseCard.png"),
-  },
-  {
-    id: "4",
-    titleEnglish: "Mental Health",
-    titleSpanish: "Salud Mental",
-    image: require("../assets/MentalHealthCard.png"),
-  },
-  {
-    id: "5",
-    titleEnglish: "Symptom Management",
-    titleSpanish: "Manejo de síntomas",
-    image: require("../assets/SymptomManagement.png"),
-  },
 ];
 
 const WellnessGuide = () => {
@@ -163,9 +139,12 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cardTitle: {
-    fontSize: FontSize.size_lg,
-    fontFamily: FontFamily.arial,
+    fontSize: FontSize.size_md,
+    fontFamily: FontFamily.montserrat,
     color: "#F36D35",
+    textShadowColor: "rgba(0, 0, 0, 0.8)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 5,
     textAlign: "center",
   },
 });
