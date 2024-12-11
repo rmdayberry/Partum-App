@@ -98,16 +98,13 @@ const BottomTabs = () => {
             <TouchableOpacity
               {...props}
               onPress={() => {
-                // Navigate to 'DashboardHome' inside 'DashboardStack'
-                navigation.navigate("Home", {
-                  screen: "DashboardHome", // Target the screen inside the nested stack
-                });
+                // Use `navigation` from context to navigate to "DashboardHome"
+                navigation.navigate("Dashboard");
               }}
             />
           ),
         }}
       />
-
       <Tab.Screen name="Appointments" component={AppointmentsStack} />
       <Tab.Screen name="Learn" component={EducationStack} />
       <Tab.Screen name="More" component={MoreStack} />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 const topics = [
   {
     id: "1",
-    titleEnglish: "Sleep",
+    title: "Sleep",
     titleSpanish: "Dormir",
     image: require("../assets/Sleep.png"),
   },
@@ -23,43 +23,15 @@ const WellnessGuide = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [languagePreference, setLanguagePreference] = useState("English");
 
-  // Fetch user language preference
-  useEffect(() => {
-    const fetchLanguagePreference = async () => {
-      try {
-        const userId = "6751f6871fb757c8ce3efb3d"; // Replace with dynamic user ID
-        const response = await axios.get(
-          `http://localhost:5002/users/${userId}`
-        );
-        setLanguagePreference(response.data.languagePreference || "English");
-      } catch (error) {
-        console.error("Error fetching language preference:", error);
-      }
-    };
-    fetchLanguagePreference();
-  }, []);
-
-  //Filter topic based on search query
   const filteredTopics = topics.filter((topic) =>
-    topic[languagePreference === "Español" ? "titleSpanish" : "titleEnglish"]
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
+    topic.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const renderTopicCard = ({ item }) => (
-    <View style={styles.card}>
-      <ImageBackground
-        source={item.image}
-        style={styles.cardBackground}
-        imageStyle={{ borderRadius: Border.br_xs }}
-      >
-        <Text style={styles.cardTitle}>
-          {languagePreference === "Español"
-            ? item.titleSpanish
-            : item.titleEnglish}
-        </Text>
-      </ImageBackground>
-    </View>
+    <TouchableOpacity style={styles.card}>
+      <Image source={item.icon} style={styles.icon} />
+      <Text style={styles.cardTitle}>{item.title}</Text>
+    </TouchableOpacity>
   );
 
   return (
@@ -126,26 +98,24 @@ const styles = StyleSheet.create({
     height: 150,
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
-    overflow: "hidden",
+    padding: 16,
+    justifyContent: "center",
+    alignItems: "center",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
   },
-  cardBackground: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    padding: 10,
+  icon: {
+    width: 60,
+    height: 60,
+    marginBottom: 12,
   },
   cardTitle: {
     fontSize: FontSize.size_md,
     fontFamily: FontFamily.montserrat,
-    color: "#fff",
-    textShadowColor: "rgba(0, 0, 0, 0.8)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 5,
     textAlign: "center",
+    color: Color.colorGray_700,
   },
 });
 export default WellnessGuide;
