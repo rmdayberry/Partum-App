@@ -1,4 +1,5 @@
 import * as React from "react";
+import { TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -18,9 +19,6 @@ import MorePage from "./screens/MorePage";
 import Registration from "./screens/Registration";
 import Login from "./screens/Login";
 
-// Create Context for userId
-export const UserContext = React.createContext();
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -34,11 +32,9 @@ const fetchFonts = async () => {
   }
 };
 
-const DashboardStack = ({ userId }) => (
+const DashboardStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="DashboardHome">
-      {() => <Dashboard userId={userId} />}
-    </Stack.Screen>
+    <Stack.Screen name="DashboardHome" component={Dashboard} />
     <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
   </Stack.Navigator>
@@ -65,7 +61,7 @@ const MoreStack = () => (
   </Stack.Navigator>
 );
 
-const BottomTabs = ({ userId }) => (
+const BottomTabs = () => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       headerShown: false,
@@ -89,9 +85,7 @@ const BottomTabs = ({ userId }) => (
       tabBarStyle: { backgroundColor: "#fff" },
     })}
   >
-    <Tab.Screen name="Home">
-      {() => <DashboardStack userId={userId} />}
-    </Tab.Screen>
+    <Tab.Screen name="Home" component={DashboardStack} />
     <Tab.Screen name="Appointments" component={AppointmentsStack} />
     <Tab.Screen name="Learn" component={EducationStack} />
     <Tab.Screen name="More" component={MoreStack} />
@@ -100,20 +94,15 @@ const BottomTabs = ({ userId }) => (
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = React.useState(false);
-  const [userId, setUserId] = React.useState(null);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   React.useEffect(() => {
     const loadResources = async () => {
       try {
         await SplashScreen.preventAutoHideAsync();
         await fetchFonts();
-
-        // Retrieve stored userId
-        const storedUserId = await AsyncStorage.getItem("userId");
-        if (storedUserId) {
-          setUserId(storedUserId);
-        }
-
+        const token = await AsyncStorage.getItem("userToken");
+        setIsLoggedIn(!!token); // Set logged-in state based on token existence
         setFontsLoaded(true);
         await SplashScreen.hideAsync();
       } catch (error) {
@@ -128,22 +117,18 @@ const App = () => {
   }
 
   return (
-    <UserContext.Provider value={{ userId, setUserId }}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {userId ? (
-            <Stack.Screen name="HomeTabs">
-              {() => <BottomTabs userId={userId} />}
-            </Stack.Screen>
-          ) : (
-            <>
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Registration" component={Registration} />
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {isLoggedIn ? (
+          <Stack.Screen name="HomeTabs" component={BottomTabs} />
+        ) : (
+          <>
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Registration" component={Registration} />
+          </>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

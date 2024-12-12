@@ -107,13 +107,10 @@ const App = () => {
       try {
         await SplashScreen.preventAutoHideAsync();
         await fetchFonts();
-
-        // Retrieve stored userId
         const storedUserId = await AsyncStorage.getItem("userId");
         if (storedUserId) {
           setUserId(storedUserId);
         }
-
         setFontsLoaded(true);
         await SplashScreen.hideAsync();
       } catch (error) {

@@ -20,6 +20,8 @@ const Dashboard = ({ userId }) => {
   const [loadingTip, setLoadingTip] = useState(true);
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
 
+  const userId = "6751f6871fb757c8ce3efb3d"; // Test user from database
+
   useEffect(() => {
     if (!userId) {
       console.error("No userId provided to Dashboard");

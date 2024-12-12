@@ -36,9 +36,7 @@ const fetchFonts = async () => {
 
 const DashboardStack = ({ userId }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="DashboardHome">
-      {() => <Dashboard userId={userId} />}
-    </Stack.Screen>
+    <Stack.Screen name="DashboardHome" component={Dashboard} />
     <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
   </Stack.Navigator>

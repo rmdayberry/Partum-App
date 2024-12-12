@@ -1,11 +1,12 @@
 import * as React from "react";
+import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import "react-native-reanimated";
 import Dashboard from "./screens/Dashboard";
 import WellnessGuide from "./screens/WellnessGuide";
 import CommunityResources from "./screens/CommunityResources";
@@ -18,10 +19,10 @@ import MorePage from "./screens/MorePage";
 import Registration from "./screens/Registration";
 import Login from "./screens/Login";
 
-// Create Context for userId
-export const UserContext = React.createContext();
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
+
 const Tab = createBottomTabNavigator();
 
 const fetchFonts = async () => {
@@ -34,11 +35,11 @@ const fetchFonts = async () => {
   }
 };
 
-const DashboardStack = ({ userId }) => (
+const DashboardStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="DashboardHome">
-      {() => <Dashboard userId={userId} />}
-    </Stack.Screen>
+    <Stack.Screen name="Registration" component={Registration} />
+    <Stack.Screen name="Login" component={Login} />
+    <Stack.Screen name="DashboardHome" component={Dashboard} />
     <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
   </Stack.Navigator>
@@ -65,85 +66,92 @@ const MoreStack = () => (
   </Stack.Navigator>
 );
 
-const BottomTabs = ({ userId }) => (
-  <Tab.Navigator
-    screenOptions={({ route }) => ({
-      headerShown: false,
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
-        if (route.name === "Home") {
-          iconName = focused ? "home" : "home-outline";
-        } else if (route.name === "Appointments") {
-          iconName = focused ? "calendar" : "calendar-outline";
-        } else if (route.name === "Learn") {
-          iconName = focused ? "book" : "book-outline";
-        } else if (route.name === "More") {
-          iconName = focused
-            ? "ellipsis-horizontal"
-            : "ellipsis-horizontal-outline";
-        }
-        return <Ionicons name={iconName} size={size} color={color} />;
-      },
-      tabBarActiveTintColor: "#007Aff",
-      tabBarInactiveTintColor: "gray",
-      tabBarStyle: { backgroundColor: "#fff" },
-    })}
-  >
-    <Tab.Screen name="Home">
-      {() => <DashboardStack userId={userId} />}
-    </Tab.Screen>
-    <Tab.Screen name="Appointments" component={AppointmentsStack} />
-    <Tab.Screen name="Learn" component={EducationStack} />
-    <Tab.Screen name="More" component={MoreStack} />
-  </Tab.Navigator>
-);
+const BottomTabs = () => {
+  const navigation = useNavigation(); // Ensure navigation context is accessible here.
+
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === "Home") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "Appointments") {
+            iconName = focused ? "calendar" : "calendar-outline";
+          } else if (route.name === "Learn") {
+            iconName = focused ? "book" : "book-outline";
+          } else if (route.name === "More") {
+            iconName = focused
+              ? "ellipsis-horizontal"
+              : "ellipsis-horizontal-outline";
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: "#007Aff",
+        tabBarInactiveTintColor: "gray",
+        tabBarStyle: { backgroundColor: "#fff" },
+      })}
+    >
+      <Tab.Screen
+        name="Home"
+        component={DashboardStack}
+        options={{
+          tabBarButton: (props) => (
+            <TouchableOpacity
+              {...props}
+              onPress={() => {
+                // Navigate to 'DashboardHome' inside 'DashboardStack'
+                navigation.navigate("Home", {
+                  screen: "DashboardHome", // Target the screen inside the nested stack
+                });
+              }}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen name="Appointments" component={AppointmentsStack} />
+      <Tab.Screen name="Learn" component={EducationStack} />
+      <Tab.Screen name="More" component={MoreStack} />
+    </Tab.Navigator>
+  );
+};
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = React.useState(false);
-  const [userId, setUserId] = React.useState(null);
 
   React.useEffect(() => {
     const loadResources = async () => {
       try {
+        // Prevent splash screen from hiding automatically
         await SplashScreen.preventAutoHideAsync();
+
+        // Load fonts/other async tasks
         await fetchFonts();
-
-        // Retrieve stored userId
-        const storedUserId = await AsyncStorage.getItem("userId");
-        if (storedUserId) {
-          setUserId(storedUserId);
-        }
-
         setFontsLoaded(true);
+
+        // Hide splash screen after loading
         await SplashScreen.hideAsync();
       } catch (error) {
-        console.warn("Error loading resources:", error);
+        console.warn(error);
       }
     };
+
     loadResources();
   }, []);
 
   if (!fontsLoaded) {
-    return null; // Show nothing while fonts are being loaded
+    // Show nothing while fonts are being loaded
+    return null;
   }
 
   return (
-    <UserContext.Provider value={{ userId, setUserId }}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {userId ? (
-            <Stack.Screen name="HomeTabs">
-              {() => <BottomTabs userId={userId} />}
-            </Stack.Screen>
-          ) : (
-            <>
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Registration" component={Registration} />
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserContext.Provider>
+    <NavigationContainer>
+      <BottomTabs />
+    </NavigationContainer>
   );
 };
 
