@@ -50,36 +50,8 @@ router.get("/:id/progress", async (req, res) => {
   }
 });
 
-// Register a new user
-router.post("/register", async (req, res) => {
-  try {
-    const { name, email, password, dueDate, languagePreference } = req.body;
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "Email already in use" });
-    }
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new user instance
-    const newUser = new User({
-      name,
-      email,
-      password, // You should hash this before saving
-      dueDate,
-      languagePreference,
-    });
-
-    // Save the user instance to the database
-    await newUser.save();
-
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    console.error("Error during user registration:", error.message);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
+//Hash password
+const salt = await bcrypt.genSalt(10);
+const hashedPassword = await bcrypt.hash(password, salt);
 
 module.exports = router;

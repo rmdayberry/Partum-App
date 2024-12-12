@@ -50,34 +50,40 @@ router.get("/:id/progress", async (req, res) => {
   }
 });
 
-// Register a new user
+//Registration endpoint
 router.post("/register", async (req, res) => {
+  const { name, email, password, dueDate, languagePreference } = req.body;
+  if (!name || !email || !password) {
+    return res
+      .status(400)
+      .json({ message: "All required fields must be filled" });
+  }
   try {
-    const { name, email, password, dueDate, languagePreference } = req.body;
-
-    // Check if user already exists
+    //check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already in use" });
+      return res.status(400).json({ message: "Email is already in use" });
     }
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user instance
+    //Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    //Create a new user
     const newUser = new User({
       name,
       email,
-      password, // You should hash this before saving
+      password: hashedPassword,
       dueDate,
       languagePreference,
     });
 
-    // Save the user instance to the database
-    await newUser.save();
+    //Save the user to the database
+    await newUser, save();
 
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    console.error("Error during user registration:", error.message);
+    console.error(error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
