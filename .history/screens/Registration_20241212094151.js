@@ -6,9 +6,9 @@ import {
   Button,
   StyleSheet,
   Alert,
-  KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import { Picker } from "@react-native-picker/picker"; // Import the picker
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 
 const translations = {
@@ -18,7 +18,7 @@ const translations = {
     emailPlaceholder: "Email",
     passwordPlaceholder: "Password",
     dueDatePlaceholder: "Due Date (YYYY-MM-DD)",
-    languagePreferencePlaceholder: "Language Preference",
+    languagePreferencePlaceholder: "Select Language Preference",
     registerButton: "Register",
     toggleToSpanish: "Español",
   },
@@ -28,7 +28,7 @@ const translations = {
     emailPlaceholder: "Correo electrónico",
     passwordPlaceholder: "Contraseña",
     dueDatePlaceholder: "Fecha de parto (AAAA-MM-DD)",
-    languagePreferencePlaceholder: "Preferencia de idioma",
+    languagePreferencePlaceholder: "Seleccione preferencia de idioma",
     registerButton: "Registrar",
     toggleToEnglish: "English",
   },
@@ -41,10 +41,21 @@ const Registration = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [languagePreference, setLanguagePreference] = useState("");
-  const [open, setOpen] = useState(false);
 
   const handleRegister = async () => {
     try {
+      // Validate fields
+      if (!name || !email || !password || !dueDate || !languagePreference) {
+        Alert.alert(
+          language === "English" ? "Error" : "Error",
+          language === "English"
+            ? "All fields are required."
+            : "Todos los campos son obligatorios."
+        );
+        return;
+      }
+
+      // Backend API Call
       const response = await fetch("http://localhost:5002/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -64,7 +75,7 @@ const Registration = ({ navigation }) => {
             ? "User registered successfully!"
             : "¡Usuario registrado con éxito!"
         );
-        navigation.navigate("Login");
+        navigation.navigate("Login"); // Redirect to Login or Dashboard
       } else {
         const errorData = await response.json();
         Alert.alert(
@@ -78,22 +89,24 @@ const Registration = ({ navigation }) => {
     }
   };
 
-  const t = translations[language];
+  const t = translations[language]; // Access translations based on selected language
 
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       {/* Language toggle */}
       <Text
-        style={styles.languageToggle}
+        style={styles.toggleText}
         onPress={() =>
           setLanguage(language === "English" ? "Español" : "English")
         }
       >
-        {language === "English" ? t.toggleToSpanish : t.toggleToEnglish}
+        {language === "English"
+          ? translations.English.toggleToSpanish
+          : translations.Español.toggleToEnglish}
       </Text>
 
       {/* Header */}
-      <Text style={styles.title}>{t.registerTitle}</Text>
+      <Text style={styles.title}> {t.registerTitle}</Text>
 
       {/* Name Input */}
       <TextInput
@@ -102,7 +115,6 @@ const Registration = ({ navigation }) => {
         value={name}
         onChangeText={setName}
       />
-
       {/* Email Input */}
       <TextInput
         style={styles.input}
@@ -111,7 +123,6 @@ const Registration = ({ navigation }) => {
         value={email}
         onChangeText={setEmail}
       />
-
       {/* Password Input */}
       <TextInput
         style={styles.input}
@@ -120,7 +131,6 @@ const Registration = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
       />
-
       {/* Due Date Input */}
       <TextInput
         style={styles.input}
@@ -130,29 +140,27 @@ const Registration = ({ navigation }) => {
       />
 
       {/* Language Preference Dropdown */}
-      <DropDownPicker
-        open={open}
-        value={languagePreference}
-        items={[
-          { label: "English", value: "English" },
-          { label: "Español", value: "Español" },
-        ]}
-        setOpen={setOpen}
-        setValue={setLanguagePreference}
-        placeholder={t.languagePreferencePlaceholder}
-        style={styles.input} // Match input field styling
-        dropDownContainerStyle={styles.dropdownContainer}
-      />
+      <View style={styles.input}>
+        <Picker
+          selectedValue={languagePreference}
+          onValueChange={(itemValue) => setLanguagePreference(itemValue)}
+          style={styles.picker}
+        >
+          <Picker.Item label="Select Language" value="" />
+          <Picker.Item label="English" value="English" />
+          <Picker.Item label="Español" value="Español" />
+        </Picker>
+      </View>
 
       {/* Register Button */}
       <Button title={t.registerButton} onPress={handleRegister} />
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
     padding: 20,
     backgroundColor: Color.nEW,
@@ -171,15 +179,17 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
+    justifyContent: "center",
   },
-  dropdownContainer: {
-    borderColor: "#ddd",
+  picker: {
+    width: "100%",
+    color: "#333",
   },
-  languageToggle: {
+  toggleText: {
     alignSelf: "flex-end",
-    marginBottom: 10,
     fontSize: 16,
     color: "#007Aff",
+    marginBottom: 10,
   },
 });
 
