@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
 import { View, Text, StyleSheet, Button, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserContext } from "../contexts/UserContext";
 
 const translations = {
   English: {
@@ -21,17 +21,16 @@ const translations = {
 };
 
 const MorePage = ({ navigation }) => {
-  const { setUserId, languagePreference } = useContext(UserContext);
-
+  const { setUserId, languarePreference } = useContext(UserContext);
   const t = translations[languagePreference || "English"];
 
   const handleLogout = async () => {
     try {
+      //Clear AsyncStorage
       await AsyncStorage.removeItem("userId");
-      await AsyncStorage.removeItem("languagePreference");
-      setUserId(null); // Reset user context
+      setUserId(null); //reset user id context
       Alert.alert(t.logout, t.logoutMessage);
-      navigation.navigate("Login");
+      navigation.replace("Login"); // Redirect to login
     } catch (error) {
       console.error("Logout error:", error);
       Alert.alert(t.error, t.errorMessage);
@@ -58,5 +57,4 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-
 export default MorePage;

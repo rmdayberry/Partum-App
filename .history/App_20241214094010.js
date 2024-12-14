@@ -40,9 +40,7 @@ const DashboardStack = ({ userId }) => (
     <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
     <Stack.Screen name="Education" component={Education} />
-    <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
-    <Stack.Screen name="Settings" component={Settings} />
-    <Stack.Screen name="GetSupport" component={GetSupport} />
+    <Stack.Screen name="CommunityResources" component={CommunityResources} />
   </Stack.Navigator>
 );
 

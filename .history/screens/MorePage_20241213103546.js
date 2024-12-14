@@ -31,7 +31,10 @@ const MorePage = ({ navigation }) => {
       await AsyncStorage.removeItem("languagePreference");
       setUserId(null); // Reset user context
       Alert.alert(t.logout, t.logoutMessage);
-      navigation.navigate("Login");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
     } catch (error) {
       console.error("Logout error:", error);
       Alert.alert(t.error, t.errorMessage);

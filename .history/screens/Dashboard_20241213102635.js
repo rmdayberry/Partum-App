@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { UserContext } from "../contexts/UserContext";
 import Header from "../components/Header";
 import ProgressBar from "../components/ProgressBar";
 import AppointmentContainer from "../components/AppointmentContainer";
@@ -13,8 +12,7 @@ import {
 } from "../api/api";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 
-const Dashboard = () => {
-  const { userId } = useContext(UserContext);
+const Dashboard = ({ userId }) => {
   const navigation = useNavigation();
   const [currentWeek, setCurrentWeek] = useState(null);
   const [weeklyTip, setWeeklyTip] = useState(null);
@@ -25,6 +23,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (!userId) {
       console.error("No userId provided to Dashboard");
+      setLoadingDailyTip(false);
       return;
     }
 

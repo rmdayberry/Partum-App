@@ -46,8 +46,8 @@ const Login = ({ navigation }) => {
 
         setUserId(data.userId);
         setLanguagePreference(data.languagePreference || "English");
-        navigation.navigate("MainTabs");
-        console.log("Navigation state:", navigation.getState());
+
+        navigation.replace("HomeTabs");
       } else {
         const errorData = await response.json();
         Alert.alert("Error", errorData.message || "Login failed.");
@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.montserrat,
     color: "#007Aff",
     textAlign: "center",
+    marginBottom: 8,
   },
   registerTextSpanish: {
     fontSize: FontSize.size_smi,
     fontFamily: FontFamily.montserrat,
     color: "#888",
-    marginBottom: 8,
   },
   registerHereText: {
     fontSize: FontSize.size_md,

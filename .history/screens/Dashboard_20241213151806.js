@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { UserContext } from "../contexts/UserContext";
 import Header from "../components/Header";
 import ProgressBar from "../components/ProgressBar";
 import AppointmentContainer from "../components/AppointmentContainer";

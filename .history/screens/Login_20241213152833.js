@@ -47,7 +47,6 @@ const Login = ({ navigation }) => {
         setUserId(data.userId);
         setLanguagePreference(data.languagePreference || "English");
         navigation.navigate("MainTabs");
-        console.log("Navigation state:", navigation.getState());
       } else {
         const errorData = await response.json();
         Alert.alert("Error", errorData.message || "Login failed.");

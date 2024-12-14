@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -18,7 +17,6 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setUserId, setLanguagePreference } = useContext(UserContext);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -38,16 +36,16 @@ const Login = ({ navigation }) => {
         const data = await response.json();
         Alert.alert("Success", "Login successful!");
 
+        // Save userId in AsyncStorage
         await AsyncStorage.setItem("userId", data.userId);
         await AsyncStorage.setItem(
           "languagePreference",
-          data.languagePreference || "English"
+          data.languagePreference
         );
-
         setUserId(data.userId);
-        setLanguagePreference(data.languagePreference || "English");
-        navigation.navigate("MainTabs");
-        console.log("Navigation state:", navigation.getState());
+        setLanguagePreference(data.languagePreference);
+        // Navigate to HomeTabs with userId
+        navigation.replace("HomeTabs");
       } else {
         const errorData = await response.json();
         Alert.alert("Error", errorData.message || "Login failed.");
@@ -158,6 +156,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.montserrat,
     color: "#007Aff",
     textAlign: "center",
+    marginBottom: 8,
   },
   registerTextSpanish: {
     fontSize: FontSize.size_smi,

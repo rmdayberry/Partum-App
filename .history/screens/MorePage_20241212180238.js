@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
 import { View, Text, StyleSheet, Button, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UserContext } from "../App";
 
 const translations = {
   English: {
@@ -21,42 +21,27 @@ const translations = {
 };
 
 const MorePage = ({ navigation }) => {
-  const { setUserId, languagePreference } = useContext(UserContext);
-
-  const t = translations[languagePreference || "English"];
+  const { setUserId, languarePreference } = useContext(UserContext);
+  const
 
   const handleLogout = async () => {
     try {
+      //Clear AsyncStorage
       await AsyncStorage.removeItem("userId");
-      await AsyncStorage.removeItem("languagePreference");
-      setUserId(null); // Reset user context
-      Alert.alert(t.logout, t.logoutMessage);
-      navigation.navigate("Login");
+      setUserId(null); //reset user id context
+      Alert.alert("Logged out", "You have been logged out.");
+      navigation.replace("Login"); // Redirect to login
     } catch (error) {
       console.error("Logout error:", error);
-      Alert.alert(t.error, t.errorMessage);
+      Alert.alert("Error", "An error occurred while logging out.");
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t.title}</Text>
-      <Button title={t.logout} onPress={handleLogout} />
+      <Text style={styles.title}>More</Text>
+      <Text>This is a placeholder for the More Page screen.</Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-});
-
 export default MorePage;

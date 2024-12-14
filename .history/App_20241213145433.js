@@ -18,6 +18,7 @@ import Education from "./screens/Education";
 import MorePage from "./screens/MorePage";
 import Registration from "./screens/Registration";
 import Login from "./screens/Login";
+import { Text } from "react-native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,15 +35,11 @@ const fetchFonts = async () => {
 
 const DashboardStack = ({ userId }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Dashboard">
+    <Stack.Screen name="DashboardHome">
       {() => <Dashboard userId={userId} />}
     </Stack.Screen>
     <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
-    <Stack.Screen name="Education" component={Education} />
-    <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
-    <Stack.Screen name="Settings" component={Settings} />
-    <Stack.Screen name="GetSupport" component={GetSupport} />
   </Stack.Navigator>
 );
 
@@ -102,64 +99,18 @@ const BottomTabs = ({ userId }) => (
 );
 
 const App = () => {
-  const [fontsLoaded, setFontsLoaded] = React.useState(false);
-  const [userId, setUserId] = React.useState(null);
-  const [languagePreference, setLanguagePreference] = React.useState("English");
-
-  React.useEffect(() => {
-    const loadResources = async () => {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-        await fetchFonts();
-
-        // Retrieve stored userId and languagePreference
-        const storedUserId = await AsyncStorage.getItem("userId");
-        const storedLanguagePreference = await AsyncStorage.getItem(
-          "languagePreference"
-        );
-        console.log("Stored User ID:", storedUserId);
-
-        if (storedUserId) setUserId(storedUserId);
-        if (storedLanguagePreference)
-          setLanguagePreference(storedLanguagePreference);
-
-        setFontsLoaded(true);
-        await SplashScreen.hideAsync();
-      } catch (error) {
-        console.warn("Error loading resources:", error);
-      }
-    };
-    loadResources();
-  }, []);
-
-  if (!fontsLoaded) {
-    return null; // Show nothing while fonts are being loaded
-  }
-
   return (
-    <UserContext.Provider
-      value={{
-        userId,
-        setUserId,
-        languagePreference,
-        setLanguagePreference,
-      }}
-    >
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {userId ? (
-            <Stack.Screen name="MainTabs">
-              {() => <BottomTabs userId={userId} />}
-            </Stack.Screen>
-          ) : (
-            <>
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Registration" component={Registration} />
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={() => <Text>Login Screen</Text>}
+        />
+        <Stack.Screen name="MainTabs">
+          {() => <BottomTabs userId={userId} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
