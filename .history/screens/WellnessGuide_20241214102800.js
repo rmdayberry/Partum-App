@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   TextInput,
   FlatList,
   ImageBackground,
-  FlatListComponent,
 } from "react-native";
 import axios from "axios";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
@@ -17,25 +16,25 @@ const topics = [
     id: "1",
     titleEnglish: "1st Trimester",
     titleSpanish: "1er Trimestre",
-    image: require("../assets/1stTrimester.png"),
+    image: require("../assets/Sleep.png"),
   },
   {
     id: "2",
     titleEnglish: "2nd Trimester",
     titleSpanish: "2do Trimestre",
-    image: require("../assets/2ndTrimester.png"),
+    image: require("../assets/NutritionCardFinal.png"),
   },
   {
     id: "3",
     titleEnglish: "3rd Trimester",
     titleSpanish: "3er Trimestre",
-    image: require("../assets/3rdTrimester.png"),
+    image: require("../assets/ExerciseCard.png"),
   },
   {
     id: "4",
     titleEnglish: "Postpartum",
     titleSpanish: "Posparto",
-    image: require("../assets/Postpartum.png"),
+    image: require("../assets/MentalHealthCard.png"),
   },
 ];
 
@@ -104,7 +103,7 @@ const WellnessGuide = () => {
         keyExtractor={(item) => item.id}
         numColumns={2}
         columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.flatListContainer}
+        contentContainerStyle={styles.contentContainer}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -116,8 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.nEW,
     padding: 16,
-    justifyContent: "center",
-    alignItems: "center",
   },
   header: {
     fontSize: 24,
@@ -126,7 +123,6 @@ const styles = StyleSheet.create({
     color: Color.colorDarkslateblue_200,
     marginBottom: 16,
     marginTop: 70,
-    textAlign: "center",
   },
   searchBar: {
     width: "100%",
@@ -140,32 +136,24 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 2,
   },
-  flatListContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flexGrow: 1,
-    paddingBottom: 20,
-  },
   contentContainer: {
     paddingBottom: 20,
   },
 
   row: {
     justifyContent: "space-between",
-    width: "100%",
+    marginBottom: 16,
   },
   card: {
     width: "48%",
     height: 150,
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
-    paddingHorizontal: 12,
     overflow: "hidden",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
-    marginBottom: 16,
   },
   cardBackground: {
     flex: 1,

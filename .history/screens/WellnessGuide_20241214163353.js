@@ -23,19 +23,19 @@ const topics = [
     id: "2",
     titleEnglish: "2nd Trimester",
     titleSpanish: "2do Trimestre",
-    image: require("../assets/2ndTrimester.png"),
+    image: require("../assets/NutritionCardFinal.png"),
   },
   {
     id: "3",
     titleEnglish: "3rd Trimester",
     titleSpanish: "3er Trimestre",
-    image: require("../assets/3rdTrimester.png"),
+    image: require("../assets/ExerciseCard.png"),
   },
   {
     id: "4",
     titleEnglish: "Postpartum",
     titleSpanish: "Posparto",
-    image: require("../assets/Postpartum.png"),
+    image: require("../assets/MentalHealthCard.png"),
   },
 ];
 

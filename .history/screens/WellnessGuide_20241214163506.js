@@ -35,7 +35,7 @@ const topics = [
     id: "4",
     titleEnglish: "Postpartum",
     titleSpanish: "Posparto",
-    image: require("../assets/Postpartum.png"),
+    image: require("../assets/postpartum.png"),
   },
 ];
 

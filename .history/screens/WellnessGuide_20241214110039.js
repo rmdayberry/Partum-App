@@ -17,25 +17,25 @@ const topics = [
     id: "1",
     titleEnglish: "1st Trimester",
     titleSpanish: "1er Trimestre",
-    image: require("../assets/1stTrimester.png"),
+    image: require("../assets/Sleep.png"),
   },
   {
     id: "2",
     titleEnglish: "2nd Trimester",
     titleSpanish: "2do Trimestre",
-    image: require("../assets/2ndTrimester.png"),
+    image: require("../assets/NutritionCardFinal.png"),
   },
   {
     id: "3",
     titleEnglish: "3rd Trimester",
     titleSpanish: "3er Trimestre",
-    image: require("../assets/3rdTrimester.png"),
+    image: require("../assets/ExerciseCard.png"),
   },
   {
     id: "4",
     titleEnglish: "Postpartum",
     titleSpanish: "Posparto",
-    image: require("../assets/Postpartum.png"),
+    image: require("../assets/MentalHealthCard.png"),
   },
 ];
 
@@ -111,73 +111,4 @@ const WellnessGuide = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.nEW,
-    padding: 16,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    fontFamily: FontFamily.montserrat,
-    color: Color.colorDarkslateblue_200,
-    marginBottom: 16,
-    marginTop: 70,
-    textAlign: "center",
-  },
-  searchBar: {
-    width: "100%",
-    height: 40,
-    backgroundColor: "#fff",
-    borderRadius: Border.br_xs,
-    paddingHorizontal: 12,
-    marginBottom: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2,
-  },
-  flatListContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flexGrow: 1,
-    paddingBottom: 20,
-  },
-  contentContainer: {
-    paddingBottom: 20,
-  },
-
-  row: {
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  card: {
-    width: "48%",
-    height: 150,
-    backgroundColor: "#fff",
-    borderRadius: Border.br_xs,
-    paddingHorizontal: 12,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 2,
-    marginBottom: 16,
-  },
-  cardBackground: {
-    flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    padding: 10,
-  },
-  cardTitle: {
-    fontSize: FontSize.size_lg,
-    fontFamily: FontFamily.arial,
-    color: "#F36D35",
-    textAlign: "center",
-  },
-});
 export default WellnessGuide;
