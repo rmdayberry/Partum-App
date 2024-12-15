@@ -131,9 +131,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.nEW,
     padding: 16,
+    justifyContent: "center",
   },
   contentWrapper: {
-    marginTop: 60,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: FontFamily.montserrat,
     color: Color.colorDarkslateblue_200,
-    marginBottom: 16, // Reduce space below the header
+    marginBottom: 8, // Reduce space below the header
     textAlign: "center",
   },
   searchBar: {
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
     paddingHorizontal: 12,
+    marginBottom: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
@@ -159,7 +160,6 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     alignItems: "center",
-    marginTop: "20",
   },
   row: {
     justifyContent: "space-between",

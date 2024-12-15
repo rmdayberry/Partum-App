@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contentWrapper: {
-    marginTop: 60,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

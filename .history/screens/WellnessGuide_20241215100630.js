@@ -111,17 +111,17 @@ const WellnessGuide = () => {
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        {/* FlatList for cards */}
-        <FlatList
-          data={filteredTopics}
-          renderItem={renderTopicCard}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.flatListContainer}
-          showsVerticalScrollIndicator={false}
-        />
       </View>
+      {/* FlatList for cards */}
+      <FlatList
+        data={filteredTopics}
+        renderItem={renderTopicCard}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContainer}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
@@ -133,17 +133,17 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contentWrapper: {
-    marginTop: 60,
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 16,
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     fontFamily: FontFamily.montserrat,
     color: Color.colorDarkslateblue_200,
-    marginBottom: 16, // Reduce space below the header
+    marginBottom: 8, // Reduce space below the header
     textAlign: "center",
   },
   searchBar: {
@@ -152,14 +152,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
     paddingHorizontal: 12,
+    marginBottom: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
   },
   flatListContainer: {
+    flexGrow: 0,
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: "20",
   },
   row: {
     justifyContent: "space-between",

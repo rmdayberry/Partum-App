@@ -100,28 +100,29 @@ const WellnessGuide = () => {
 
   return (
     <View style={styles.container}>
-      {/* Wrapper for header and search bar */}
       <View style={styles.contentWrapper}>
+        {/* Header */}
         <Text style={styles.header}>
           {translations.header[languagePreference]}
         </Text>
+        {/* Search Bar */}
         <TextInput
           style={styles.searchBar}
           placeholder={translations.searchPlaceholder[languagePreference]}
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        {/* FlatList for cards */}
-        <FlatList
-          data={filteredTopics}
-          renderItem={renderTopicCard}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.flatListContainer}
-          showsVerticalScrollIndicator={false}
-        />
       </View>
+      {/* Content */}
+      <FlatList
+        data={filteredTopics}
+        renderItem={renderTopicCard}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContainer}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
@@ -131,40 +132,41 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.nEW,
     padding: 16,
+    justifyContent: "center", // Center everything vertically
   },
   contentWrapper: {
-    marginTop: 60,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center", // Center header and search bar horizontally
+    marginBottom: 16, // Reduce space between header/search bar and cards
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     fontFamily: FontFamily.montserrat,
     color: Color.colorDarkslateblue_200,
-    marginBottom: 16, // Reduce space below the header
+    marginBottom: 8, // Reduce space below the header
     textAlign: "center",
   },
   searchBar: {
-    width: "90%",
+    width: "90%", // Slightly smaller to align visually with cards
     height: 40,
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
     paddingHorizontal: 12,
+    marginBottom: 16, // Slightly reduce space below the search bar
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
   },
   flatListContainer: {
-    alignItems: "center",
-    marginTop: "20",
+    flexGrow: 0, // Prevent the FlatList from stretching unnecessarily
+    justifyContent: "center", // Center cards within their area
+    alignItems: "center", // Align cards horizontally
   },
   row: {
     justifyContent: "space-between",
     width: "100%",
-    marginBottom: 16,
+    marginBottom: 16, // Consistent spacing between rows
   },
   card: {
     width: "48%",

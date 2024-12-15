@@ -100,28 +100,29 @@ const WellnessGuide = () => {
 
   return (
     <View style={styles.container}>
-      {/* Wrapper for header and search bar */}
       <View style={styles.contentWrapper}>
+        {/* Header */}
         <Text style={styles.header}>
           {translations.header[languagePreference]}
         </Text>
+        {/* Search Bar */}
         <TextInput
           style={styles.searchBar}
           placeholder={translations.searchPlaceholder[languagePreference]}
           value={searchQuery}
           onChangeText={(text) => setSearchQuery(text)}
         />
-        {/* FlatList for cards */}
-        <FlatList
-          data={filteredTopics}
-          renderItem={renderTopicCard}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.flatListContainer}
-          showsVerticalScrollIndicator={false}
-        />
       </View>
+      {/* Content */}
+      <FlatList
+        data={filteredTopics}
+        renderItem={renderTopicCard}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContainer}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
@@ -131,40 +132,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.nEW,
     padding: 16,
-  },
-  contentWrapper: {
-    marginTop: 60,
-    flex: 1,
     justifyContent: "center",
-    alignItems: "center",
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
     fontFamily: FontFamily.montserrat,
     color: Color.colorDarkslateblue_200,
-    marginBottom: 16, // Reduce space below the header
+    marginBottom: 16,
     textAlign: "center",
   },
   searchBar: {
-    width: "90%",
+    width: "100%",
     height: 40,
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
     paddingHorizontal: 12,
+    marginBottom: 24,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
   },
   flatListContainer: {
+    flexGrow: 0,
     alignItems: "center",
-    marginTop: "20",
+    justifyContent: "center",
+    paddingBottom: 20,
   },
+  contentWrapper: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 16,
+  },
+
   row: {
     justifyContent: "space-between",
     width: "100%",
-    marginBottom: 16,
   },
   card: {
     width: "48%",
@@ -176,6 +180,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
+    marginBottom: 16,
+  },
+  cardBackground: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  titleContainer: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
   },
   cardBackground: {
     flex: 1,

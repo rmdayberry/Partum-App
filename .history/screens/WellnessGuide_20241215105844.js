@@ -133,9 +133,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contentWrapper: {
-    marginTop: 60,
     flex: 1,
     justifyContent: "center",
+    marginTop: 175,
     alignItems: "center",
   },
   header: {

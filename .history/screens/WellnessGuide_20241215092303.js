@@ -12,18 +12,6 @@ import axios from "axios";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 import { UserContext } from "../contexts/UserContext";
 
-//Translation dictionary
-const translations = {
-  header: {
-    English: "Wellness Guide",
-    Español: "Guía de Bienestar",
-  },
-  searchPlaceholder: {
-    English: "Search Wellness Guide",
-    Español: "Buscar en la Guía de Bienestar...",
-  },
-};
-
 const topics = [
   {
     id: "1",
@@ -89,39 +77,38 @@ const WellnessGuide = () => {
         style={styles.cardBackground}
         imageStyle={{ borderRadius: Border.br_xs }}
       >
-        <Text style={styles.cardTitle}>
-          {languagePreference === "Español"
-            ? item.titleSpanish
-            : item.titleEnglish}
-        </Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.cardTitle}>
+            {languagePreference === "Español"
+              ? item.titleSpanish
+              : item.titleEnglish}
+          </Text>
+        </View>
       </ImageBackground>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      {/* Wrapper for header and search bar */}
-      <View style={styles.contentWrapper}>
-        <Text style={styles.header}>
-          {translations.header[languagePreference]}
-        </Text>
-        <TextInput
-          style={styles.searchBar}
-          placeholder={translations.searchPlaceholder[languagePreference]}
-          value={searchQuery}
-          onChangeText={(text) => setSearchQuery(text)}
-        />
-        {/* FlatList for cards */}
-        <FlatList
-          data={filteredTopics}
-          renderItem={renderTopicCard}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.flatListContainer}
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
+      {/* Header */}
+      <Text style={styles.header}>Wellness Guide</Text>
+      {/* Search Bar */}
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search Wellness Guide..."
+        value={searchQuery}
+        onChangeText={(text) => setSearchQuery(text)}
+      />
+      {/* Content */}
+      <FlatList
+        data={filteredTopics}
+        renderItem={renderTopicCard}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContainer}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
@@ -131,10 +118,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.nEW,
     padding: 16,
-  },
-  contentWrapper: {
-    marginTop: 60,
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -143,15 +126,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontFamily: FontFamily.montserrat,
     color: Color.colorDarkslateblue_200,
-    marginBottom: 16, // Reduce space below the header
+    marginBottom: 16,
+    marginTop: 70,
     textAlign: "center",
   },
   searchBar: {
-    width: "90%",
+    width: "100%",
     height: 40,
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
     paddingHorizontal: 12,
+    marginBottom: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
@@ -159,12 +144,17 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     alignItems: "center",
-    marginTop: "20",
+    justifyContent: "center",
+    flexGrow: 1,
+    paddingBottom: 20,
   },
+  contentContainer: {
+    paddingBottom: 20,
+  },
+
   row: {
     justifyContent: "space-between",
     width: "100%",
-    marginBottom: 16,
   },
   card: {
     width: "48%",
@@ -176,23 +166,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
     elevation: 2,
+    marginBottom: 16,
   },
   cardBackground: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
-    padding: 10,
   },
-  cardTitle: {
-    fontSize: FontSize.size_lg,
-    fontFamily: FontFamily.arial,
-    color: "#FFF",
-    textAlign: "center",
+  titleContainer: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: Border.br_xs,
-    overflow: "hidden",
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardTitle: {
+    fontSize: FontSize.size_md,
+    fontFamily: FontFamily.arial,
+    color: "#FFF",
+    textAlign: "center",
   },
 });
 export default WellnessGuide;

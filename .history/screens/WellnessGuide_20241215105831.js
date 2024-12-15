@@ -133,9 +133,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   contentWrapper: {
-    marginTop: 60,
     flex: 1,
     justifyContent: "center",
+    marginTop: 175,
     alignItems: "center",
   },
   header: {
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: Border.br_xs,
     paddingHorizontal: 12,
+    marginBottom: 8,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
