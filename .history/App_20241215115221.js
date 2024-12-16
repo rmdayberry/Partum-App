@@ -49,10 +49,7 @@ const DashboardStack = ({ userId }) => (
         headerStyle: {
           backgroundColor: Color.nEW,
         },
-        headerTintColor: "#000",
-        headerBackTitle: "Wellness Guide",
-        shadowOpacity: 0,
-        elevation: 0,
+        headerTintColor: "",
       }}
     />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />

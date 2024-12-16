@@ -46,13 +46,14 @@ const DashboardStack = ({ userId }) => (
       options={{
         headerShown: true,
         headerTitle: "",
+        headerTintColor: 
         headerStyle: {
           backgroundColor: Color.nEW,
+          shadowOpacity: 0,
+          elevation: 0,
         },
         headerTintColor: "#000",
         headerBackTitle: "Wellness Guide",
-        shadowOpacity: 0,
-        elevation: 0,
       }}
     />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />

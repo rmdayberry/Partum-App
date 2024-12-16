@@ -8,12 +8,12 @@ import {
   ImageBackground,
   FlatListComponent,
   Touchable,
-  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 //Translation dictionary
 const translations = {
@@ -34,7 +34,6 @@ const topics = [
     titleEnglish: "1st Trimester",
     titleSpanish: "1er Trimestre",
     image: require("../assets/1stTrimester.png"),
-    navigateTo: "FirstTrimesterWG",
   },
   {
     id: "2",

@@ -19,7 +19,6 @@ import MorePage from "./screens/MorePage";
 import Registration from "./screens/Registration";
 import Login from "./screens/Login";
 import FirstTrimester from "./screens/WellnessGuideTrims/FirstTrimesterWG";
-import { Color } from "./GlobalStyles";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,21 +39,7 @@ const DashboardStack = ({ userId }) => (
       {() => <Dashboard userId={userId} />}
     </Stack.Screen>
     <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
-    <Stack.Screen
-      name="FirstTrimesterWG"
-      component={FirstTrimester}
-      options={{
-        headerShown: true,
-        headerTitle: "",
-        headerStyle: {
-          backgroundColor: Color.nEW,
-        },
-        headerTintColor: "#000",
-        headerBackTitle: "Wellness Guide",
-        shadowOpacity: 0,
-        elevation: 0,
-      }}
-    />
+    <Stack.Screen name="FirstTrimesterWG" component={FirstTrimester} />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
     <Stack.Screen name="Education" component={Education} />
     <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
