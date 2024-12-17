@@ -21,12 +21,12 @@ const topicImages = {
   symptoms: require("../../assets/SymptomsWG.png"),
 };
 
-const SecondTrimester = () => {
-  return (
-    <View>
-      <Text>2T</Text>
-      <Text>This is a placeholder</Text>
-    </View>
-  );
+const translations = {
+  sleep: {},
 };
+const SecondTrimester={
+return()
+
+
+
 export default SecondTrimester;

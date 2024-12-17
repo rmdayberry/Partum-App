@@ -270,73 +270,8 @@ const translations = {
         "Sé Buena Contigo Misma: Cuidar tu salud mental no es egoísta, es una parte esencial del cuidado de tu bebé. Sé amable contigo misma, adopta el autocuidado y busca apoyo cuando lo necesites.",
     },
   },
-  symptoms: {
-    English: {
-      heading: "Danger Signs & Symptoms",
-      content:
-        "The first trimester of pregnancy can be an anxious time as you wait to hear your baby’s heartbeat or feel their first movements. Remember, you can always reach out to us if you have questions. Here are some signs and symptoms that require immediate attention:",
-      title1: "When to Call Us",
-      content1: [
-        "You cannot keep food or water down for 24 hours.",
-        "You are bleeding from your vagina.",
-        "You have severe abdominal pain.",
-        "You have a fever higher than 100.4°F (38°C).",
-      ],
-      title2: "Common Symptoms in the First Trimester",
-      content2: [
-        "Nausea and Vomiting: Feeling nauseated or throwing up is very common in early pregnancy, though it can feel miserable. Here are some tips to help you manage:",
-        "• Eat small, frequent meals.",
-        "• Try to eat something every 2 hours.",
-        "• Listen to your cravings. Eat what sounds good, even if it’s not your usual diet.",
-        "• Eat before getting out of bed. A small snack, like crackers or dry cereal, can help.",
-        "• Adjust prenatal vitamins if they worsen nausea; switch to folic acid.",
-        "• Try ginger (tea, candies, or ginger ale) or lemon drops.",
-        "• Use Sea Bands for acupressure or supplement with Vitamin B-6 (50mg twice a day).",
-        "• Consider Unisom for sleep and nausea relief (ask for a prescription).",
-        "Note: If you can’t keep food or fluids down for 24 hours, call us—you may need IV hydration or stronger medication.",
-      ],
-      title3: "Sore Breasts",
-      content3: [
-        "Sore breasts are often one of the first signs of pregnancy. This tenderness happens because your body is already preparing to produce milk for your baby.",
-        "• Your breasts may grow larger and feel tender or sensitive.",
-        "• Some people notice a small amount of leaking, but most do not.",
-        "• Milk production won’t start until after your baby and the placenta are delivered.",
-        "Throughout pregnancy, your body is getting ready to provide the perfect nourishment for your baby. After birth, your milk will adapt by the hour and day to meet their exact needs. It’s a truly miraculous process.",
-      ],
-    },
-    Español: {
-      heading: "Signos y Síntomas de Alerta",
-      content:
-        "El primer trimestre del embarazo puede ser un tiempo de ansiedad mientras esperas escuchar los latidos de tu bebé o sentir sus primeros movimientos. Recuerda que siempre puedes contactarnos si tienes preguntas. Estos son algunos signos y síntomas que requieren atención inmediata:",
-      title1: "Cuándo Llamarnos",
-      content1: [
-        "No puedes retener comida o agua durante 24 horas.",
-        "Tienes sangrado vaginal.",
-        "Tienes dolor abdominal severo.",
-        "Tienes fiebre mayor a 100.4°F (38°C).",
-      ],
-      title2: "Síntomas Comunes en el Primer Trimestre",
-      content2: [
-        "Náuseas y Vómitos: Sentir náuseas o vomitar es muy común al principio del embarazo. Aquí tienes algunos consejos para manejarlas:",
-        "• Come comidas pequeñas y frecuentes.",
-        "• Intenta comer algo cada 2 horas.",
-        "• Escucha tus antojos y come lo que se te antoje.",
-        "• Come algo antes de levantarte de la cama, como galletas saladas o cereal seco.",
-        "• Ajusta las vitaminas prenatales si empeoran tus náuseas; cambia a ácido fólico.",
-        "• Prueba el jengibre (té, caramelos o ginger ale) o los caramelos de limón.",
-        "• Usa pulseras Sea Bands para acupresión o toma Vitamina B-6 (50mg dos veces al día).",
-        "• Considera tomar Unisom para dormir y reducir las náuseas (consulta si necesitas receta).",
-        "Nota: Si no puedes retener comida ni líquidos durante 24 horas, llámanos; podrías necesitar hidratación intravenosa o medicamentos más fuertes.",
-      ],
-      title3: "Senos Sensibles",
-      content3: [
-        "Los senos sensibles son a menudo uno de los primeros signos de embarazo. Esta sensibilidad ocurre porque tu cuerpo ya se está preparando para producir leche para tu bebé.",
-        "• Es posible que tus senos crezcan y se sientan tiernos o sensibles.",
-        "• Algunas personas notan una pequeña cantidad de secreción, pero la mayoría no.",
-        "• La producción de leche no comenzará hasta después del nacimiento de tu bebé y la placenta.",
-        "Durante todo el embarazo, tu cuerpo se está preparando para ofrecer el alimento perfecto a tu bebé. Después del parto, la leche se adaptará cada hora y cada día para satisfacer exactamente sus necesidades. Es un proceso realmente milagroso.",
-      ],
-    },
+  Symptoms: {
+    English: {},
   },
 };
 
@@ -378,59 +313,55 @@ const FirstTrimester = () => {
       {};
 
     return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={styles.scene}>
         {/* Main Heading */}
         <Image source={topicImages[activeTab]} style={styles.image} />
-        <View style={styles.Contentcontainer}>
-          <Text style={styles.tabHeading}>
-            {heading || "Content Unavailable"}
-          </Text>
-          <Text style={styles.content}>{content}</Text>
+        <Text style={styles.tabHeading}>
+          {heading || "Content Unavailable"}
+        </Text>
+        <Text style={styles.content}>{content}</Text>
 
-          {/* Section 1 */}
-          {title1 && <Text style={styles.subheading}>{title1}</Text>}
-          {Array.isArray(content1) ? (
-            content1.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content1}</Text>
-          )}
-
-          {/* Section 2 */}
-          {title2 && <Text style={styles.subheading}>{title2}</Text>}
-          {content2 && <Text style={styles.content}>{content2}</Text>}
-
-          {/* Section 3 */}
-          {title3 && <Text style={styles.subheading}>{title3}</Text>}
-          {Array.isArray(content3)
-            ? content3.map((item, index) => (
-                <Text key={index} style={styles.bulletPoint}>
-                  • {item}
-                </Text>
-              ))
-            : content3 && <Text style={styles.content}>{content3}</Text>}
-
-          {/* Section 4 */}
-          {title4 && <Text style={styles.subheading}>{title4}</Text>}
-          {Array.isArray(content4) ? (
-            content4.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content4}</Text>
-          )}
-          {/* Bottom Text */}
-          {bottomText && (
-            <Text style={[styles.content, styles.bottomText]}>
-              {bottomText}
+        {/* Section 1 */}
+        {title1 && <Text style={styles.subheading}>{title1}</Text>}
+        {Array.isArray(content1) ? (
+          content1.map((item, index) => (
+            <Text key={index} style={styles.bulletPoint}>
+              • {item}
             </Text>
-          )}
-        </View>
+          ))
+        ) : (
+          <Text style={styles.content}>{content1}</Text>
+        )}
+
+        {/* Section 2 */}
+        {title2 && <Text style={styles.subheading}>{title2}</Text>}
+        {content2 && <Text style={styles.content}>{content2}</Text>}
+
+        {/* Section 3 */}
+        {title3 && <Text style={styles.subheading}>{title3}</Text>}
+        {Array.isArray(content3)
+          ? content3.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))
+          : content3 && <Text style={styles.content}>{content3}</Text>}
+
+        {/* Section 4 */}
+        {title4 && <Text style={styles.subheading}>{title4}</Text>}
+        {Array.isArray(content4) ? (
+          content4.map((item, index) => (
+            <Text key={index} style={styles.bulletPoint}>
+              • {item}
+            </Text>
+          ))
+        ) : (
+          <Text style={styles.content}>{content4}</Text>
+        )}
+        {/* Bottom Text */}
+        {bottomText && (
+          <Text style={[styles.content, styles.bottomText]}>{bottomText}</Text>
+        )}
       </ScrollView>
     );
   };
@@ -463,10 +394,6 @@ const FirstTrimester = () => {
                 ? "Salud Mental"
                 : "Mental Health",
           },
-          {
-            key: "symptoms",
-            label: languagePreference === "Español" ? "Síntomas" : "Symptoms",
-          },
         ].map((tab) => (
           <TouchableOpacity
             key={tab.key}
@@ -495,9 +422,9 @@ const FirstTrimester = () => {
 };
 
 const styles = StyleSheet.create({
-  Contentcontainer: {
-    padding: 16,
-    marginBottom: 40,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
   tabBar: {
     backgroundColor: "#f8f8f8",
@@ -527,8 +454,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   scene: {
-    flexGrow: 1,
-    justifyContent: "flex-start",
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    alignItems: "flex-start",
   },
   image: {
     width: screenWidth,
@@ -552,17 +480,17 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#333",
+    color: "#555",
     marginBottom: 8,
   },
   bulletPoint: {
     fontSize: 16,
-    color: "#333",
+    color: "#555",
     marginVertical: 4,
     marginLeft: 8,
   },
   bottomText: {
-    marginTop: 10,
+    marginTop: 20,
     padding: 15,
     fontSize: 12,
     color: "#6200EE",

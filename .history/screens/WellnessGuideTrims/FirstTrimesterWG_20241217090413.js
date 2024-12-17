@@ -270,7 +270,7 @@ const translations = {
         "Sé Buena Contigo Misma: Cuidar tu salud mental no es egoísta, es una parte esencial del cuidado de tu bebé. Sé amable contigo misma, adopta el autocuidado y busca apoyo cuando lo necesites.",
     },
   },
-  symptoms: {
+  Symptoms: {
     English: {
       heading: "Danger Signs & Symptoms",
       content:
@@ -378,59 +378,55 @@ const FirstTrimester = () => {
       {};
 
     return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={styles.scene}>
         {/* Main Heading */}
         <Image source={topicImages[activeTab]} style={styles.image} />
-        <View style={styles.Contentcontainer}>
-          <Text style={styles.tabHeading}>
-            {heading || "Content Unavailable"}
-          </Text>
-          <Text style={styles.content}>{content}</Text>
+        <Text style={styles.tabHeading}>
+          {heading || "Content Unavailable"}
+        </Text>
+        <Text style={styles.content}>{content}</Text>
 
-          {/* Section 1 */}
-          {title1 && <Text style={styles.subheading}>{title1}</Text>}
-          {Array.isArray(content1) ? (
-            content1.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content1}</Text>
-          )}
-
-          {/* Section 2 */}
-          {title2 && <Text style={styles.subheading}>{title2}</Text>}
-          {content2 && <Text style={styles.content}>{content2}</Text>}
-
-          {/* Section 3 */}
-          {title3 && <Text style={styles.subheading}>{title3}</Text>}
-          {Array.isArray(content3)
-            ? content3.map((item, index) => (
-                <Text key={index} style={styles.bulletPoint}>
-                  • {item}
-                </Text>
-              ))
-            : content3 && <Text style={styles.content}>{content3}</Text>}
-
-          {/* Section 4 */}
-          {title4 && <Text style={styles.subheading}>{title4}</Text>}
-          {Array.isArray(content4) ? (
-            content4.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content4}</Text>
-          )}
-          {/* Bottom Text */}
-          {bottomText && (
-            <Text style={[styles.content, styles.bottomText]}>
-              {bottomText}
+        {/* Section 1 */}
+        {title1 && <Text style={styles.subheading}>{title1}</Text>}
+        {Array.isArray(content1) ? (
+          content1.map((item, index) => (
+            <Text key={index} style={styles.bulletPoint}>
+              • {item}
             </Text>
-          )}
-        </View>
+          ))
+        ) : (
+          <Text style={styles.content}>{content1}</Text>
+        )}
+
+        {/* Section 2 */}
+        {title2 && <Text style={styles.subheading}>{title2}</Text>}
+        {content2 && <Text style={styles.content}>{content2}</Text>}
+
+        {/* Section 3 */}
+        {title3 && <Text style={styles.subheading}>{title3}</Text>}
+        {Array.isArray(content3)
+          ? content3.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))
+          : content3 && <Text style={styles.content}>{content3}</Text>}
+
+        {/* Section 4 */}
+        {title4 && <Text style={styles.subheading}>{title4}</Text>}
+        {Array.isArray(content4) ? (
+          content4.map((item, index) => (
+            <Text key={index} style={styles.bulletPoint}>
+              • {item}
+            </Text>
+          ))
+        ) : (
+          <Text style={styles.content}>{content4}</Text>
+        )}
+        {/* Bottom Text */}
+        {bottomText && (
+          <Text style={[styles.content, styles.bottomText]}>{bottomText}</Text>
+        )}
       </ScrollView>
     );
   };
@@ -495,9 +491,9 @@ const FirstTrimester = () => {
 };
 
 const styles = StyleSheet.create({
-  Contentcontainer: {
-    padding: 16,
-    marginBottom: 40,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
   tabBar: {
     backgroundColor: "#f8f8f8",
@@ -527,8 +523,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   scene: {
-    flexGrow: 1,
-    justifyContent: "flex-start",
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    alignItems: "flex-start",
   },
   image: {
     width: screenWidth,
@@ -552,17 +549,17 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#333",
+    color: "#555",
     marginBottom: 8,
   },
   bulletPoint: {
     fontSize: 16,
-    color: "#333",
+    color: "#555",
     marginVertical: 4,
     marginLeft: 8,
   },
   bottomText: {
-    marginTop: 10,
+    marginTop: 20,
     padding: 15,
     fontSize: 12,
     color: "#6200EE",

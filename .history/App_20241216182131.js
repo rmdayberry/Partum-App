@@ -19,7 +19,6 @@ import MorePage from "./screens/MorePage";
 import Registration from "./screens/Registration";
 import Login from "./screens/Login";
 import FirstTrimester from "./screens/WellnessGuideTrims/FirstTrimesterWG";
-import SecondTrimester from "./screens/WellnessGuideTrims/SecondTrimesterWG";
 import { Color } from "./GlobalStyles";
 
 const Stack = createNativeStackNavigator();
@@ -52,21 +51,6 @@ const DashboardStack = ({ userId }) => (
         },
         headerTintColor: "#000",
         headerBackTitle: "1st Trimester",
-        shadowOpacity: 0,
-        elevation: 0,
-      }}
-    />
-    <Stack.Screen
-      name="SecondTrimesterWG"
-      component={SecondTrimester}
-      options={{
-        headerShown: true,
-        headerTitle: "",
-        headerStyle: {
-          backgroundColor: Color.nEW,
-        },
-        headerTintColor: "#000",
-        headerBackTitle: "2nd Trimester",
         shadowOpacity: 0,
         elevation: 0,
       }}

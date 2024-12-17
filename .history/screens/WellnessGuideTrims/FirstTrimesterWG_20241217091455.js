@@ -497,7 +497,6 @@ const FirstTrimester = () => {
 const styles = StyleSheet.create({
   Contentcontainer: {
     padding: 16,
-    marginBottom: 40,
   },
   tabBar: {
     backgroundColor: "#f8f8f8",

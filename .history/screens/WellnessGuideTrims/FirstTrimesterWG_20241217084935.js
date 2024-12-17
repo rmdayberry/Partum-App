@@ -171,172 +171,7 @@ const translations = {
         "Create a Routine: Add a short walk, gentle stretch, or light yoga to your daily schedule. Small, consistent efforts make a big difference!",
       ],
     },
-    Español: {
-      heading: "Ejercicio Durante el Primer Trimestre",
-      content:
-        "Mantenerte activa durante el embarazo es una de las mejores cosas que puedes hacer por ti y por tu bebé. El ejercicio regular puede ayudarte a reducir el estrés, mejorar tu estado de ánimo, aumentar tus niveles de energía y preparar tu cuerpo para las demandas físicas del embarazo y el parto. Durante el primer trimestre, es importante enfocarte en movimientos suaves y seguros, siempre escuchando a tu cuerpo.",
-      title1: "Beneficios del Ejercicio en el Primer Trimestre:",
-      content1: [
-        "Reduce la fatiga: El movimiento suave puede ayudarte a combatir el cansancio común en las primeras etapas del embarazo.",
-        "Alivia las náuseas: Para algunas personas, el ejercicio ligero puede reducir las náuseas matutinas.",
-        "Mejora el estado de ánimo: Mantenerte activa puede reducir el estrés y ayudarte a sentirte más positiva durante tu embarazo.",
-        "Apoya un aumento de peso saludable: El ejercicio ayuda a tu cuerpo a adaptarse a los cambios naturales del embarazo.",
-        "Fortalece tu cuerpo para los próximos trimestres y el parto: Comenzar temprano sienta una base sólida para los meses venideros.",
-      ],
-      title2: "Actividades Seguras y Efectivas para el Primer Trimestre:",
-      content2: [
-        "Caminar: Mantiene tu cuerpo activo sin poner demasiada tensión en tus articulaciones.",
-        "Estiramientos y Yoga: Los estiramientos suaves y el yoga prenatal mejoran la flexibilidad, reducen dolores y fomentan la relajación. Evita las posturas que impliquen acostarte de espaldas o giros profundos.",
-        "Natación o Aeróbicos en el Agua: Las actividades acuáticas son de bajo impacto y excelentes para tus articulaciones, además de mantenerte fresca y apoyada.",
-        "Entrenamiento de Fuerza: Usa pesas ligeras o ejercicios con tu propio peso para mantener el tono muscular. Enfócate en movimientos controlados y evita levantar objetos muy pesados.",
-        "Ejercicios del Suelo Pélvico (Kegels): Fortalecer el suelo pélvico desde temprano puede reducir el riesgo de incontinencia y mejorar la recuperación posparto.",
-      ],
-      title3: "Qué Evitar en el Primer Trimestre:",
-      content3: [
-        "Actividades de alto impacto o riesgosas: Evita deportes de contacto, esquiar o cualquier actividad con alto riesgo de caídas o lesiones.",
-        "Sobrecalentamiento: Los entrenamientos intensos que causan sobrecalentamiento pueden ser perjudiciales. Mantente fresca e hidratada.",
-        "Acostarte de espaldas por largos períodos: A medida que tu útero crece, acostarte de espaldas puede reducir el flujo sanguíneo.",
-      ],
-      title4: "Consejos para el Éxito:",
-      content4: [
-        "Empieza Despacio: Comienza con 10-15 minutos de actividad ligera unas cuantas veces a la semana y aumenta gradualmente.",
-        "Mantente Hidratada: Bebe mucha agua antes, durante y después del ejercicio.",
-        "Usa Ropa Cómoda: Opta por ropa transpirable y elástica, y calzado de apoyo.",
-        "Crea una Rutina: Agrega una caminata corta, un estiramiento suave o yoga ligero a tu horario diario. ¡Pequeños esfuerzos constantes hacen una gran diferencia!",
-      ],
-    },
-  },
-  mentalHealth: {
-    English: {
-      heading: "Mental Health During Pregnancy",
-      content:
-        "Caring for your mental health is just as important as caring for your physical health. Pregnancy is a time of incredible change, and it’s natural to experience a range of emotions. As you grow this new life inside you, remember to be kind to yourself and prioritize your mental well-being.",
-      title1: "Depression or Anxiety",
-      content1: [
-        "Pregnancy and the postpartum period can bring mood changes, anxiety, or depression. These are common and treatable.",
-        "If you’re struggling with feelings of sadness, worry, or overwhelming stress, please let us know.",
-        "Together, we can create a plan to support your mental wellness, whether through counseling, support groups, or safe medications if needed.",
-      ],
-      title2: "Tips for Caring for Your Mental Health:",
-      content2: [
-        "Surround Yourself with Supportive People: Spend time with friends, family, or community members who uplift you. Avoid those who bring unnecessary stress or negativity into your life.",
-        "Practice Deep Breathing: When life feels overwhelming, stop and take 5 deep breaths. Imagine the air filling your belly, calming your mind and body.",
-        "Create a Safe Space: You and your baby deserve to be in a safe, loving environment. Avoid toxic people and places whenever possible.",
-      ],
-      title3: "When to Seek Help",
-      content3: [
-        "If you are experiencing any of the following, reach out to us or a mental health professional:",
-        "Persistent sadness or hopelessness",
-        "Intense anxiety or panic attacks",
-        "Trouble bonding with your baby",
-        "Thoughts of harming yourself or others",
-        "You don’t have to go through this alone. We’re here to support you.",
-      ],
-      title4: "Resources for a Safe Environment:",
-      content4:
-        "If you need help with a difficult relationship or living situation, don’t hesitate to reach out to us or contact the hotline below:\nDomestic Violence Crisis Hotline: 866-223-1111\nYour safety and well-being are top priorities.",
-      bottomText:
-        "Be Good to Yourself: Taking care of your mental health is not selfish—it’s an essential part of caring for your baby. Be gentle with yourself, embrace self-care, and seek support when you need it.",
-    },
-    Español: {
-      heading: "Salud Mental Durante el Embarazo",
-      content:
-        "Cuidar tu salud mental es tan importante como cuidar tu salud física. El embarazo es una etapa de muchos cambios, y es natural experimentar una variedad de emociones. Mientras formas esta nueva vida dentro de ti, recuerda ser amable contigo misma y priorizar tu bienestar mental.",
-      title1: "Depresión o Ansiedad",
-      content1: [
-        "El embarazo y el período posparto pueden traer cambios de humor, ansiedad o depresión. Estas son situaciones comunes y tratables.",
-        "Si estás lidiando con sentimientos de tristeza, preocupación o estrés abrumador, avísanos.",
-        "Juntos podemos crear un plan para apoyar tu bienestar mental, ya sea a través de terapia, grupos de apoyo o medicamentos seguros si es necesario.",
-      ],
-      title2: "Consejos para Cuidar tu Salud Mental:",
-      content2: [
-        "Rodéate de Personas que te Apoyen: Pasa tiempo con amigos, familiares o miembros de la comunidad que te hagan sentir bien. Evita a las personas que generen estrés o negatividad innecesaria.",
-        "Practica Respiración Profunda: Cuando la vida se sienta abrumadora, detente y toma 5 respiraciones profundas. Imagina que el aire llena tu abdomen, calmando tu mente y cuerpo.",
-        "Crea un Espacio Seguro: Tú y tu bebé merecen estar en un ambiente seguro y amoroso. Siempre que sea posible, evita lugares y personas tóxicas.",
-      ],
-      title3: "Cuándo Buscar Ayuda",
-      content3: [
-        "Si experimentas alguno de los siguientes síntomas, busca apoyo con nosotros o un profesional de salud mental:",
-        "Tristeza o desesperanza persistente",
-        "Ansiedad intensa o ataques de pánico",
-        "Dificultad para conectar con tu bebé",
-        "Pensamientos de hacerte daño a ti misma o a otros",
-        "No tienes que pasar por esto sola. Estamos aquí para apoyarte.",
-      ],
-      title4: "Recursos para un Entorno Seguro:",
-      content4:
-        "Si necesitas ayuda con una relación difícil o una situación de vida complicada, no dudes en contactarnos o llamar a la línea de ayuda:\nLínea de Crisis por Violencia Doméstica: 866-223-1111\nTu seguridad y bienestar son nuestra prioridad.",
-      bottomText:
-        "Sé Buena Contigo Misma: Cuidar tu salud mental no es egoísta, es una parte esencial del cuidado de tu bebé. Sé amable contigo misma, adopta el autocuidado y busca apoyo cuando lo necesites.",
-    },
-  },
-  symptoms: {
-    English: {
-      heading: "Danger Signs & Symptoms",
-      content:
-        "The first trimester of pregnancy can be an anxious time as you wait to hear your baby’s heartbeat or feel their first movements. Remember, you can always reach out to us if you have questions. Here are some signs and symptoms that require immediate attention:",
-      title1: "When to Call Us",
-      content1: [
-        "You cannot keep food or water down for 24 hours.",
-        "You are bleeding from your vagina.",
-        "You have severe abdominal pain.",
-        "You have a fever higher than 100.4°F (38°C).",
-      ],
-      title2: "Common Symptoms in the First Trimester",
-      content2: [
-        "Nausea and Vomiting: Feeling nauseated or throwing up is very common in early pregnancy, though it can feel miserable. Here are some tips to help you manage:",
-        "• Eat small, frequent meals.",
-        "• Try to eat something every 2 hours.",
-        "• Listen to your cravings. Eat what sounds good, even if it’s not your usual diet.",
-        "• Eat before getting out of bed. A small snack, like crackers or dry cereal, can help.",
-        "• Adjust prenatal vitamins if they worsen nausea; switch to folic acid.",
-        "• Try ginger (tea, candies, or ginger ale) or lemon drops.",
-        "• Use Sea Bands for acupressure or supplement with Vitamin B-6 (50mg twice a day).",
-        "• Consider Unisom for sleep and nausea relief (ask for a prescription).",
-        "Note: If you can’t keep food or fluids down for 24 hours, call us—you may need IV hydration or stronger medication.",
-      ],
-      title3: "Sore Breasts",
-      content3: [
-        "Sore breasts are often one of the first signs of pregnancy. This tenderness happens because your body is already preparing to produce milk for your baby.",
-        "• Your breasts may grow larger and feel tender or sensitive.",
-        "• Some people notice a small amount of leaking, but most do not.",
-        "• Milk production won’t start until after your baby and the placenta are delivered.",
-        "Throughout pregnancy, your body is getting ready to provide the perfect nourishment for your baby. After birth, your milk will adapt by the hour and day to meet their exact needs. It’s a truly miraculous process.",
-      ],
-    },
-    Español: {
-      heading: "Signos y Síntomas de Alerta",
-      content:
-        "El primer trimestre del embarazo puede ser un tiempo de ansiedad mientras esperas escuchar los latidos de tu bebé o sentir sus primeros movimientos. Recuerda que siempre puedes contactarnos si tienes preguntas. Estos son algunos signos y síntomas que requieren atención inmediata:",
-      title1: "Cuándo Llamarnos",
-      content1: [
-        "No puedes retener comida o agua durante 24 horas.",
-        "Tienes sangrado vaginal.",
-        "Tienes dolor abdominal severo.",
-        "Tienes fiebre mayor a 100.4°F (38°C).",
-      ],
-      title2: "Síntomas Comunes en el Primer Trimestre",
-      content2: [
-        "Náuseas y Vómitos: Sentir náuseas o vomitar es muy común al principio del embarazo. Aquí tienes algunos consejos para manejarlas:",
-        "• Come comidas pequeñas y frecuentes.",
-        "• Intenta comer algo cada 2 horas.",
-        "• Escucha tus antojos y come lo que se te antoje.",
-        "• Come algo antes de levantarte de la cama, como galletas saladas o cereal seco.",
-        "• Ajusta las vitaminas prenatales si empeoran tus náuseas; cambia a ácido fólico.",
-        "• Prueba el jengibre (té, caramelos o ginger ale) o los caramelos de limón.",
-        "• Usa pulseras Sea Bands para acupresión o toma Vitamina B-6 (50mg dos veces al día).",
-        "• Considera tomar Unisom para dormir y reducir las náuseas (consulta si necesitas receta).",
-        "Nota: Si no puedes retener comida ni líquidos durante 24 horas, llámanos; podrías necesitar hidratación intravenosa o medicamentos más fuertes.",
-      ],
-      title3: "Senos Sensibles",
-      content3: [
-        "Los senos sensibles son a menudo uno de los primeros signos de embarazo. Esta sensibilidad ocurre porque tu cuerpo ya se está preparando para producir leche para tu bebé.",
-        "• Es posible que tus senos crezcan y se sientan tiernos o sensibles.",
-        "• Algunas personas notan una pequeña cantidad de secreción, pero la mayoría no.",
-        "• La producción de leche no comenzará hasta después del nacimiento de tu bebé y la placenta.",
-        "Durante todo el embarazo, tu cuerpo se está preparando para ofrecer el alimento perfecto a tu bebé. Después del parto, la leche se adaptará cada hora y cada día para satisfacer exactamente sus necesidades. Es un proceso realmente milagroso.",
-      ],
-    },
+    Español: {},
   },
 };
 
@@ -378,59 +213,55 @@ const FirstTrimester = () => {
       {};
 
     return (
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={styles.scene}>
         {/* Main Heading */}
         <Image source={topicImages[activeTab]} style={styles.image} />
-        <View style={styles.Contentcontainer}>
-          <Text style={styles.tabHeading}>
-            {heading || "Content Unavailable"}
-          </Text>
-          <Text style={styles.content}>{content}</Text>
+        <Text style={styles.tabHeading}>
+          {heading || "Content Unavailable"}
+        </Text>
+        <Text style={styles.content}>{content}</Text>
 
-          {/* Section 1 */}
-          {title1 && <Text style={styles.subheading}>{title1}</Text>}
-          {Array.isArray(content1) ? (
-            content1.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content1}</Text>
-          )}
-
-          {/* Section 2 */}
-          {title2 && <Text style={styles.subheading}>{title2}</Text>}
-          {content2 && <Text style={styles.content}>{content2}</Text>}
-
-          {/* Section 3 */}
-          {title3 && <Text style={styles.subheading}>{title3}</Text>}
-          {Array.isArray(content3)
-            ? content3.map((item, index) => (
-                <Text key={index} style={styles.bulletPoint}>
-                  • {item}
-                </Text>
-              ))
-            : content3 && <Text style={styles.content}>{content3}</Text>}
-
-          {/* Section 4 */}
-          {title4 && <Text style={styles.subheading}>{title4}</Text>}
-          {Array.isArray(content4) ? (
-            content4.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content4}</Text>
-          )}
-          {/* Bottom Text */}
-          {bottomText && (
-            <Text style={[styles.content, styles.bottomText]}>
-              {bottomText}
+        {/* Section 1 */}
+        {title1 && <Text style={styles.subheading}>{title1}</Text>}
+        {Array.isArray(content1) ? (
+          content1.map((item, index) => (
+            <Text key={index} style={styles.bulletPoint}>
+              • {item}
             </Text>
-          )}
-        </View>
+          ))
+        ) : (
+          <Text style={styles.content}>{content1}</Text>
+        )}
+
+        {/* Section 2 */}
+        {title2 && <Text style={styles.subheading}>{title2}</Text>}
+        {content2 && <Text style={styles.content}>{content2}</Text>}
+
+        {/* Section 3 */}
+        {title3 && <Text style={styles.subheading}>{title3}</Text>}
+        {Array.isArray(content3)
+          ? content3.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))
+          : content3 && <Text style={styles.content}>{content3}</Text>}
+
+        {/* Section 4 */}
+        {title4 && <Text style={styles.subheading}>{title4}</Text>}
+        {Array.isArray(content4) ? (
+          content4.map((item, index) => (
+            <Text key={index} style={styles.bulletPoint}>
+              • {item}
+            </Text>
+          ))
+        ) : (
+          <Text style={styles.content}>{content4}</Text>
+        )}
+        {/* Bottom Text */}
+        {bottomText && (
+          <Text style={[styles.content, styles.bottomText]}>{bottomText}</Text>
+        )}
       </ScrollView>
     );
   };
@@ -451,21 +282,6 @@ const FirstTrimester = () => {
           {
             key: "nutrition",
             label: languagePreference === "Español" ? "Nutrición" : "Nutrition",
-          },
-          {
-            key: "exercise",
-            label: languagePreference === "Español" ? "Ejercicio" : "Exercise",
-          },
-          {
-            key: "mentalHealth",
-            label:
-              languagePreference === "Español"
-                ? "Salud Mental"
-                : "Mental Health",
-          },
-          {
-            key: "symptoms",
-            label: languagePreference === "Español" ? "Síntomas" : "Symptoms",
           },
         ].map((tab) => (
           <TouchableOpacity
@@ -495,9 +311,9 @@ const FirstTrimester = () => {
 };
 
 const styles = StyleSheet.create({
-  Contentcontainer: {
-    padding: 16,
-    marginBottom: 40,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
   },
   tabBar: {
     backgroundColor: "#f8f8f8",
@@ -527,8 +343,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   scene: {
-    flexGrow: 1,
-    justifyContent: "flex-start",
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    alignItems: "flex-start",
   },
   image: {
     width: screenWidth,
@@ -552,17 +369,17 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#333",
+    color: "#555",
     marginBottom: 8,
   },
   bulletPoint: {
     fontSize: 16,
-    color: "#333",
+    color: "#555",
     marginVertical: 4,
     marginLeft: 8,
   },
   bottomText: {
-    marginTop: 10,
+    marginTop: 20,
     padding: 15,
     fontSize: 12,
     color: "#6200EE",

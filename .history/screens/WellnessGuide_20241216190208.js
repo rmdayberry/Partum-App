@@ -41,7 +41,6 @@ const topics = [
     titleEnglish: "2nd Trimester",
     titleSpanish: "2do Trimestre",
     image: require("../assets/2ndTrimester.png"),
-    navigateTo: "SecondTrimesterWG",
   },
   {
     id: "3",
