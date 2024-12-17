@@ -747,83 +747,6 @@ const translations = {
         },
       ],
     },
-    Spanish: {
-      heading: "Síntomas Durante el Segundo Trimestre",
-      content:
-        "El segundo trimestre a menudo trae alivio de algunas molestias del principio del embarazo, pero nuevas experiencias y sensaciones, como sentir a tu bebé moverse, toman protagonismo. Aquí tienes lo que necesitas saber sobre los síntomas comunes y cuándo buscar ayuda.",
-      sections: [
-        {
-          title: "Movimiento Fetal",
-          subtitleBold:
-            "¡Sentir a tu bebé moverse por primera vez puede ser mágico! Esto es lo que puedes esperar:",
-          bulletPoints: [
-            "Cuándo Sentirás Movimiento: Los bebés comienzan a moverse muy temprano, pero la mayoría de las personas no sienten estos movimientos regularmente hasta las 20 a 22 semanas de embarazo.",
-            "Algunas pueden sentir movimiento tan temprano como a las 14 o 15 semanas, especialmente en un segundo o tercer embarazo.",
-            "Cómo Se Siente: Los primeros movimientos pueden sentirse como alas de mariposa, revoloteos o incluso una fuerte patadita.",
-            "No Te Preocupes: Si no sientes movimientos regulares hasta las 22 semanas, esto es completamente normal. Cada persona experimenta los movimientos fetales de manera diferente.",
-          ],
-        },
-        {
-          title: "Signos de Alerta y Síntomas",
-          bulletPoints: [
-            "Vómitos Severos: No puedes retener comida ni agua durante 24 horas.",
-            "Sangrado Vaginal: Cualquier cantidad de sangrado debe ser evaluado.",
-            "Dolor Abdominal Intenso: El dolor intenso en el abdomen no es normal y debe ser revisado.",
-            "Fiebre Mayor a 100.4°F (38°C): La fiebre puede ser señal de una infección que requiere tratamiento.",
-          ],
-        },
-        {
-          title: "Otros Síntomas Comunes del Segundo Trimestre",
-        },
-        {
-          subtitleBold: "Dolor de los Ligamentos Redondos:",
-          bulletPoints:
-            "Qué Ayuda: Descansar, cambiar de posición lentamente y hacer estiramientos ligeros.",
-        },
-        {
-          subtitleBold: "Dolor de Espalda:",
-          bulletPoints:
-            "Qué Ayuda: Mantén una buena postura, usa zapatos cómodos y considera un cinturón de apoyo para maternidad.",
-        },
-        {
-          subtitleBold: "Acidez Estomacal:",
-          bulletPoints:
-            "Qué Ayuda: Come comidas pequeñas, evita acostarte después de comer y usa almohadas para dormir ligeramente inclinada.",
-        },
-        {
-          subtitleBold: "Calambres en las Piernas:",
-          bulletPoints:
-            "Qué Ayuda: Mantente hidratada, estira las piernas antes de acostarte y considera suplementos de magnesio o calcio si tu médico lo recomienda.",
-        },
-        {
-          subtitleBold: "Estreñimiento:",
-          bulletPoints:
-            "Qué Ayuda: Bebe mucha agua, come alimentos ricos en fibra y mantente activa.",
-        },
-        {
-          subtitleBold: "Hinchazón (Edema):",
-          bulletPoints:
-            "Qué Ayuda: Eleva los pies, evita estar de pie por largos períodos y usa zapatos cómodos.",
-        },
-        {
-          subtitleBold: "Contracciones de Braxton Hicks:",
-          bulletPoints:
-            "Qué Ayuda: Bebe agua y descansa si se vuelven incómodas. Llámanos si son frecuentes, dolorosas o van acompañadas de otros síntomas.",
-        },
-        {
-          title: "Cuándo Llamarnos por Otros Síntomas",
-          bulletPoints: [
-            "Dolores de Cabeza Severos: Dolores de cabeza persistentes que no desaparecen con descanso o hidratación pueden necesitar evaluación.",
-            "Cambios en la Visión: Visión borrosa, manchas o cambios repentinos podrían ser signos de presión arterial alta o preeclampsia.",
-            "Disminución del Movimiento Fetal Después de las 22 Semanas: Si notas menos movimiento de lo normal después de las 22 semanas, contáctanos de inmediato.",
-          ],
-        },
-        {
-          subtitleBold:
-            "Tu segundo trimestre suele ser un tiempo de crecimiento, conexión y nuevas experiencias. Déjanos saber si tienes alguna preocupación o necesitas apoyo adicional.",
-        },
-      ],
-    },
   },
 };
 
@@ -924,7 +847,8 @@ const SecondTrimester = () => {
           },
           {
             key: "symptoms",
-            label: languagePreference === "Español" ? "Síntomas" : "Symptoms",
+            label:
+              languagePreference === "Español" ? "Salud Mental" : "Symptoms",
           },
         ].map((tab) => (
           <TouchableOpacity
