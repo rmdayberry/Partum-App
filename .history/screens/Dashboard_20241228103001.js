@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   dailyTipFrame: {
-    marginBottom: 20,
+    marginTop: 20,
     padding: 16,
     backgroundColor: "#fff",
     borderRadius: 8,

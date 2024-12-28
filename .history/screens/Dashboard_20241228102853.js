@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   weeklyTipContainer: {
+    marginTop: 0,
     marginHorizontal: 10,
     padding: 8,
     alignItems: "center",
@@ -206,10 +207,11 @@ const styles = StyleSheet.create({
   appointmentSection: {
     alignSelf: "screenLeft",
     width: "40%",
-    margin: 20,
+    marginTop: 20,
+    marginHorizontal: 20,
   },
   dailyTipFrame: {
-    marginBottom: 20,
+    marginTop: 20,
     padding: 16,
     backgroundColor: "#fff",
     borderRadius: 8,
