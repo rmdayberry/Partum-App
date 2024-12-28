@@ -3,6 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
+  TextInput,
   FlatList,
   ImageBackground,
   TouchableWithoutFeedback,
@@ -22,6 +23,10 @@ const translations = {
   subheader: {
     English: "Explore wellness topics organized by trimester",
     Español: "Explora temas de bienestar organizados por trimestre",
+  },
+  searchPlaceholder: {
+    English: "Search Wellness Guide",
+    Español: "Buscar en la Guía de Bienestar...",
   },
 };
 
@@ -59,9 +64,9 @@ const topics = [
 
 const WellnessGuide = () => {
   const { userId } = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState("");
   const [languagePreference, setLanguagePreference] = useState("English");
   const navigation = useNavigation();
-  const scaleValue = useRef(new Animated.Value(1)).current; // Move useRef here
 
   // Fetch user language preference
   useEffect(() => {
@@ -82,49 +87,62 @@ const WellnessGuide = () => {
     fetchLanguagePreference();
   }, [userId]);
 
-  const handlePressIn = () => {
-    Animated.spring(scaleValue, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.spring(scaleValue, {
-      toValue: 1,
-      friction: 4,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const renderTopicCard = ({ item }) => (
-    <TouchableWithoutFeedback
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      onPress={() => {
-        if (item.navigateTo) {
-          navigation.navigate(item.navigateTo);
-        }
-      }}
-    >
-      <Animated.View
-        style={[styles.card, { transform: [{ scale: scaleValue }] }]}
-      >
-        <ImageBackground
-          source={item.image}
-          style={styles.cardBackground}
-          imageStyle={{ borderRadius: Border.br_md }}
-        >
-          <View style={styles.gradientOverlay} />
-          <Text style={styles.cardTitle}>
-            {languagePreference === "Español"
-              ? item.titleSpanish
-              : item.titleEnglish}
-          </Text>
-        </ImageBackground>
-      </Animated.View>
-    </TouchableWithoutFeedback>
+  // Filter topics based on search query
+  const filteredTopics = topics.filter((topic) =>
+    topic[languagePreference === "Español" ? "titleSpanish" : "titleEnglish"]
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
   );
+
+  // Animated card component
+  const WellnessGuide = ()=> {
+    const scaleValue = useRef(new Animated.Value(1)).current;
+    const renderTopicCard = ({item}) =>{
+
+    const handlePressIn = () => {
+      Animated.spring(scaleValue, {
+        toValue: 0.95,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const handlePressOut = () => {
+      Animated.spring(scaleValue, {
+        toValue: 1,
+        friction: 4,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    return (
+      <TouchableWithoutFeedback
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        onPress={() => {
+          if (item.navigateTo) {
+            navigation.navigate(item.navigateTo);
+          }
+        }}
+      >
+        <Animated.View
+          style={[styles.card, { transform: [{ scale: scaleValue }] }]}
+        >
+          <ImageBackground
+            source={item.image}
+            style={styles.cardBackground}
+            imageStyle={{ borderRadius: Border.br_md }}
+          >
+            <View style={styles.gradientOverlay} />
+            <Text style={styles.cardTitle}>
+              {languagePreference === "Español"
+                ? item.titleSpanish
+                : item.titleEnglish}
+            </Text>
+          </ImageBackground>
+        </Animated.View>
+      </TouchableWithoutFeedback>
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -140,7 +158,7 @@ const WellnessGuide = () => {
 
       {/* Categories */}
       <FlatList
-        data={topics}
+        data={filteredTopics}
         renderItem={renderTopicCard}
         keyExtractor={(item) => item.id}
         numColumns={2}

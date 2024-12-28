@@ -1,31 +1,33 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
+  TextInput,
   FlatList,
   ImageBackground,
-  TouchableWithoutFeedback,
-  Animated,
+  FlatListComponent,
+  Touchable,
+  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 
-// Translation dictionary
+//Translation dictionary
 const translations = {
   header: {
     English: "Wellness Guide",
     Español: "Guía de Bienestar",
   },
-  subheader: {
-    English: "Explore wellness topics organized by trimester",
-    Español: "Explora temas de bienestar organizados por trimestre",
+  searchPlaceholder: {
+    English: "Search Wellness Guide",
+    Español: "Buscar en la Guía de Bienestar...",
   },
 };
 
-// Topics for wellness guide cards
+//Topics for wellness guide cards
 const topics = [
   {
     id: "1",
@@ -59,15 +61,15 @@ const topics = [
 
 const WellnessGuide = () => {
   const { userId } = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState("");
   const [languagePreference, setLanguagePreference] = useState("English");
   const navigation = useNavigation();
-  const scaleValue = useRef(new Animated.Value(1)).current; // Move useRef here
 
   // Fetch user language preference
   useEffect(() => {
     const fetchLanguagePreference = async () => {
       if (!userId) {
-        console.warn("No userId found, skipping language fetch.");
+        consol.warn("No userId found, skipping language fetch.");
         return;
       }
       try {
@@ -80,74 +82,62 @@ const WellnessGuide = () => {
       }
     };
     fetchLanguagePreference();
-  }, [userId]);
+  }, []);
 
-  const handlePressIn = () => {
-    Animated.spring(scaleValue, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.spring(scaleValue, {
-      toValue: 1,
-      friction: 4,
-      useNativeDriver: true,
-    }).start();
-  };
+  //Filter topic based on search query
+  const filteredTopics = topics.filter((topic) =>
+    topic[languagePreference === "Español" ? "titleSpanish" : "titleEnglish"]
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
   const renderTopicCard = ({ item }) => (
-    <TouchableWithoutFeedback
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
+    <TouchableOpacity
+      style={styles.card}
       onPress={() => {
         if (item.navigateTo) {
           navigation.navigate(item.navigateTo);
         }
       }}
     >
-      <Animated.View
-        style={[styles.card, { transform: [{ scale: scaleValue }] }]}
+      <ImageBackground
+        source={item.image}
+        style={styles.cardBackground}
+        imageStyle={{ borderRadius: Border.br_xs }}
       >
-        <ImageBackground
-          source={item.image}
-          style={styles.cardBackground}
-          imageStyle={{ borderRadius: Border.br_md }}
-        >
-          <View style={styles.gradientOverlay} />
-          <Text style={styles.cardTitle}>
-            {languagePreference === "Español"
-              ? item.titleSpanish
-              : item.titleEnglish}
-          </Text>
-        </ImageBackground>
-      </Animated.View>
-    </TouchableWithoutFeedback>
+        <Text style={styles.cardTitle}>
+          {languagePreference === "Español"
+            ? item.titleSpanish
+            : item.titleEnglish}
+        </Text>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.headerSection}>
+      {/* Wrapper for header and search bar */}
+      <View style={styles.contentWrapper}>
         <Text style={styles.header}>
           {translations.header[languagePreference]}
         </Text>
-        <Text style={styles.subheader}>
-          {translations.subheader[languagePreference]}
-        </Text>
+        <TextInput
+          style={styles.searchBar}
+          placeholder={translations.searchPlaceholder[languagePreference]}
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
+        {/* FlatList for cards */}
+        <FlatList
+          data={filteredTopics}
+          renderItem={renderTopicCard}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={styles.flatListContainer}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
-
-      {/* Categories */}
-      <FlatList
-        data={topics}
-        renderItem={renderTopicCard}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.flatListContainer}
-        showsVerticalScrollIndicator={false}
-      />
     </View>
   );
 };
@@ -156,49 +146,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.nEW,
-    paddingHorizontal: 16,
-    paddingTop: 40,
+    padding: 16,
   },
-  headerSection: {
+  contentWrapper: {
+    marginTop: 60,
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
-    padding: 20,
   },
   header: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: "bold",
     fontFamily: FontFamily.montserrat,
     color: Color.colorDarkslateblue_200,
+    marginBottom: 16, // Reduce space below the header
     textAlign: "center",
-    marginBottom: 8,
   },
-  subheader: {
-    fontSize: 16,
-    fontFamily: FontFamily.arial,
-    color: "#555",
-    textAlign: "center",
+  searchBar: {
+    width: "90%",
+    height: 40,
+    backgroundColor: "#fff",
+    borderRadius: Border.br_xs,
+    paddingHorizontal: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
   },
   flatListContainer: {
     alignItems: "center",
+    marginTop: "20",
   },
   row: {
     justifyContent: "space-between",
-    marginBottom: 16,
     width: "100%",
+    marginBottom: 16,
   },
   card: {
     width: "48%",
-    aspectRatio: 3 / 4,
+    height: 150,
     backgroundColor: "#fff",
-    borderRadius: Border.br_md,
+    borderRadius: Border.br_xs,
     overflow: "hidden",
     shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "#ddd",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 2,
   },
   cardBackground: {
     flex: 1,
@@ -206,21 +199,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-  gradientOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    borderRadius: Border.br_md,
-  },
   cardTitle: {
-    fontSize: FontSize.size_md,
-    fontFamily: FontFamily.montserrat,
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.arial,
     color: "#FFF",
     textAlign: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: Border.br_sm,
+    borderRadius: Border.br_xs,
+    overflow: "hidden",
   },
 });
-
 export default WellnessGuide;

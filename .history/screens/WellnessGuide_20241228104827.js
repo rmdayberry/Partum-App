@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
+  TextInput,
   FlatList,
   ImageBackground,
-  TouchableWithoutFeedback,
-  Animated,
+  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
@@ -22,6 +22,10 @@ const translations = {
   subheader: {
     English: "Explore wellness topics organized by trimester",
     Español: "Explora temas de bienestar organizados por trimestre",
+  },
+  searchPlaceholder: {
+    English: "Search Wellness Guide",
+    Español: "Buscar en la Guía de Bienestar...",
   },
 };
 
@@ -59,9 +63,9 @@ const topics = [
 
 const WellnessGuide = () => {
   const { userId } = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState("");
   const [languagePreference, setLanguagePreference] = useState("English");
   const navigation = useNavigation();
-  const scaleValue = useRef(new Animated.Value(1)).current; // Move useRef here
 
   // Fetch user language preference
   useEffect(() => {
@@ -82,72 +86,64 @@ const WellnessGuide = () => {
     fetchLanguagePreference();
   }, [userId]);
 
-  const handlePressIn = () => {
-    Animated.spring(scaleValue, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.spring(scaleValue, {
-      toValue: 1,
-      friction: 4,
-      useNativeDriver: true,
-    }).start();
-  };
+  // Filter topics based on search query
+  const filteredTopics = topics.filter((topic) =>
+    topic[languagePreference === "Español" ? "titleSpanish" : "titleEnglish"]
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
   const renderTopicCard = ({ item }) => (
-    <TouchableWithoutFeedback
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
+    <TouchableOpacity
+      style={styles.card}
       onPress={() => {
         if (item.navigateTo) {
           navigation.navigate(item.navigateTo);
         }
       }}
     >
-      <Animated.View
-        style={[styles.card, { transform: [{ scale: scaleValue }] }]}
+      <ImageBackground
+        source={item.image}
+        style={styles.cardBackground}
+        imageStyle={{ borderRadius: Border.br_sm }}
       >
-        <ImageBackground
-          source={item.image}
-          style={styles.cardBackground}
-          imageStyle={{ borderRadius: Border.br_md }}
-        >
-          <View style={styles.gradientOverlay} />
-          <Text style={styles.cardTitle}>
-            {languagePreference === "Español"
-              ? item.titleSpanish
-              : item.titleEnglish}
-          </Text>
-        </ImageBackground>
-      </Animated.View>
-    </TouchableWithoutFeedback>
+        <Text style={styles.cardTitle}>
+          {languagePreference === "Español"
+            ? item.titleSpanish
+            : item.titleEnglish}
+        </Text>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.headerSection}>
+      {/* Header and Search Bar */}
+      <View style={styles.contentWrapper}>
         <Text style={styles.header}>
           {translations.header[languagePreference]}
         </Text>
         <Text style={styles.subheader}>
           {translations.subheader[languagePreference]}
         </Text>
-      </View>
 
-      {/* Categories */}
-      <FlatList
-        data={topics}
-        renderItem={renderTopicCard}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.flatListContainer}
-        showsVerticalScrollIndicator={false}
-      />
+        <TextInput
+          style={styles.searchBar}
+          placeholder={translations.searchPlaceholder[languagePreference]}
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
+        {/* Categories List */}
+        <FlatList
+          data={filteredTopics}
+          renderItem={renderTopicCard}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={styles.flatListContainer}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     </View>
   );
 };
@@ -156,28 +152,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.nEW,
-    paddingHorizontal: 16,
-    paddingTop: 40,
+    padding: 16,
   },
-  headerSection: {
+  contentWrapper: {
+    marginTop: 40,
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
-    padding: 20,
   },
   header: {
     fontSize: 30,
+    fontFamily: "helvetica",
     fontWeight: "bold",
-    fontFamily: FontFamily.montserrat,
     color: Color.colorDarkslateblue_200,
-    textAlign: "center",
     marginBottom: 8,
+    textAlign: "center",
   },
   subheader: {
     fontSize: 16,
     fontFamily: FontFamily.arial,
     color: "#555",
     textAlign: "center",
+    paddingHorizontal: 10,
   },
+
   flatListContainer: {
     alignItems: "center",
   },
@@ -188,28 +186,20 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "48%",
-    aspectRatio: 3 / 4,
+    height: 180,
     backgroundColor: "#fff",
-    borderRadius: Border.br_md,
+    borderRadius: Border.br_sm,
     overflow: "hidden",
     shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
-    marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "#ddd",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   cardBackground: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
-  },
-  gradientOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    borderRadius: Border.br_md,
   },
   cardTitle: {
     fontSize: FontSize.size_md,

@@ -3,6 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
+  TextInput,
   FlatList,
   ImageBackground,
   TouchableWithoutFeedback,
@@ -22,6 +23,10 @@ const translations = {
   subheader: {
     English: "Explore wellness topics organized by trimester",
     Español: "Explora temas de bienestar organizados por trimestre",
+  },
+  searchPlaceholder: {
+    English: "Search Wellness Guide",
+    Español: "Buscar en la Guía de Bienestar...",
   },
 };
 
@@ -59,9 +64,9 @@ const topics = [
 
 const WellnessGuide = () => {
   const { userId } = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState("");
   const [languagePreference, setLanguagePreference] = useState("English");
   const navigation = useNavigation();
-  const scaleValue = useRef(new Animated.Value(1)).current; // Move useRef here
 
   // Fetch user language preference
   useEffect(() => {
@@ -82,74 +87,89 @@ const WellnessGuide = () => {
     fetchLanguagePreference();
   }, [userId]);
 
-  const handlePressIn = () => {
-    Animated.spring(scaleValue, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
+  // Filter topics based on search query
+  const filteredTopics = topics.filter((topic) =>
+    topic[languagePreference === "Español" ? "titleSpanish" : "titleEnglish"]
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
-  const handlePressOut = () => {
-    Animated.spring(scaleValue, {
-      toValue: 1,
-      friction: 4,
-      useNativeDriver: true,
-    }).start();
-  };
+  // Animated card component
+  const WellnessGuide = () => {
+    const { userId } = useContext(UserContext);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [languagePreference, setLanguagePreference] = useState("English");
+    const scaleValue = useRef(new Animated.Value(1)).current; // Move useRef here
 
-  const renderTopicCard = ({ item }) => (
-    <TouchableWithoutFeedback
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      onPress={() => {
-        if (item.navigateTo) {
-          navigation.navigate(item.navigateTo);
-        }
-      }}
-    >
-      <Animated.View
-        style={[styles.card, { transform: [{ scale: scaleValue }] }]}
+    const handlePressIn = () => {
+      Animated.spring(scaleValue, {
+        toValue: 0.95,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const handlePressOut = () => {
+      Animated.spring(scaleValue, {
+        toValue: 1,
+        friction: 4,
+        useNativeDriver: true,
+      }).start();
+    };
+
+    const renderTopicCard = ({ item }) => (
+      <TouchableWithoutFeedback
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        onPress={() => {
+          if (item.navigateTo) {
+            navigation.navigate(item.navigateTo);
+          }
+        }}
       >
-        <ImageBackground
-          source={item.image}
-          style={styles.cardBackground}
-          imageStyle={{ borderRadius: Border.br_md }}
+        <Animated.View
+          style={[styles.card, { transform: [{ scale: scaleValue }] }]}
         >
-          <View style={styles.gradientOverlay} />
-          <Text style={styles.cardTitle}>
-            {languagePreference === "Español"
-              ? item.titleSpanish
-              : item.titleEnglish}
+          <ImageBackground
+            source={item.image}
+            style={styles.cardBackground}
+            imageStyle={{ borderRadius: Border.br_md }}
+          >
+            <View style={styles.gradientOverlay} />
+            <Text style={styles.cardTitle}>
+              {languagePreference === "Español"
+                ? item.titleSpanish
+                : item.titleEnglish}
+            </Text>
+          </ImageBackground>
+        </Animated.View>
+      </TouchableWithoutFeedback>
+    );
+
+    return (
+      <View style={styles.container}>
+        {/* Header Section */}
+        <View style={styles.headerSection}>
+          <Text style={styles.header}>
+            {translations.header[languagePreference]}
           </Text>
-        </ImageBackground>
-      </Animated.View>
-    </TouchableWithoutFeedback>
-  );
+          <Text style={styles.subheader}>
+            {translations.subheader[languagePreference]}
+          </Text>
+        </View>
 
-  return (
-    <View style={styles.container}>
-      {/* Header Section */}
-      <View style={styles.headerSection}>
-        <Text style={styles.header}>
-          {translations.header[languagePreference]}
-        </Text>
-        <Text style={styles.subheader}>
-          {translations.subheader[languagePreference]}
-        </Text>
+        {/* Categories */}
+        <FlatList
+          data={filteredTopics}
+          renderItem={renderTopicCard}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={styles.flatListContainer}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
-
-      {/* Categories */}
-      <FlatList
-        data={topics}
-        renderItem={renderTopicCard}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.flatListContainer}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
-  );
+    );
+  };
 };
 
 const styles = StyleSheet.create({

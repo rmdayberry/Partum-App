@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
   StyleSheet,
+  TextInput,
   FlatList,
   ImageBackground,
-  TouchableWithoutFeedback,
-  Animated,
+  TouchableOpacity,
 } from "react-native";
 import axios from "axios";
 import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
@@ -22,6 +22,10 @@ const translations = {
   subheader: {
     English: "Explore wellness topics organized by trimester",
     Español: "Explora temas de bienestar organizados por trimestre",
+  },
+  searchPlaceholder: {
+    English: "Search Wellness Guide",
+    Español: "Buscar en la Guía de Bienestar...",
   },
 };
 
@@ -59,9 +63,9 @@ const topics = [
 
 const WellnessGuide = () => {
   const { userId } = useContext(UserContext);
+  const [searchQuery, setSearchQuery] = useState("");
   const [languagePreference, setLanguagePreference] = useState("English");
   const navigation = useNavigation();
-  const scaleValue = useRef(new Animated.Value(1)).current; // Move useRef here
 
   // Fetch user language preference
   useEffect(() => {
@@ -82,48 +86,34 @@ const WellnessGuide = () => {
     fetchLanguagePreference();
   }, [userId]);
 
-  const handlePressIn = () => {
-    Animated.spring(scaleValue, {
-      toValue: 0.95,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handlePressOut = () => {
-    Animated.spring(scaleValue, {
-      toValue: 1,
-      friction: 4,
-      useNativeDriver: true,
-    }).start();
-  };
+  // Filter topics based on search query
+  const filteredTopics = topics.filter((topic) =>
+    topic[languagePreference === "Español" ? "titleSpanish" : "titleEnglish"]
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
   const renderTopicCard = ({ item }) => (
-    <TouchableWithoutFeedback
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
+    <TouchableOpacity
+      style={styles.card}
       onPress={() => {
         if (item.navigateTo) {
           navigation.navigate(item.navigateTo);
         }
       }}
     >
-      <Animated.View
-        style={[styles.card, { transform: [{ scale: scaleValue }] }]}
+      <ImageBackground
+        source={item.image}
+        style={styles.cardBackground}
+        imageStyle={{ borderRadius: Border.br_md }}
       >
-        <ImageBackground
-          source={item.image}
-          style={styles.cardBackground}
-          imageStyle={{ borderRadius: Border.br_md }}
-        >
-          <View style={styles.gradientOverlay} />
-          <Text style={styles.cardTitle}>
-            {languagePreference === "Español"
-              ? item.titleSpanish
-              : item.titleEnglish}
-          </Text>
-        </ImageBackground>
-      </Animated.View>
-    </TouchableWithoutFeedback>
+        <Text style={styles.cardTitle}>
+          {languagePreference === "Español"
+            ? item.titleSpanish
+            : item.titleEnglish}
+        </Text>
+      </ImageBackground>
+    </TouchableOpacity>
   );
 
   return (
@@ -134,13 +124,15 @@ const WellnessGuide = () => {
           {translations.header[languagePreference]}
         </Text>
         <Text style={styles.subheader}>
-          {translations.subheader[languagePreference]}
+          {languagePreference === "Español"
+            ? "Explora temas de bienestar organizados por trimestre."
+            : "Explore wellness topics organized by trimester."}
         </Text>
       </View>
 
       {/* Categories */}
       <FlatList
-        data={topics}
+        data={filteredTopics}
         renderItem={renderTopicCard}
         keyExtractor={(item) => item.id}
         numColumns={2}
@@ -162,7 +154,13 @@ const styles = StyleSheet.create({
   headerSection: {
     alignItems: "center",
     marginBottom: 20,
+    backgroundColor: "linear-gradient(to bottom, #e6f7ff, #ffffff)", // Gradient background
     padding: 20,
+    borderRadius: Border.br_md,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
   },
   header: {
     fontSize: 30,
@@ -202,7 +200,7 @@ const styles = StyleSheet.create({
   },
   cardBackground: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
   },
@@ -220,6 +218,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: Border.br_sm,
+    overflow: "hidden",
+    marginBottom: 8,
+  },
+  iconBadge: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: Color.primary, // Match with app theme
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 10,
   },
 });
 
