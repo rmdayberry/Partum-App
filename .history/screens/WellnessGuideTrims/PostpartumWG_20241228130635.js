@@ -188,49 +188,5 @@ const styles = StyleSheet.create({
   detailSubtitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#444",
-    marginTop: 10,
-  },
-  detailPoint: {
-    fontSize: 16,
-    color: "#555",
-    marginLeft: 12,
-    marginVertical: 6,
-  },
-  carouselContainer: {
-    marginTop: 16,
-    flexDirection: "row",
-  },
-  carouselItem: {
-    width: screenWidth * 0.75,
-    backgroundColor: "#f9f9f9",
-    borderRadius: 12,
-    padding: 20,
-    marginHorizontal: 8,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  carouselImage: {
-    width: 90,
-    height: 90,
-    marginBottom: 10,
-    borderRadius: 45, // Circular image
-  },
-  carouselTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
-    textAlign: "center",
-    marginBottom: 6,
-  },
-  carouselDescription: {
-    fontSize: 14,
-    color: "#666",
-    textAlign: "center",
-  },
-});
+ 
 
-export default Postpartum;

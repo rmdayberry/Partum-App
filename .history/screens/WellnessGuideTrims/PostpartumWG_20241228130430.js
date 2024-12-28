@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
   carouselContainer: {
     marginTop: 16,
     flexDirection: "row",
+    justifyContent: "center",
   },
   carouselItem: {
     width: screenWidth * 0.75,

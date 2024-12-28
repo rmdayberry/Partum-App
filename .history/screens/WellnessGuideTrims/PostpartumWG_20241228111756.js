@@ -25,20 +25,20 @@ const content = {
     subtitle: "Caring for you and your baby in the first weeks.",
     sections: [
       {
-        title: "Pain Management",
+        title: "Pain Medication",
         details: [
           {
-            subtitle: "For Vaginal Birth",
+            subtitle: "Vaginal Birth",
             points: [
               "Take 600mg ibuprofen (Motrin) every 6-8 hours as needed for pain.",
-              "Alternate with 650mg acetaminophen (Tylenol) every 3-4 hours if pain persists.",
+              "Alternate ibuprofen with 650mg acetaminophen (Tylenol) every 3-4 hours if pain persists.",
             ],
           },
           {
-            subtitle: "For Cesarean Birth",
+            subtitle: "Cesarean Birth or Tubal Ligation",
             points: [
-              "Start with ibuprofen and acetaminophen for pain relief.",
-              "Add oxycodone as prescribed if pain persists.",
+              "Use ibuprofen and acetaminophen as first-choice pain relievers.",
+              "If pain persists, add 1-2 oxycodone pills every 4 hours as prescribed.",
             ],
           },
         ],
@@ -53,10 +53,10 @@ const content = {
             image: graphics.periBottle,
           },
           {
-            title: "Make Soothing Padcicles",
+            title: "Soothing Padcicles",
             description:
-              "Use witch hazel, aloe vera, and pads to make cooling 'padcicles'.",
-            image: graphics.recoveryTips,
+              "Use witch hazel, aloe vera, and pads to make soothing 'padcicles'.",
+            image: graphics.recoveryTips, // Placeholder for padcicle graphic
           },
         ],
       },
@@ -114,7 +114,7 @@ const Postpartum = () => {
             </View>
           )}
 
-          {/* Carousel Items */}
+          {/* Horizontal ScrollView for Carousel Items */}
           {section.carouselItems && (
             <ScrollView
               horizontal
@@ -143,88 +143,70 @@ const Postpartum = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#fff",
     paddingHorizontal: 16,
   },
   header: {
-    marginBottom: 24,
-    paddingVertical: 20,
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
+    marginBottom: 20,
   },
   headerText: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
-    color: "#333",
+    color: "#6200EE",
   },
   subtitle: {
     fontSize: 16,
     color: "#666",
-    marginTop: 8,
-    textAlign: "center",
-    paddingHorizontal: 16,
+    marginVertical: 10,
   },
   section: {
     marginBottom: 20,
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 3 },
+    padding: 16,
+    backgroundColor: "#f8f8f8",
+    borderRadius: 8,
   },
   sectionTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 12,
-    color: "#333",
+    marginBottom: 10,
   },
   detailSubtitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#444",
     marginTop: 10,
+    color: "#333",
   },
   detailPoint: {
     fontSize: 16,
     color: "#555",
-    marginLeft: 12,
-    marginVertical: 6,
+    paddingLeft: 10,
+    marginVertical: 2,
   },
   carouselContainer: {
-    marginTop: 16,
-    flexDirection: "row",
+    marginTop: 10,
   },
   carouselItem: {
-    width: screenWidth * 0.75,
-    backgroundColor: "#f9f9f9",
-    borderRadius: 12,
-    padding: 20,
-    marginHorizontal: 8,
-    alignItems: "center",
+    width: screenWidth * 0.7,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 16,
+    marginRight: 16,
     shadowColor: "#000",
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
+    alignItems: "center",
   },
   carouselImage: {
-    width: 90,
-    height: 90,
+    width: 80,
+    height: 80,
     marginBottom: 10,
-    borderRadius: 45, // Circular image
   },
   carouselTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
-    color: "#333",
+    marginBottom: 4,
     textAlign: "center",
-    marginBottom: 6,
   },
   carouselDescription: {
     fontSize: 14,
