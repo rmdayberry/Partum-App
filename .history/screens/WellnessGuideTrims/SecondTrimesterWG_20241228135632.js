@@ -9,7 +9,6 @@ import {
   Dimensions,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
-import { translations } from "../../translations/secondTrimesterWGTranslations";
 import axios from "axios";
 
 const { width: screenWidth } = Dimensions.get("window");

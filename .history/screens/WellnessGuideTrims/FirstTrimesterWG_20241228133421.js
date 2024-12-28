@@ -42,10 +42,6 @@ const FirstTrimester = () => {
   }, [userId]);
 
   const renderContent = () => {
-    const tabContent =
-      translations[activeTab]?.[languagePreference] ||
-      translations[activeTab]?.English ||
-      {};
     const {
       heading,
       content,
@@ -57,92 +53,48 @@ const FirstTrimester = () => {
       content3,
       title4,
       content4,
-      vitamins,
-      avoidTitle,
-      avoid,
-      nuggetTitle,
-      nuggetContent,
-      tipsTitle,
-      tips,
       bottomText,
-    } = tabContent;
+    } =
+      translations[activeTab]?.[languagePreference] ||
+      translations[activeTab]?.English ||
+      {};
 
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView style={styles.contentContainer}>
         <Image source={topicImages[activeTab]} style={styles.image} />
         <View style={styles.section}>
           <Text style={styles.heading}>{heading || "Content Unavailable"}</Text>
-          {content && <Text style={styles.content}>{content}</Text>}
+          <Text style={styles.content}>{content}</Text>
 
-          {/* Sections */}
           {title1 && <Text style={styles.subheading}>{title1}</Text>}
-          {content1 &&
-            (Array.isArray(content1) ? (
-              content1.map((item, index) => (
+          {Array.isArray(content1)
+            ? content1.map((item, index) => (
                 <Text key={index} style={styles.bulletPoint}>
                   • {item}
                 </Text>
               ))
-            ) : (
-              <Text style={styles.content}>{content1}</Text>
-            ))}
+            : content1 && <Text style={styles.content}>{content1}</Text>}
 
           {title2 && <Text style={styles.subheading}>{title2}</Text>}
           {content2 && <Text style={styles.content}>{content2}</Text>}
 
           {title3 && <Text style={styles.subheading}>{title3}</Text>}
-          {content3 &&
-            (Array.isArray(content3) ? (
-              content3.map((item, index) => (
+          {Array.isArray(content3)
+            ? content3.map((item, index) => (
                 <Text key={index} style={styles.bulletPoint}>
                   • {item}
                 </Text>
               ))
-            ) : (
-              <Text style={styles.content}>{content3}</Text>
-            ))}
+            : content3 && <Text style={styles.content}>{content3}</Text>}
 
           {title4 && <Text style={styles.subheading}>{title4}</Text>}
-          {content4 &&
-            (Array.isArray(content4) ? (
-              content4.map((item, index) => (
+          {Array.isArray(content4)
+            ? content4.map((item, index) => (
                 <Text key={index} style={styles.bulletPoint}>
                   • {item}
                 </Text>
               ))
-            ) : (
-              <Text style={styles.content}>{content4}</Text>
-            ))}
-
-          {vitamins && (
-            <>
-              <Text style={styles.subheading}>Vitamins & Supplements</Text>
-              {vitamins.map((item, index) => (
-                <Text key={index} style={styles.bulletPoint}>
-                  • {item}
-                </Text>
-              ))}
-            </>
-          )}
-
-          {avoidTitle && <Text style={styles.subheading}>{avoidTitle}</Text>}
-          {avoid &&
-            avoid.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))}
-
-          {nuggetTitle && <Text style={styles.subheading}>{nuggetTitle}</Text>}
-          {nuggetContent && <Text style={styles.content}>{nuggetContent}</Text>}
-
-          {tipsTitle && <Text style={styles.subheading}>{tipsTitle}</Text>}
-          {tips &&
-            tips.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))}
+            : content4 && <Text style={styles.content}>{content4}</Text>}
 
           {bottomText && (
             <Text style={[styles.content, styles.bottomText]}>
@@ -161,24 +113,46 @@ const FirstTrimester = () => {
         style={styles.tabBar}
         contentContainerStyle={styles.tabBarContent}
       >
-        {Object.keys(translations).map((tab) => (
+        {[
+          {
+            key: "sleep",
+            label: languagePreference === "Español" ? "Sueño" : "Sleep",
+          },
+          {
+            key: "nutrition",
+            label: languagePreference === "Español" ? "Nutrición" : "Nutrition",
+          },
+          {
+            key: "exercise",
+            label: languagePreference === "Español" ? "Ejercicio" : "Exercise",
+          },
+          {
+            key: "mentalHealth",
+            label:
+              languagePreference === "Español"
+                ? "Salud Mental"
+                : "Mental Health",
+          },
+          {
+            key: "symptoms",
+            label: languagePreference === "Español" ? "Síntomas" : "Symptoms",
+          },
+        ].map((tab) => (
           <TouchableOpacity
-            key={tab}
-            onPress={() => setActiveTab(tab)}
+            key={tab.key}
+            onPress={() => setActiveTab(tab.key)}
             style={[
               styles.tabButton,
-              activeTab === tab && styles.activeTabButton,
+              activeTab === tab.key && styles.activeTabButton,
             ]}
           >
             <Text
               style={[
                 styles.tabText,
-                activeTab === tab && styles.activeTabText,
+                activeTab === tab.key && styles.activeTabText,
               ]}
             >
-              {languagePreference === "Español"
-                ? translations[tab]?.Español?.heading.split(" ")[0]
-                : translations[tab]?.English?.heading.split(" ")[0]}
+              {tab.label}
             </Text>
           </TouchableOpacity>
         ))}
@@ -202,9 +176,11 @@ const styles = StyleSheet.create({
   tabBarContent: {
     alignItems: "center",
     justifyContent: "space-between",
+    flexDirection: "row",
   },
   tabButton: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -221,7 +197,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   contentContainer: {
-    flexGrow: 1,
+    flex: 1, // Ensure content stretches properly
     padding: 16,
     backgroundColor: "#fff",
   },
@@ -229,7 +205,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 200,
     marginBottom: 16,
-    borderRadius: 12,
     resizeMode: "cover",
   },
   section: {
@@ -259,6 +234,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     color: "#333",
     marginBottom: 10,
+    textAlign: "justify", // Ensure consistent paragraph alignment
   },
   bulletPoint: {
     fontSize: 16,
