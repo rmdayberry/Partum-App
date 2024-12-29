@@ -23,44 +23,42 @@ const openLink = async (url) => {
   }
 };
 
-const CommunityResources = () => {
-  const resources = [
-    {
-      title: "Transportation",
-      description:
-        "No access to transportation? Your health insurance plan may offer free rides to appointments. Tap to learn how to set up a ride and access these benefits.",
-      buttonText: "Learn More",
-      icon: require("../assets/transportation.png"),
-      onPress: () => openLink("https://example.com/transportation"),
-    },
-    {
-      title: "WIC Program",
-      description:
-        "Learn how to access nutritional support and resources for you and your baby through the Women, Infants, and Children program.",
-      buttonText: "Find Out More",
-      icon: require("../assets/wic-icon.png"),
-      onPress: () =>
-        openLink("https://www.health.state.mn.us/people/wic/index.html"),
-    },
-    {
-      title: "Insurance",
-      description:
-        "Need insurance? We partner with Portico to help patients apply for public insurance that covers clinic visits, transportation, and more. Tap to learn how we can assist.",
-      buttonText: "Learn More",
-      icon: require("../assets/healthcare.png"),
-      onPress: () => openLink("https://example.com/insurance"),
-    },
-    {
-      title: "Food Banks",
-      description:
-        "Access nutritious food and groceries for you and your family through local food banks and assistance programs.",
-      buttonText: "Find Supplies",
-      icon: require("../assets/foodBank.png"),
-      onPress: () => openLink("https://example.com/foodbanks"),
-    },
-  ];
+const resources = [
+  {
+    title: "Transportation",
+    description:
+      "No access to transportation? Your health insurance plan may offer free rides to appointments. Tap to learn how to set up a ride and access these benefits.",
+    buttonText: "Learn More",
+    icon: require("../assets/transportation.png"),
+    onPress: () => openLink("https://example.com/transportation"),
+  },
+  {
+    title: "WIC Program",
+    description:
+      "Learn how to access nutritional support and resources for you and your baby through the Women, Infants, and Children program.",
+    buttonText: "Find Out More",
+    icon: require("../assets/wic-icon.png"),
+    onPress: () =>
+      openLink("https://www.health.state.mn.us/people/wic/index.html"),
+  },
+  {
+    title: "Insurance",
+    description:
+      "Need insurance? We partner with Portico to help patients apply for public insurance that covers clinic visits, transportation, and more. Tap to learn how we can assist.",
+    buttonText: "Learn More",
+    icon: require("../assets/healthcare.png"),
+    onPress: () => openLink("https://example.com/insurance"),
+  },
+  {
+    title: "Food Banks",
+    description:
+      "Access nutritious food and groceries for you and your family through local food banks and assistance programs.",
+    buttonText: "Find Supplies",
+    icon: require("../assets/foodBank.png"),
+    onPress: () => openLink("https://example.com/foodbanks"),
+  },
+];
 
-  // The `return` is now inside the `CommunityResources` component
   return (
     <View style={styles.container}>
       <View style={styles.header}>

@@ -6,22 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  Linking,
 } from "react-native";
-
-const openLink = async (url) => {
-  try {
-    const supported = await Linking.canOpenURL(url);
-    if (supported) {
-      await Linking.openURL(url);
-    } else {
-      alert("Sorry, this link cannot be opened on your device.");
-    }
-  } catch (error) {
-    console.error("An error occurred while trying to open the link:", error);
-    alert("Something went wrong. Please try again later.");
-  }
-};
 
 const CommunityResources = () => {
   const resources = [
@@ -30,37 +15,32 @@ const CommunityResources = () => {
       description:
         "No access to transportation? Your health insurance plan may offer free rides to appointments. Tap to learn how to set up a ride and access these benefits.",
       buttonText: "Learn More",
-      icon: require("../assets/transportation.png"),
-      onPress: () => openLink("https://example.com/transportation"),
+      onPress: () => {}, // Add navigation or link here
     },
     {
       title: "WIC Program",
       description:
         "Learn how to access nutritional support and resources for you and your baby through the Women, Infants, and Children program.",
       buttonText: "Find Out More",
-      icon: require("../assets/wic-icon.png"),
-      onPress: () =>
-        openLink("https://www.health.state.mn.us/people/wic/index.html"),
+      icon: require("../assets/wic-icon.png"), // Placeholder for WIC icon
+      onPress: () => {}, // Add WIC website link here
     },
     {
       title: "Insurance",
       description:
         "Need insurance? We partner with Portico to help patients apply for public insurance that covers clinic visits, transportation, and more. Tap to learn how we can assist.",
       buttonText: "Learn More",
-      icon: require("../assets/healthcare.png"),
-      onPress: () => openLink("https://example.com/insurance"),
+      onPress: () => {}, // Add navigation or link here
     },
     {
       title: "Food Banks",
       description:
         "Access nutritious food and groceries for you and your family through local food banks and assistance programs.",
       buttonText: "Find Supplies",
-      icon: require("../assets/foodBank.png"),
-      onPress: () => openLink("https://example.com/foodbanks"),
+      onPress: () => {}, // Add navigation or link here
     },
   ];
 
-  // The `return` is now inside the `CommunityResources` component
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -70,6 +50,7 @@ const CommunityResources = () => {
         </Text>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
+        {/* Cards for Resources */}
         {resources.map((resource, index) => (
           <View key={index} style={styles.card}>
             <Image source={resource.icon} style={styles.icon} />
@@ -78,7 +59,7 @@ const CommunityResources = () => {
               <Text style={styles.cardDescription}>{resource.description}</Text>
               <TouchableOpacity
                 style={styles.button}
-                onPress={resource.onPress}
+                onPress={() => handleLinkPress(resource.link)}
               >
                 <Text style={styles.buttonText}>{resource.buttonText}</Text>
               </TouchableOpacity>
