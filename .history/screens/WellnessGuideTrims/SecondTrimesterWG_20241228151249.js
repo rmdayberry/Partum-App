@@ -19,7 +19,7 @@ const topicImages = {
   nutrition: require("../../assets/secondTNutrition.png"),
   mentalHealth: require("../../assets/secondTMentalHealth.png"),
   exercise: require("../../assets/secondTExercise.png"),
-  symptoms: require("../../assets/secondTSymptoms.png"),
+  symptoms: require("../../assets/SymptomsWG.png"),
 };
 
 const SecondTrimester = () => {

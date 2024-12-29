@@ -15,11 +15,11 @@ import axios from "axios";
 const { width: screenWidth } = Dimensions.get("window");
 
 const topicImages = {
-  sleep: require("../../assets/secondTSleep.png"),
-  nutrition: require("../../assets/secondTNutrition.png"),
-  mentalHealth: require("../../assets/secondTMentalHealth.png"),
-  exercise: require("../../assets/secondTExercise.png"),
-  symptoms: require("../../assets/secondTSymptoms.png"),
+  sleep: require("../../assets/SleepWG.png"),
+  nutrition: require("../../assets/NutritionWG.png"),
+  mentalHealth: require("../../assets/MentalHealthWG.png"),
+  exercise: require("../../assets/ExerciseWG.png"),
+  symptoms: require("../../assets/SymptomsWG.png"),
 };
 
 const SecondTrimester = () => {
@@ -163,11 +163,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   image: {
-    width: "100%",
+    width: screenWidth,
     height: 200,
     resizeMode: "cover",
-    borderRadius: 12,
-    marginBottom: 16,
   },
   section: {
     marginBottom: 16,

@@ -15,12 +15,12 @@ import axios from "axios";
 const { width: screenWidth } = Dimensions.get("window");
 
 const topicImages = {
-  nutrition: require("../../assets/NutritionWG.png"),
   sleep: require("../../assets/SleepWG.png"),
+  nutrition: require("../../assets/NutritionWG.png"),
   exercise: require("../../assets/ExerciseWG.png"),
   symptoms: require("../../assets/SymptomsWG.png"),
-  support: require("../../assets/secondTSymptoms.png"),
-  labor: require("../../assets/secondTSymptoms.png"),
+  support: require("../../assets/SupportWG.png"),
+  labor: require("../../assets/LaborPrepWG.png"),
 };
 
 const ThirdTrimester = () => {
@@ -47,47 +47,108 @@ const ThirdTrimester = () => {
       translations[activeTab]?.[languagePreference] ||
       translations[activeTab]?.English ||
       {};
-    const { heading, content, sections, bottomText } = tabContent;
+    const {
+      heading,
+      content,
+      title1,
+      content1,
+      title2,
+      content2,
+      title3,
+      content3,
+      title4,
+      content4,
+      vitamins,
+      avoidTitle,
+      avoid,
+      nuggetTitle,
+      nuggetContent,
+      tipsTitle,
+      tips,
+      bottomText,
+    } = tabContent;
 
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <Image source={topicImages[activeTab]} style={styles.image} />
         <View style={styles.section}>
-          {heading && <Text style={styles.heading}>{heading}</Text>}
+          <Text style={styles.heading}>{heading || "Content Unavailable"}</Text>
           {content && <Text style={styles.content}>{content}</Text>}
 
-          {/* Render Sections */}
-          {sections &&
-            sections.map((section, idx) => (
-              <View key={idx} style={styles.box}>
-                {section.title && (
-                  <Text style={styles.subheading}>{section.title}</Text>
-                )}
-                {section.bulletPoints &&
-                  section.bulletPoints.map((point, index) => (
-                    <Text key={index} style={styles.bulletPoint}>
-                      • {point}
-                    </Text>
-                  ))}
-              </View>
+          {/* Sections */}
+          {title1 && <Text style={styles.subheading}>{title1}</Text>}
+          {content1 &&
+            (Array.isArray(content1) ? (
+              content1.map((item, index) => (
+                <Text key={index} style={styles.bulletPoint}>
+                  • {item}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.content}>{content1}</Text>
             ))}
 
-          {/* Render Bottom Text */}
+          {title2 && <Text style={styles.subheading}>{title2}</Text>}
+          {content2 && <Text style={styles.content}>{content2}</Text>}
+
+          {title3 && <Text style={styles.subheading}>{title3}</Text>}
+          {content3 &&
+            (Array.isArray(content3) ? (
+              content3.map((item, index) => (
+                <Text key={index} style={styles.bulletPoint}>
+                  • {item}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.content}>{content3}</Text>
+            ))}
+
+          {title4 && <Text style={styles.subheading}>{title4}</Text>}
+          {content4 &&
+            (Array.isArray(content4) ? (
+              content4.map((item, index) => (
+                <Text key={index} style={styles.bulletPoint}>
+                  • {item}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.content}>{content4}</Text>
+            ))}
+
+          {vitamins && (
+            <>
+              <Text style={styles.subheading}>Vitamins & Supplements</Text>
+              {vitamins.map((item, index) => (
+                <Text key={index} style={styles.bulletPoint}>
+                  • {item}
+                </Text>
+              ))}
+            </>
+          )}
+
+          {avoidTitle && <Text style={styles.subheading}>{avoidTitle}</Text>}
+          {avoid &&
+            avoid.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))}
+
+          {nuggetTitle && <Text style={styles.subheading}>{nuggetTitle}</Text>}
+          {nuggetContent && <Text style={styles.content}>{nuggetContent}</Text>}
+
+          {tipsTitle && <Text style={styles.subheading}>{tipsTitle}</Text>}
+          {tips &&
+            tips.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))}
+
           {bottomText && (
-            <View style={styles.bottomSection}>
-              {bottomText.title && (
-                <Text style={styles.bottomTitle}>{bottomText.title}</Text>
-              )}
-              {bottomText.content && (
-                <Text style={styles.bottomContent}>{bottomText.content}</Text>
-              )}
-              {bottomText.bulletPoints &&
-                bottomText.bulletPoints.map((point, index) => (
-                  <Text key={index} style={styles.bulletPoint}>
-                    • {point}
-                  </Text>
-                ))}
-            </View>
+            <Text style={[styles.content, styles.bottomText]}>
+              {bottomText}
+            </Text>
           )}
         </View>
       </ScrollView>
@@ -117,8 +178,8 @@ const ThirdTrimester = () => {
               ]}
             >
               {languagePreference === "Español"
-                ? translations[tab]?.Español?.tabName
-                : translations[tab]?.English?.tabName}
+                ? translations[tab]?.Español?.heading.split(" ")[0]
+                : translations[tab]?.English?.heading.split(" ")[0]}
             </Text>
           </TouchableOpacity>
         ))}
@@ -206,33 +267,11 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     paddingLeft: 10,
   },
-  box: {
-    backgroundColor: "#f8f8f8",
-    borderRadius: 8,
-    padding: 12,
-    marginVertical: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  bottomSection: {
-    marginTop: 20,
-    padding: 16,
-    backgroundColor: "#E0F7FA",
-    borderRadius: 8,
-  },
-  bottomTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
+  bottomText: {
+    marginTop: 10,
+    fontSize: 14,
     color: "#6200EE",
-    marginBottom: 8,
-  },
-  bottomContent: {
-    fontSize: 16,
-    color: "#555",
-    marginBottom: 8,
+    textAlign: "center",
   },
 });
 

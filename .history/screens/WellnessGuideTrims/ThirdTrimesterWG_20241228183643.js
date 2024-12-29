@@ -9,23 +9,24 @@ import {
   Dimensions,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
-import { translations } from "../../translations/secondTrimesterWGTranslations";
+import { translations } from "../../translations/thirdTrimesterWGTranslation";
 import axios from "axios";
 
 const { width: screenWidth } = Dimensions.get("window");
 
 const topicImages = {
-  sleep: require("../../assets/secondTSleep.png"),
-  nutrition: require("../../assets/secondTNutrition.png"),
-  mentalHealth: require("../../assets/secondTMentalHealth.png"),
-  exercise: require("../../assets/secondTExercise.png"),
-  symptoms: require("../../assets/secondTSymptoms.png"),
+  nutrition: require("../../assets/NutritionWG.png"),
+  sleep: require("../../assets/SleepWG.png"),
+  exercise: require("../../assets/ExerciseWG.png"),
+  symptoms: require("../../assets/SymptomsWG.png"),
+  support: require("../../assets/secondTSymptoms.png"),
+  labor: require("../../assets/secondTSymptoms.png"),
 };
 
-const SecondTrimester = () => {
+const ThirdTrimester = () => {
   const { userId } = useContext(UserContext);
   const [languagePreference, setLanguagePreference] = useState("English");
-  const [activeTab, setActiveTab] = useState("sleep");
+  const [activeTab, setActiveTab] = useState("nutrition");
 
   useEffect(() => {
     const fetchLanguagePreference = async () => {
@@ -42,50 +43,52 @@ const SecondTrimester = () => {
   }, [userId]);
 
   const renderContent = () => {
-    const { heading, content, sections } =
+    const tabContent =
       translations[activeTab]?.[languagePreference] ||
       translations[activeTab]?.English ||
       {};
+    const { heading, content, sections, bottomText } = tabContent;
 
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Image */}
         <Image source={topicImages[activeTab]} style={styles.image} />
-
-        {/* Main Content */}
         <View style={styles.section}>
           {heading && <Text style={styles.heading}>{heading}</Text>}
           {content && <Text style={styles.content}>{content}</Text>}
 
-          {/* Sections */}
-          {sections?.map((section, index) => (
-            <View key={index} style={styles.subsection}>
-              {section.title && (
-                <Text style={styles.subheading}>{section.title}</Text>
-              )}
+          {/* Render Sections */}
+          {sections &&
+            sections.map((section, idx) => (
+              <View key={idx} style={styles.box}>
+                {section.title && (
+                  <Text style={styles.subheading}>{section.title}</Text>
+                )}
+                {section.bulletPoints &&
+                  section.bulletPoints.map((point, index) => (
+                    <Text key={index} style={styles.bulletPoint}>
+                      • {point}
+                    </Text>
+                  ))}
+              </View>
+            ))}
 
-              {section.subtitleBold && (
-                <Text style={styles.subtitleBold}>{section.subtitleBold}</Text>
+          {/* Render Bottom Text */}
+          {bottomText && (
+            <View style={styles.bottomSection}>
+              {bottomText.title && (
+                <Text style={styles.bottomTitle}>{bottomText.title}</Text>
               )}
-
-              {Array.isArray(section.bulletPoints) &&
-                section.bulletPoints.map((point, idx) => (
-                  <Text key={idx} style={styles.bulletPoint}>
+              {bottomText.content && (
+                <Text style={styles.bottomContent}>{bottomText.content}</Text>
+              )}
+              {bottomText.bulletPoints &&
+                bottomText.bulletPoints.map((point, index) => (
+                  <Text key={index} style={styles.bulletPoint}>
                     • {point}
                   </Text>
                 ))}
-
-              {Array.isArray(section.content) &&
-                section.content.map((item, idx) => (
-                  <View key={idx} style={styles.detailsSection}>
-                    {item.subtitle && (
-                      <Text style={styles.subtitle}>{item.subtitle}</Text>
-                    )}
-                    <Text style={styles.content}>{item.details}</Text>
-                  </View>
-                ))}
             </View>
-          ))}
+          )}
         </View>
       </ScrollView>
     );
@@ -93,11 +96,10 @@ const SecondTrimester = () => {
 
   return (
     <View style={styles.container}>
-      {/* Tabs */}
       <ScrollView
         horizontal
-        contentContainerStyle={styles.tabBarContent}
         style={styles.tabBar}
+        contentContainerStyle={styles.tabBarContent}
       >
         {Object.keys(translations).map((tab) => (
           <TouchableOpacity
@@ -121,8 +123,6 @@ const SecondTrimester = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-
-      {/* Render Content */}
       {renderContent()}
     </View>
   );
@@ -135,15 +135,16 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     backgroundColor: "#fff",
+    height: 50,
     borderBottomWidth: 1,
     borderColor: "#ddd",
   },
   tabBarContent: {
-    flexDirection: "row",
-    paddingVertical: 10,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   tabButton: {
-    marginHorizontal: 16,
+    paddingHorizontal: 20,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -160,24 +161,26 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   contentContainer: {
+    flexGrow: 1,
     padding: 16,
+    backgroundColor: "#fff",
   },
   image: {
     width: "100%",
     height: 200,
-    resizeMode: "cover",
-    borderRadius: 12,
     marginBottom: 16,
+    borderRadius: 12,
+    resizeMode: "cover",
   },
   section: {
     marginBottom: 16,
     padding: 16,
     borderRadius: 12,
-    backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
+    backgroundColor: "#fff",
   },
   heading: {
     fontSize: 22,
@@ -185,38 +188,52 @@ const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 10,
   },
-  subsection: {
-    marginTop: 12,
-  },
   subheading: {
     fontSize: 18,
     fontWeight: "600",
     color: "#444",
     marginVertical: 8,
   },
-  subtitle: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 6,
-    color: "#555",
-  },
-  subtitleBold: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#444",
-    marginBottom: 6,
-  },
   content: {
     fontSize: 16,
-    lineHeight: 22,
-    color: "#555",
+    lineHeight: 24,
+    color: "#333",
     marginBottom: 10,
   },
   bulletPoint: {
     fontSize: 16,
-    color: "#333",
+    color: "#555",
     marginVertical: 4,
+    paddingLeft: 10,
+  },
+  box: {
+    backgroundColor: "#f8f8f8",
+    borderRadius: 8,
+    padding: 12,
+    marginVertical: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  bottomSection: {
+    marginTop: 20,
+    padding: 16,
+    backgroundColor: "#E0F7FA",
+    borderRadius: 8,
+  },
+  bottomTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#6200EE",
+    marginBottom: 8,
+  },
+  bottomContent: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 8,
   },
 });
 
-export default SecondTrimester;
+export default ThirdTrimester;

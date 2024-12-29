@@ -9,18 +9,15 @@ import {
   Dimensions,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
-import { translations } from "../../translations/thirdTrimesterWGTranslation";
 import axios from "axios";
 
 const { width: screenWidth } = Dimensions.get("window");
 
+// Images for topics
 const topicImages = {
   nutrition: require("../../assets/NutritionWG.png"),
   sleep: require("../../assets/SleepWG.png"),
   exercise: require("../../assets/ExerciseWG.png"),
-  symptoms: require("../../assets/SymptomsWG.png"),
-  support: require("../../assets/secondTSymptoms.png"),
-  labor: require("../../assets/secondTSymptoms.png"),
 };
 
 const ThirdTrimester = () => {
@@ -28,6 +25,7 @@ const ThirdTrimester = () => {
   const [languagePreference, setLanguagePreference] = useState("English");
   const [activeTab, setActiveTab] = useState("nutrition");
 
+  // Fetch user language preference
   useEffect(() => {
     const fetchLanguagePreference = async () => {
       try {
@@ -43,26 +41,29 @@ const ThirdTrimester = () => {
   }, [userId]);
 
   const renderContent = () => {
-    const tabContent =
+    const activeContent =
       translations[activeTab]?.[languagePreference] ||
-      translations[activeTab]?.English ||
-      {};
-    const { heading, content, sections, bottomText } = tabContent;
+      translations[activeTab]?.English;
+
+    if (!activeContent) {
+      return <Text style={styles.errorText}>Content not found</Text>;
+    }
+
+    const { heading, content, sections, bottomText } = activeContent;
 
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        {/* Image */}
         <Image source={topicImages[activeTab]} style={styles.image} />
-        <View style={styles.section}>
+        <View style={styles.contentContainer}>
           {heading && <Text style={styles.heading}>{heading}</Text>}
           {content && <Text style={styles.content}>{content}</Text>}
 
           {/* Render Sections */}
-          {sections &&
+          {Array.isArray(sections) &&
             sections.map((section, idx) => (
-              <View key={idx} style={styles.box}>
-                {section.title && (
-                  <Text style={styles.subheading}>{section.title}</Text>
-                )}
+              <View key={idx} style={styles.section}>
+                <Text style={styles.subheading}>{section.title}</Text>
                 {section.bulletPoints &&
                   section.bulletPoints.map((point, index) => (
                     <Text key={index} style={styles.bulletPoint}>
@@ -75,13 +76,9 @@ const ThirdTrimester = () => {
           {/* Render Bottom Text */}
           {bottomText && (
             <View style={styles.bottomSection}>
-              {bottomText.title && (
-                <Text style={styles.bottomTitle}>{bottomText.title}</Text>
-              )}
-              {bottomText.content && (
-                <Text style={styles.bottomContent}>{bottomText.content}</Text>
-              )}
-              {bottomText.bulletPoints &&
+              <Text style={styles.bottomTitle}>{bottomText.title}</Text>
+              <Text style={styles.bottomContent}>{bottomText.content}</Text>
+              {Array.isArray(bottomText.bulletPoints) &&
                 bottomText.bulletPoints.map((point, index) => (
                   <Text key={index} style={styles.bulletPoint}>
                     • {point}
@@ -96,29 +93,45 @@ const ThirdTrimester = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        horizontal
-        style={styles.tabBar}
-        contentContainerStyle={styles.tabBarContent}
-      >
-        {Object.keys(translations).map((tab) => (
+      {/* Tabs */}
+      <ScrollView horizontal contentContainerStyle={styles.tabBar}>
+        {[
+          {
+            key: "nutrition",
+            label: languagePreference === "Español" ? "Nutrición" : "Nutrition",
+          },
+          {
+            key: "exercise",
+            label: languagePreference === "Español" ? "Ejercicio" : "Exercise",
+          },
+          {
+            key: "symptoms",
+            label: languagePreference === "Español" ? "Sintòmas" : "Symptoms",
+          },
+          {
+            key: "support",
+            label: languagePreference === "Español" ? "Apoyo" : "Support",
+          },
+          {
+            key: "labor",
+            label: languagePreference === "Español" ? "Parto" : "Labor Prep",
+          },
+        ].map((tab) => (
           <TouchableOpacity
-            key={tab}
-            onPress={() => setActiveTab(tab)}
+            key={tab.key}
+            onPress={() => setActiveTab(tab.key)}
             style={[
               styles.tabButton,
-              activeTab === tab && styles.activeTabButton,
+              activeTab === tab.key && styles.activeTabButton,
             ]}
           >
             <Text
               style={[
                 styles.tabText,
-                activeTab === tab && styles.activeTabText,
+                activeTab === tab.key && styles.activeTabText,
               ]}
             >
-              {languagePreference === "Español"
-                ? translations[tab]?.Español?.tabName
-                : translations[tab]?.English?.tabName}
+              {tab.label}
             </Text>
           </TouchableOpacity>
         ))}
@@ -129,99 +142,51 @@ const ThirdTrimester = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f8f8f8",
-  },
-  tabBar: {
-    backgroundColor: "#fff",
-    height: 50,
-    borderBottomWidth: 1,
-    borderColor: "#ddd",
-  },
-  tabBarContent: {
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  tabButton: {
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  activeTabButton: {
-    borderBottomWidth: 2,
-    borderBottomColor: "#6200EE",
-  },
-  tabText: {
-    fontSize: 16,
-    color: "#777",
-  },
-  activeTabText: {
-    color: "#6200EE",
-    fontWeight: "bold",
-  },
-  contentContainer: {
-    flexGrow: 1,
-    padding: 16,
-    backgroundColor: "#fff",
-  },
-  image: {
-    width: "100%",
-    height: 200,
-    marginBottom: 16,
-    borderRadius: 12,
-    resizeMode: "cover",
-  },
-  section: {
-    marginBottom: 16,
-    padding: 16,
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-    backgroundColor: "#fff",
-  },
+  container: { flex: 1, backgroundColor: "#fff" },
+  image: { width: screenWidth, height: 200, resizeMode: "cover" },
+  contentContainer: { padding: 16 },
   heading: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
-    color: "#333",
+    color: "#6200EE",
     marginBottom: 10,
   },
-  subheading: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#444",
-    marginVertical: 8,
-  },
-  content: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: "#333",
-    marginBottom: 10,
-  },
+  subheading: { fontSize: 18, fontWeight: "600", marginTop: 10 },
   bulletPoint: {
     fontSize: 16,
-    color: "#555",
     marginVertical: 4,
+    color: "#555",
     paddingLeft: 10,
   },
-  box: {
+  content: { fontSize: 16, marginBottom: 12, color: "#555" },
+  tabBar: {
+    flexDirection: "row",
+    paddingVertical: 10,
     backgroundColor: "#f8f8f8",
-    borderRadius: 8,
-    padding: 12,
-    marginVertical: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
-  bottomSection: {
+  tabButton: { marginHorizontal: 10, paddingBottom: 5 },
+  activeTabButton: { borderBottomWidth: 2, borderBottomColor: "#6200EE" },
+  tabText: { fontSize: 16, color: "#777" },
+  activeTabText: { color: "#6200EE", fontWeight: "bold" },
+  section: { marginVertical: 8 },
+  bottomText: {
     marginTop: 20,
-    padding: 16,
+    padding: 12,
     backgroundColor: "#E0F7FA",
     borderRadius: 8,
+  },
+  nuggetTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#00796B",
+    marginBottom: 8,
+  },
+  nuggetContent: { fontSize: 16, color: "#004D40" },
+  bottomSection: {
+    marginTop: 20,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
   },
   bottomTitle: {
     fontSize: 20,
@@ -233,6 +198,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#555",
     marginBottom: 8,
+  },
+  bulletPoint: {
+    fontSize: 16,
+    marginVertical: 4,
+    color: "#555",
+    paddingLeft: 10,
   },
 });
 
