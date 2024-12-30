@@ -97,7 +97,7 @@ const translations = {
       title: "Soporte de Aplicación",
       description:
         "¿Necesita ayuda con la aplicación? Comuníquese con nosotros por correo electrónico.",
-      button: "Escríbenos",
+      button: "Contacto partumApp@gmail.com",
     },
   },
 };

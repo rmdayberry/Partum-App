@@ -6,50 +6,17 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
-  Alert,
 } from "react-native";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 
 const openDialer = (phoneNumber) => {
-  const url = `tel:${phoneNumber}`;
-  Linking.canOpenURL(url)
-    .then((supported) => {
-      if (!supported) {
-        Alert.alert("Error", "Your device does not support phone calls.");
-      } else {
-        return Linking.openURL(url);
-      }
-    })
-    .catch((err) => {
-      console.error("An error occurred while trying to open the dialer:", err);
-      Alert.alert(
-        "Error",
-        "Unable to open the phone dialer. Please try again."
-      );
-    });
+  Linking.openURL(`tel:${phoneNumber}`);
 };
 
 const openEmail = (email) => {
-  const url = `mailto:${email}`;
-  Linking.canOpenURL(url)
-    .then((supported) => {
-      if (!supported) {
-        Alert.alert("Error", "Your device does not support email clients.");
-      } else {
-        return Linking.openURL(url);
-      }
-    })
-    .catch((err) => {
-      console.error(
-        "An error occurred while trying to open the email client:",
-        err
-      );
-      Alert.alert(
-        "Error",
-        "Unable to open the email client. Please try again."
-      );
-    });
+  Linking.openURL(`mailto:${email}`);
 };
+
 const translations = {
   English: {
     title: "Get Support",
@@ -57,7 +24,7 @@ const translations = {
     clinicName: "Riverland Community Health",
     clinicSubtitle: "Peter J. King Family Health Center",
     address: "1026 7th St W, St Paul, MN 55102",
-    callButton: "Call Clinic",
+    callButton: "Call: 651-758-9500",
     clinicDetails:
       "Phones are answered 24 hours a day. Language assistance is available after hours. Ask for AT&T language line assistance.",
     hours: {
@@ -71,7 +38,7 @@ const translations = {
     appSupport: {
       title: "For App Support",
       description: "Need help with the app? Reach out to us via email.",
-      button: "Email Us",
+      button: "Contact: partumApp@gmail.com",
     },
   },
   Español: {
@@ -80,7 +47,7 @@ const translations = {
     clinicName: "Salud Comunitaria Riverland",
     clinicSubtitle: "Centro de Salud Familiar Peter J. King",
     address: "1026 7th St W, St Paul, MN 55102",
-    callButton: "Llamar a la Clínica",
+    callButton: "Llamar: 651-758-9500",
     clinicDetails:
       "Los teléfonos están disponibles las 24 horas del día. La asistencia lingüística está disponible después del horario laboral. Solicite asistencia de línea de idiomas AT&T.",
     hours: {
@@ -97,7 +64,7 @@ const translations = {
       title: "Soporte de Aplicación",
       description:
         "¿Necesita ayuda con la aplicación? Comuníquese con nosotros por correo electrónico.",
-      button: "Escríbenos",
+      button: "Contacto: partumApp@gmail.com",
     },
   },
 };
@@ -124,7 +91,6 @@ const GetSupport = () => {
           >
             <Text style={styles.buttonText}>{texts.callButton}</Text>
           </TouchableOpacity>
-          <Text style={styles.cardDescription}>{texts.clinicDetails}</Text>
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>{texts.hours.title}</Text>
             <Text style={styles.sectionText}>{texts.hours.clinic}</Text>

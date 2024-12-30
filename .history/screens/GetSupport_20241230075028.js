@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -6,50 +6,17 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
-  Alert,
 } from "react-native";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 
 const openDialer = (phoneNumber) => {
-  const url = `tel:${phoneNumber}`;
-  Linking.canOpenURL(url)
-    .then((supported) => {
-      if (!supported) {
-        Alert.alert("Error", "Your device does not support phone calls.");
-      } else {
-        return Linking.openURL(url);
-      }
-    })
-    .catch((err) => {
-      console.error("An error occurred while trying to open the dialer:", err);
-      Alert.alert(
-        "Error",
-        "Unable to open the phone dialer. Please try again."
-      );
-    });
+  Linking.openURL(`tel:${phoneNumber}`);
 };
 
 const openEmail = (email) => {
-  const url = `mailto:${email}`;
-  Linking.canOpenURL(url)
-    .then((supported) => {
-      if (!supported) {
-        Alert.alert("Error", "Your device does not support email clients.");
-      } else {
-        return Linking.openURL(url);
-      }
-    })
-    .catch((err) => {
-      console.error(
-        "An error occurred while trying to open the email client:",
-        err
-      );
-      Alert.alert(
-        "Error",
-        "Unable to open the email client. Please try again."
-      );
-    });
+  Linking.openURL(`mailto:${email}`);
 };
+
 const translations = {
   English: {
     title: "Get Support",
@@ -57,7 +24,7 @@ const translations = {
     clinicName: "Riverland Community Health",
     clinicSubtitle: "Peter J. King Family Health Center",
     address: "1026 7th St W, St Paul, MN 55102",
-    callButton: "Call Clinic",
+    callButton: "Call: 651-758-9500",
     clinicDetails:
       "Phones are answered 24 hours a day. Language assistance is available after hours. Ask for AT&T language line assistance.",
     hours: {
@@ -71,7 +38,7 @@ const translations = {
     appSupport: {
       title: "For App Support",
       description: "Need help with the app? Reach out to us via email.",
-      button: "Email Us",
+      button: "Contact: partumApp@gmail.com",
     },
   },
   Español: {
@@ -80,7 +47,7 @@ const translations = {
     clinicName: "Salud Comunitaria Riverland",
     clinicSubtitle: "Centro de Salud Familiar Peter J. King",
     address: "1026 7th St W, St Paul, MN 55102",
-    callButton: "Llamar a la Clínica",
+    callButton: "Llamar: 651-758-9500",
     clinicDetails:
       "Los teléfonos están disponibles las 24 horas del día. La asistencia lingüística está disponible después del horario laboral. Solicite asistencia de línea de idiomas AT&T.",
     hours: {
@@ -97,55 +64,71 @@ const translations = {
       title: "Soporte de Aplicación",
       description:
         "¿Necesita ayuda con la aplicación? Comuníquese con nosotros por correo electrónico.",
-      button: "Escríbenos",
+      button: "Contacto: partumApp@gmail.com",
     },
   },
 };
 
 const GetSupport = () => {
-  const { languagePreference } = useContext(UserContext);
-  const texts = translations[languagePreference] || translations.English;
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{texts.title}</Text>
-        <Text style={styles.subtitle}>{texts.subtitle}</Text>
+        <Text style={styles.title}>Get Support</Text>
+        <Text style={styles.subtitle}>
+          Reach out for help when you need it most
+        </Text>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
         {/* Clinic Info */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>{texts.clinicName}</Text>
-          <Text style={styles.cardSubtitle}>{texts.clinicSubtitle}</Text>
-          <Text style={styles.cardAddress}>{texts.address}</Text>
+          <Text style={styles.cardTitle}>Riverland Community Health</Text>
+          <Text style={styles.cardSubtitle}>
+            Peter J. King Family Health Center
+          </Text>
+          <Text style={styles.cardAddress}>
+            1026 7th St W, St Paul, MN 55102
+          </Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => openDialer("6517589500")}
           >
-            <Text style={styles.buttonText}>{texts.callButton}</Text>
+            <Text style={styles.buttonText}>Call: 651-758-9500</Text>
           </TouchableOpacity>
-          <Text style={styles.cardDescription}>{texts.clinicDetails}</Text>
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{texts.hours.title}</Text>
-            <Text style={styles.sectionText}>{texts.hours.clinic}</Text>
-            <Text style={styles.sectionText}>{texts.hours.scheduling}</Text>
-            <Text style={styles.sectionText}>{texts.hours.pharmacy}</Text>
-            <Text style={styles.sectionText}>{texts.hours.afterHours}</Text>
-            <Text style={styles.sectionText}>{texts.hours.nurseLine}</Text>
+            <Text style={styles.sectionText}>
+              Phones are answered 24 hours a day. Language assistance is
+              available after hours. Ask for AT&T language line assistance.
+            </Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Hours:</Text>
+            <Text style={styles.sectionText}>
+              • Clinic Visits & Telehealth: Mon - Fri, 8:00 AM - 5:00 PM
+            </Text>
+            <Text style={styles.sectionText}>
+              • Scheduling: Mon - Fri, 7:30 AM - 5:00 PM
+            </Text>
+            <Text style={styles.sectionText}>
+              • Pharmacy: Mon - Fri, 8:30 AM - 5:00 PM
+            </Text>
+            <Text style={styles.sectionText}>
+              • After Hours Care Line: Mon - Fri, 5:00 PM - 8:00 AM
+            </Text>
+            <Text style={styles.sectionText}>• 24/7 Nurse Triage Line</Text>
           </View>
         </View>
 
         {/* App Support */}
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>{texts.appSupport.title}</Text>
+          <Text style={styles.cardTitle}>For App Support</Text>
           <Text style={styles.cardDescription}>
-            {texts.appSupport.description}
+            Need help with the app? Reach out to us via email.
           </Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => openEmail("partumApp@gmail.com")}
           >
-            <Text style={styles.buttonText}>{texts.appSupport.button}</Text>
+            <Text style={styles.buttonText}>Contact: partumApp@gmail.com</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
