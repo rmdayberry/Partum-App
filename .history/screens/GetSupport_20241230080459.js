@@ -10,31 +10,34 @@ import {
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
 
-const openDialer = (phoneNumber) => {
+const openDialer = (phoneNumber, languagePreference) => {
+  const texts =
+    translations.general[languagePreference] || translations.general.English;
+
   const url = `tel:${phoneNumber}`;
   Linking.canOpenURL(url)
     .then((supported) => {
       if (!supported) {
-        Alert.alert("Error", "Your device does not support phone calls.");
+        Alert.alert(texts.errorTitle, texts.phoneError.noSupport);
       } else {
         return Linking.openURL(url);
       }
     })
     .catch((err) => {
       console.error("An error occurred while trying to open the dialer:", err);
-      Alert.alert(
-        "Error",
-        "Unable to open the phone dialer. Please try again."
-      );
+      Alert.alert(texts.errorTitle, texts.phoneError.unableToOpen);
     });
 };
 
-const openEmail = (email) => {
+const openEmail = (email, languagePreference) => {
+  const texts =
+    translations.general[languagePreference] || translations.general.English;
+
   const url = `mailto:${email}`;
   Linking.canOpenURL(url)
     .then((supported) => {
       if (!supported) {
-        Alert.alert("Error", "Your device does not support email clients.");
+        Alert.alert(texts.errorTitle, texts.emailError.noSupport);
       } else {
         return Linking.openURL(url);
       }
@@ -44,10 +47,7 @@ const openEmail = (email) => {
         "An error occurred while trying to open the email client:",
         err
       );
-      Alert.alert(
-        "Error",
-        "Unable to open the email client. Please try again."
-      );
+      Alert.alert(texts.errorTitle, texts.emailError.unableToOpen);
     });
 };
 const translations = {
@@ -57,7 +57,7 @@ const translations = {
     clinicName: "Riverland Community Health",
     clinicSubtitle: "Peter J. King Family Health Center",
     address: "1026 7th St W, St Paul, MN 55102",
-    callButton: "Call Clinic",
+    callButton: "Call: 651-758-9500",
     clinicDetails:
       "Phones are answered 24 hours a day. Language assistance is available after hours. Ask for AT&T language line assistance.",
     hours: {
@@ -71,7 +71,16 @@ const translations = {
     appSupport: {
       title: "For App Support",
       description: "Need help with the app? Reach out to us via email.",
-      button: "Email Us",
+      button: "Contact: partumApp@gmail.com",
+    },
+    errorTitle: "Error",
+    phoneError: {
+      noSupport: "Your device does not support phone calls.",
+      unableToOpen: "Unable to open the phone dialer. Please try again.",
+    },
+    emailError: {
+      noSupport: "Your device does not support email clients.",
+      unableToOpen: "Unable to open the email client. Please try again.",
     },
   },
   Español: {
@@ -80,7 +89,7 @@ const translations = {
     clinicName: "Salud Comunitaria Riverland",
     clinicSubtitle: "Centro de Salud Familiar Peter J. King",
     address: "1026 7th St W, St Paul, MN 55102",
-    callButton: "Llamar a la Clínica",
+    callButton: "Llamar: 651-758-9500",
     clinicDetails:
       "Los teléfonos están disponibles las 24 horas del día. La asistencia lingüística está disponible después del horario laboral. Solicite asistencia de línea de idiomas AT&T.",
     hours: {
@@ -97,7 +106,18 @@ const translations = {
       title: "Soporte de Aplicación",
       description:
         "¿Necesita ayuda con la aplicación? Comuníquese con nosotros por correo electrónico.",
-      button: "Escríbenos",
+      button: "Contacto: partumApp@gmail.com",
+    },
+    errorTitle: "Error",
+    phoneError: {
+      noSupport: "Tu dispositivo no admite llamadas telefónicas.",
+      unableToOpen:
+        "No se puede abrir el marcador telefónico. Por favor, inténtalo de nuevo.",
+    },
+    emailError: {
+      noSupport: "Tu dispositivo no admite clientes de correo electrónico.",
+      unableToOpen:
+        "No se puede abrir el cliente de correo electrónico. Por favor, inténtalo de nuevo.",
     },
   },
 };
@@ -120,9 +140,9 @@ const GetSupport = () => {
           <Text style={styles.cardAddress}>{texts.address}</Text>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => openDialer("6517589500")}
+            onPress={() => openDialer("6517589500", languagePreference)}
           >
-            <Text style={styles.buttonText}>{texts.callButton}</Text>
+            <Text style={styles.buttonText}>Call Clinic</Text>
           </TouchableOpacity>
           <Text style={styles.cardDescription}>{texts.clinicDetails}</Text>
           <View style={styles.section}>

@@ -71,7 +71,7 @@ const translations = {
     appSupport: {
       title: "For App Support",
       description: "Need help with the app? Reach out to us via email.",
-      button: "Email Us",
+      button: "Contact: partumApp@gmail.com",
     },
   },
   Español: {
@@ -80,7 +80,7 @@ const translations = {
     clinicName: "Salud Comunitaria Riverland",
     clinicSubtitle: "Centro de Salud Familiar Peter J. King",
     address: "1026 7th St W, St Paul, MN 55102",
-    callButton: "Llamar a la Clínica",
+    callButton: "Llamar",
     clinicDetails:
       "Los teléfonos están disponibles las 24 horas del día. La asistencia lingüística está disponible después del horario laboral. Solicite asistencia de línea de idiomas AT&T.",
     hours: {
@@ -97,7 +97,7 @@ const translations = {
       title: "Soporte de Aplicación",
       description:
         "¿Necesita ayuda con la aplicación? Comuníquese con nosotros por correo electrónico.",
-      button: "Escríbenos",
+      button: "Contacto: partumApp@gmail.com",
     },
   },
 };

@@ -71,7 +71,7 @@ const translations = {
     appSupport: {
       title: "For App Support",
       description: "Need help with the app? Reach out to us via email.",
-      button: "Email Us",
+      button: "Contact: partumApp@gmail.com",
     },
   },
   Español: {
@@ -97,7 +97,7 @@ const translations = {
       title: "Soporte de Aplicación",
       description:
         "¿Necesita ayuda con la aplicación? Comuníquese con nosotros por correo electrónico.",
-      button: "Escríbenos",
+      button: "Contacto: partumApp@gmail.com",
     },
   },
 };
