@@ -12,9 +12,6 @@ import bleeding from "../features/symptomData/bleeding";
 import diarrheaAndVomiting from "../features/symptomData/diarrheaAndVomitting";
 import discharge from "../features/symptomData/discharge";
 import headaches from "../features/symptomData/headaches";
-import fever from "../features/symptomData/fever";
-import itching from "../features/symptomData/itching";
-import babyMovements from "../features/symptomData/babyMovements";
 
 const SymptomChecker = () => {
   const [symptoms] = useState([
@@ -22,9 +19,6 @@ const SymptomChecker = () => {
     diarrheaAndVomiting,
     discharge,
     headaches,
-    fever,
-    itching,
-    babyMovements,
   ]); // Static symptoms array
   const [selectedSymptom, setSelectedSymptom] = useState(null);
   const [language, setLanguage] = useState("en"); // Default language

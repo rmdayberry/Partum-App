@@ -10,22 +10,9 @@ import {
 } from "react-native";
 import bleeding from "../features/symptomData/bleeding";
 import diarrheaAndVomiting from "../features/symptomData/diarrheaAndVomitting";
-import discharge from "../features/symptomData/discharge";
-import headaches from "../features/symptomData/headaches";
-import fever from "../features/symptomData/fever";
-import itching from "../features/symptomData/itching";
-import babyMovements from "../features/symptomData/babyMovements";
 
 const SymptomChecker = () => {
-  const [symptoms] = useState([
-    bleeding,
-    diarrheaAndVomiting,
-    discharge,
-    headaches,
-    fever,
-    itching,
-    babyMovements,
-  ]); // Static symptoms array
+  const [symptoms] = useState([bleeding]); // Static symptoms array
   const [selectedSymptom, setSelectedSymptom] = useState(null);
   const [language, setLanguage] = useState("en"); // Default language
 
@@ -55,11 +42,11 @@ const SymptomChecker = () => {
         </View>
       ))}
       <View style={styles.adviceContainer}>
-        <Text style={styles.adviceHeader}>Advice</Text>
+        <Text style={styles.adviceHeader}>General Advice</Text>
         <Text style={styles.adviceText}>
           {symptom.advice?.general?.[language] || "No General Advice Available"}
         </Text>
-        <Text style={styles.adviceHeader}>Emergency</Text>
+        <Text style={styles.adviceHeader}>Emergency Advice</Text>
         <Text style={styles.adviceText}>
           {symptom.advice?.emergency?.[language] ||
             "No Emergency Advice Available"}

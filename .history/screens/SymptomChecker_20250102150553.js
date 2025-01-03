@@ -9,34 +9,21 @@ import {
   SafeAreaView,
 } from "react-native";
 import bleeding from "../features/symptomData/bleeding";
-import diarrheaAndVomiting from "../features/symptomData/diarrheaAndVomitting";
-import discharge from "../features/symptomData/discharge";
-import headaches from "../features/symptomData/headaches";
-import fever from "../features/symptomData/fever";
-import itching from "../features/symptomData/itching";
-import babyMovements from "../features/symptomData/babyMovements";
 
 const SymptomChecker = () => {
-  const [symptoms] = useState([
-    bleeding,
-    diarrheaAndVomiting,
-    discharge,
-    headaches,
-    fever,
-    itching,
-    babyMovements,
-  ]); // Static symptoms array
+  const [symptoms] = useState([bleeding]); // Static symptoms array
   const [selectedSymptom, setSelectedSymptom] = useState(null);
-  const [language, setLanguage] = useState("en"); // Default language
+  const [language, setLanguage] = useState("en"); // Replace with user preference
 
   const renderSymptomDetails = (symptom) => (
     <ScrollView contentContainerStyle={styles.details}>
       <Text style={styles.heading}>
-        {symptom.symptom?.[language] || "No Title Available"}
+        {symptom.symptom || "No Title Available"}
       </Text>
       <Text style={styles.content}>
         {symptom.overview?.[language] || "Overview not available"}
       </Text>
+
       {symptom.categories?.map((category, index) => (
         <View key={index} style={styles.categoryContainer}>
           <Text style={styles.categoryTitle}>
@@ -54,17 +41,19 @@ const SymptomChecker = () => {
           ))}
         </View>
       ))}
+
       <View style={styles.adviceContainer}>
-        <Text style={styles.adviceHeader}>Advice</Text>
+        <Text style={styles.adviceHeader}>General Advice</Text>
         <Text style={styles.adviceText}>
           {symptom.advice?.general?.[language] || "No General Advice Available"}
         </Text>
-        <Text style={styles.adviceHeader}>Emergency</Text>
+        <Text style={styles.adviceHeader}>Emergency Advice</Text>
         <Text style={styles.adviceText}>
           {symptom.advice?.emergency?.[language] ||
             "No Emergency Advice Available"}
         </Text>
       </View>
+
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => setSelectedSymptom(null)}
@@ -80,7 +69,7 @@ const SymptomChecker = () => {
       onPress={() => setSelectedSymptom(item)}
     >
       <Text style={styles.itemText}>
-        {item.symptom?.[language] || "No Title Available"}
+        {item.symptom || "No Title Available"}
       </Text>
     </TouchableOpacity>
   );
@@ -92,7 +81,7 @@ const SymptomChecker = () => {
       ) : (
         <FlatList
           data={symptoms}
-          keyExtractor={(item) => item.symptom.en} // Assuming `en` is always present for unique keys
+          keyExtractor={(item) => item.symptom}
           renderItem={renderSymptomItem}
           contentContainerStyle={styles.list}
         />
