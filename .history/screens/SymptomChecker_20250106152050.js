@@ -16,9 +16,6 @@ import fever from "../features/symptomData/fever";
 import itching from "../features/symptomData/itching";
 import babyMovements from "../features/symptomData/babyMovements";
 import painfulUrination from "../features/symptomData/painfulUrination";
-import abdominalPain from "../features/symptomData/abdominalPain";
-import swelling from "../features/symptomData/swelling";
-import visionProblems from "../features/symptomData/visionProblems";
 
 const SymptomChecker = () => {
   const [symptoms] = useState([
@@ -30,9 +27,6 @@ const SymptomChecker = () => {
     itching,
     babyMovements,
     painfulUrination,
-    abdominalPain,
-    swelling,
-    visionProblems,
   ]);
   const [selectedSymptom, setSelectedSymptom] = useState(null);
   const [language, setLanguage] = useState("en"); // Default language
