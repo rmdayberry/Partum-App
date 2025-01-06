@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   backButton: {
     marginTop: 24,
     paddingVertical: 14,
-    backgroundColor: "#8E44AD",
+    backgroundColor: "#8E44AD", // Accent color (purple, aligned with app theme)
     borderRadius: 10,
   },
   buttonText: {

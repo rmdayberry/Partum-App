@@ -112,7 +112,7 @@ const SymptomChecker = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8F9FA", // Soft neutral background
+    backgroundColor: "#E0F7FA", // Light gradient or solid color
   },
   list: {
     padding: 16,
@@ -121,52 +121,56 @@ const styles = StyleSheet.create({
     padding: 16,
     marginVertical: 8,
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: "#26C6DA", // Teal accent
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 3,
+    elevation: 5,
   },
   itemText: {
     fontSize: 18,
-    color: "#333333", // Neutral text color
-    fontWeight: "600",
+    color: "#006064", // Teal shade
+    fontWeight: "700",
   },
   details: {
     padding: 16,
     backgroundColor: "#FFFFFF",
-    borderRadius: 10,
+    borderRadius: 12,
     margin: 16,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.1,
     shadowRadius: 6,
-    elevation: 5,
+    elevation: 6,
   },
   heading: {
-    fontSize: 24,
-    fontWeight: "700",
+    fontSize: 28,
+    fontWeight: "800",
     marginBottom: 16,
-    color: "#2C3E50", // Darker neutral
+    color: "#00796B", // Darker teal
   },
   content: {
     fontSize: 16,
     marginBottom: 20,
     lineHeight: 24,
-    color: "#4A4A4A", // Neutral tone
+    color: "#4A4A4A",
   },
   categoryCard: {
     marginBottom: 20,
     padding: 16,
-    backgroundColor: "#F4F4F4",
-    borderRadius: 10,
+    backgroundColor: "#E3F2FD",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#42A5F5",
   },
   categoryTitle: {
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 22,
+    fontWeight: "700",
     marginBottom: 12,
-    color: "#34495E", // Slightly dark neutral
+    color: "#1565C0", // Blue accent
   },
   sectionCard: {
     marginBottom: 12,
@@ -176,46 +180,46 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 3,
+    shadowRadius: 2,
     elevation: 3,
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: "500",
-    color: "#7F8C8D", // Subtle neutral
+    fontWeight: "600",
+    color: "#3949AB", // Indigo accent
   },
   sectionContent: {
     fontSize: 16,
     lineHeight: 22,
-    color: "#626567", // Subtle tone
+    color: "#616161", // Neutral tone
   },
   adviceContainer: {
     marginTop: 24,
     padding: 16,
-    backgroundColor: "#EAECEE", // Very light neutral
-    borderRadius: 10,
+    backgroundColor: "#FFECB3", // Warm background
+    borderRadius: 12,
   },
   adviceHeader: {
     fontSize: 18,
-    fontWeight: "600",
+    fontWeight: "700",
     marginBottom: 8,
-    color: "#2C3E50", // Slightly darker
+    color: "#F57F17", // Orange shade
   },
   adviceText: {
     fontSize: 16,
     lineHeight: 22,
-    color: "#4A4A4A",
+    color: "#795548",
   },
   backButton: {
     marginTop: 24,
     paddingVertical: 14,
-    backgroundColor: "#8E44AD",
-    borderRadius: 10,
+    backgroundColor: "#0288D1", // Vibrant blue
+    borderRadius: 12,
   },
   buttonText: {
     color: "#FFFFFF",
     textAlign: "center",
-    fontWeight: "600",
+    fontWeight: "700",
   },
 });
 
