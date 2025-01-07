@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF", // Clean white for item background
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: "#68478C", // Deep purple for subtle card borders
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -186,22 +186,22 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
-    color: "#4A4A4A",
+    color: "#8D82FA", // Soft purple for item text
     fontWeight: "600",
   },
   details: {
     padding: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Maintain clean details background
   },
   backButton: {
     marginBottom: 16,
     padding: 12,
-    backgroundColor: "#8D82FA",
+    backgroundColor: "#DD4286", // Pink for a vibrant back button
     borderRadius: 8,
     alignSelf: "flex-start",
   },
   backButtonText: {
-    color: "#FFFFFF",
+    color: "#FFFFFF", // White text for the back button
     fontSize: 16,
     fontWeight: "600",
   },
@@ -209,14 +209,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "700",
     marginBottom: 16,
-    color: "#2A4B68", // Deep purple for main headings
+    color: "#68478C", // Deep purple for main headings
     textAlign: "center",
-    fontFamily: FontFamily.montserrat,
+    fontFamily: Helvetica,
   },
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#4A4A4A",
+    color: "#000", // Subtle pink-purple for body text
     marginBottom: 20,
     fontFamily: FontFamily.montserrat,
   },
@@ -245,18 +245,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF", // Clean white for sections
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: "#68478C", // Deep purple for section borders
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#727272", // Subtle gray for section titles
+    color: "#B5448A", // Muted pink-purple for section titles
     fontFamily: FontFamily.montserrat,
   },
   sectionContent: {
     fontSize: 16,
     lineHeight: 22,
-    color: "#4A4A4A", // Neutral color for section content
+    color: "#4A4A4A", // Dark gray for section content
     fontFamily: FontFamily.montserrat,
   },
   adviceContainer: {
@@ -271,9 +271,9 @@ const styles = StyleSheet.create({
   },
   adviceHeader: {
     fontSize: 18,
-    fontWeight: "700", // Heavier font weight
+    fontWeight: "600",
     marginBottom: 8,
-    color: "#4A4A4A", // Light black/gray color
+    color: "#DD4286", // Pink for advice headers
     fontFamily: FontFamily.montserrat,
   },
   adviceText: {

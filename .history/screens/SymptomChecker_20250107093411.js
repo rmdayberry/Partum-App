@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
-    color: "#4A4A4A",
+    color: "#374E6C", // Professional tone for item text
     fontWeight: "600",
   },
   details: {
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#4A4A4A",
+    color: "#4A4A4A", // Subtle text for body
     marginBottom: 20,
     fontFamily: FontFamily.montserrat,
   },

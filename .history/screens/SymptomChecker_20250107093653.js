@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
-    color: "#4A4A4A",
+    color: "#374E6C",
     fontWeight: "600",
   },
   details: {

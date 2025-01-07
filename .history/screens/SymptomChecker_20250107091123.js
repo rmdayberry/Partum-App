@@ -145,13 +145,13 @@ const SymptomChecker = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FBFD", // Light neutral background
+    backgroundColor: "#F5FAFF", // Light blue-gray for a refreshing look
   },
   header: {
     padding: 20,
-    backgroundColor: "#8D82FA", // Soft purple for the header
+    backgroundColor: "#3E8E9C", // Teal accent for the header
     borderBottomWidth: 1,
-    borderBottomColor: "#68478C",
+    borderBottomColor: "#DCE3EB",
     marginBottom: 16,
   },
   title: {
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     fontWeight: "400",
-    color: "#EDECFD", // Muted white for subtitle
+    color: "#E3F2F5", // Slightly muted white for the subtitle
     textAlign: "center",
     marginTop: 8,
     fontFamily: FontFamily.montserrat,
@@ -175,10 +175,10 @@ const styles = StyleSheet.create({
   item: {
     padding: 16,
     marginVertical: 8,
-    backgroundColor: "#FFFFFF", // Clean white for item background
+    backgroundColor: "#FFFFFF", // Clean white for items
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: "#DCE3EB",
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -186,37 +186,46 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
-    color: "#4A4A4A",
+    color: "#3E8E9C", // Teal for emphasis
     fontWeight: "600",
   },
   details: {
     padding: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Maintain clean details area
   },
   backButton: {
     marginBottom: 16,
     padding: 12,
-    backgroundColor: "#8D82FA",
+    backgroundColor: "#FF6F61", // Coral for a pop of color
     borderRadius: 8,
     alignSelf: "flex-start",
   },
   backButtonText: {
-    color: "#FFFFFF",
+    color: "#FFFFFF", // White text for the back button
     fontSize: 16,
     fontWeight: "600",
+  },
+  headerContainer: {
+    marginBottom: 16,
+    padding: 16,
+    backgroundColor: "#3E8E9C", // Teal gradient for a professional feel
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   heading: {
     fontSize: 24,
     fontWeight: "700",
-    marginBottom: 16,
-    color: "#2A4B68", // Deep purple for main headings
+    color: "#FFFFFF", // White text for better visibility
     textAlign: "center",
     fontFamily: FontFamily.montserrat,
   },
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#4A4A4A",
+    color: "#6C7A89", // Subtle gray for body text
     marginBottom: 20,
     fontFamily: FontFamily.montserrat,
   },
@@ -226,7 +235,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9FBFD", // Soft background for categories
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#68478C", // Deep purple for card borders
+    borderColor: "#DCE3EB",
     shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 4,
@@ -236,7 +245,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
     marginBottom: 12,
-    color: "#8D82FA", // Soft purple for category titles
+    color: "#2A4B68", // Dark slate for headings
     fontFamily: FontFamily.montserrat,
   },
   sectionCard: {
@@ -245,18 +254,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF", // Clean white for sections
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#E0E0E0",
+    borderColor: "#DCE3EB",
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#727272", // Subtle gray for section titles
+    color: "#6C7A89", // Muted text for secondary titles
     fontFamily: FontFamily.montserrat,
   },
   sectionContent: {
     fontSize: 16,
     lineHeight: 22,
-    color: "#4A4A4A", // Neutral color for section content
+    color: "#4A4A4A", // Darker gray for content
     fontFamily: FontFamily.montserrat,
   },
   adviceContainer: {
@@ -271,15 +280,15 @@ const styles = StyleSheet.create({
   },
   adviceHeader: {
     fontSize: 18,
-    fontWeight: "700", // Heavier font weight
+    fontWeight: "600",
     marginBottom: 8,
-    color: "#4A4A4A", // Light black/gray color
+    color: "#3E8E9C", // Teal for headers
     fontFamily: FontFamily.montserrat,
   },
   adviceText: {
     fontSize: 16,
     lineHeight: 22,
-    color: "#6C7A89", // Subtle gray for advice text
+    color: "#6C7A89", // Muted gray for advice text
     fontFamily: FontFamily.montserrat,
   },
 });

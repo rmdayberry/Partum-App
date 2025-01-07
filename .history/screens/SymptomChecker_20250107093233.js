@@ -186,22 +186,22 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
-    color: "#4A4A4A",
+    color: "#374E6C", // Professional tone for item text
     fontWeight: "600",
   },
   details: {
     padding: 16,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#FFFFFF", // Maintain clean details background
   },
   backButton: {
     marginBottom: 16,
     padding: 12,
-    backgroundColor: "#8D82FA",
+    backgroundColor: "#DD4286", // Pink for a vibrant back button
     borderRadius: 8,
     alignSelf: "flex-start",
   },
   backButtonText: {
-    color: "#FFFFFF",
+    color: "#FFFFFF", // White text for the back button
     fontSize: 16,
     fontWeight: "600",
   },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   content: {
     fontSize: 16,
     lineHeight: 24,
-    color: "#4A4A4A",
+    color: "#4A4A4A", // Subtle text for body
     marginBottom: 20,
     fontFamily: FontFamily.montserrat,
   },

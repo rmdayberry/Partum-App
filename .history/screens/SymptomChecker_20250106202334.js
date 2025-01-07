@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  Animated,
 } from "react-native";
-import { UserContext } from "../contexts/UserContext";
 import bleeding from "../features/symptomData/bleeding";
 import diarrheaAndVomiting from "../features/symptomData/diarrheaAndVomitting";
 import discharge from "../features/symptomData/discharge";
@@ -20,7 +20,7 @@ import painfulUrination from "../features/symptomData/painfulUrination";
 import abdominalPain from "../features/symptomData/abdominalPain";
 import swelling from "../features/symptomData/swelling";
 import visionProblems from "../features/symptomData/visionProblems";
-import { Color, FontFamily, FontSize } from "../GlobalStyles";
+import { UserContext } from "../contexts/UserContext";
 
 const pageTitle = {
   en: "Symptom Checker",
@@ -48,27 +48,18 @@ const SymptomChecker = () => {
 
   const renderSymptomDetails = (symptom) => (
     <ScrollView contentContainerStyle={styles.details}>
-      {/* Back Button */}
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => setSelectedSymptom(null)}
       >
         <Text style={styles.backButtonText}>← Back</Text>
       </TouchableOpacity>
-
-      {/* Header Section */}
-      <View style={styles.headerContainer}>
-        <Text style={styles.heading}>
-          {symptom.symptom?.[language] || "No Title Available"}
-        </Text>
-      </View>
-
-      {/* Overview */}
+      <Text style={styles.heading}>
+        {symptom.symptom?.[language] || "No Title Available"}
+      </Text>
       <Text style={styles.content}>
         {symptom.overview?.[language] || "Overview not available"}
       </Text>
-
-      {/* Categories */}
       {symptom.categories?.map((category, index) => (
         <View key={index} style={styles.categoryCard}>
           <Text style={styles.categoryTitle}>
@@ -86,19 +77,6 @@ const SymptomChecker = () => {
           ))}
         </View>
       ))}
-
-      {/* Advice Section */}
-      <View style={styles.adviceContainer}>
-        <Text style={styles.adviceHeader}>General Advice</Text>
-        <Text style={styles.adviceText}>
-          {symptom.advice?.general?.[language] || "No General Advice Available"}
-        </Text>
-        <Text style={styles.adviceHeader}>Emergency Advice</Text>
-        <Text style={styles.adviceText}>
-          {symptom.advice?.emergency?.[language] ||
-            "No Emergency Advice Available"}
-        </Text>
-      </View>
     </ScrollView>
   );
 
@@ -145,29 +123,27 @@ const SymptomChecker = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FBFD", // Light neutral background
+    backgroundColor: "#F5F9FF", // Soft neutral with a hint of blue
   },
   header: {
-    padding: 20,
-    backgroundColor: "#8D82FA", // Soft purple for the header
-    borderBottomWidth: 1,
-    borderBottomColor: "#68478C",
+    padding: 16,
+    backgroundColor: "linear-gradient(45deg, #4A90E2, #50B2C0)", // Gradient
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     marginBottom: 16,
   },
   title: {
     fontSize: 28,
     fontWeight: "700",
-    color: "#FFFFFF", // White text for contrast
+    color: "#FFFFFF",
     textAlign: "center",
-    fontFamily: FontFamily.montserrat,
   },
   subtitle: {
     fontSize: 16,
     fontWeight: "400",
-    color: "#EDECFD", // Muted white for subtitle
+    color: "#DDEEFF", // Light blue accent
     textAlign: "center",
     marginTop: 8,
-    fontFamily: FontFamily.montserrat,
   },
   list: {
     paddingHorizontal: 16,
@@ -175,18 +151,17 @@ const styles = StyleSheet.create({
   item: {
     padding: 16,
     marginVertical: 8,
-    backgroundColor: "#FFFFFF", // Clean white for item background
+    backgroundColor: "#FFFFFF",
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
     shadowColor: "#000",
-    shadowOpacity: 0.05,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
+    elevation: 5,
   },
   itemText: {
     fontSize: 18,
-    color: "#4A4A4A",
+    color: "#2A4B68", // Slightly vibrant navy blue
     fontWeight: "600",
   },
   details: {
@@ -196,8 +171,8 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 16,
     padding: 12,
-    backgroundColor: "#8D82FA",
-    borderRadius: 8,
+    backgroundColor: "#4A90E2", // Blue gradient match
+    borderRadius: 10,
     alignSelf: "flex-start",
   },
   backButtonText: {
@@ -209,78 +184,47 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "700",
     marginBottom: 16,
-    color: "#2A4B68", // Deep purple for main headings
+    color: "#2A4B68",
     textAlign: "center",
-    fontFamily: FontFamily.montserrat,
   },
   content: {
     fontSize: 16,
     lineHeight: 24,
     color: "#4A4A4A",
     marginBottom: 20,
-    fontFamily: FontFamily.montserrat,
   },
   categoryCard: {
     marginBottom: 16,
     padding: 16,
-    backgroundColor: "#F9FBFD", // Soft background for categories
+    backgroundColor: "#F0F7FC",
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#68478C", // Deep purple for card borders
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
   },
   categoryTitle: {
     fontSize: 20,
     fontWeight: "600",
     marginBottom: 12,
-    color: "#8D82FA", // Soft purple for category titles
-    fontFamily: FontFamily.montserrat,
+    color: "#1A374D", // Strong navy
   },
   sectionCard: {
     marginBottom: 12,
     padding: 12,
-    backgroundColor: "#FFFFFF", // Clean white for sections
+    backgroundColor: "#FFFFFF",
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "500",
-    color: "#727272", // Subtle gray for section titles
-    fontFamily: FontFamily.montserrat,
+    color: "#1A374D",
   },
   sectionContent: {
     fontSize: 16,
     lineHeight: 22,
-    color: "#4A4A4A", // Neutral color for section content
-    fontFamily: FontFamily.montserrat,
-  },
-  adviceContainer: {
-    marginTop: 24,
-    padding: 16,
-    backgroundColor: "#F9FBFD", // Soft background for advice
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  adviceHeader: {
-    fontSize: 18,
-    fontWeight: "700", // Heavier font weight
-    marginBottom: 8,
-    color: "#4A4A4A", // Light black/gray color
-    fontFamily: FontFamily.montserrat,
-  },
-  adviceText: {
-    fontSize: 16,
-    lineHeight: 22,
-    color: "#6C7A89", // Subtle gray for advice text
-    fontFamily: FontFamily.montserrat,
+    color: "#626567",
   },
 });
 

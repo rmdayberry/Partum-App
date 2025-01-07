@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   categoryCard: {
     marginBottom: 16,
     padding: 16,
-    backgroundColor: "#F9FBFD", // Soft background for categories
+    backgroundColor: Color.nEW, // Soft background for categories
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#68478C", // Deep purple for card borders
