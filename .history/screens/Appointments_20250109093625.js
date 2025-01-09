@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, FlatList, Button, Alert } from "react-native";
 import AddAppointmentForm from "../features/appointments/AddAppointmentForm";
 import { UserContext } from "../contexts/UserContext";
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Appointments = () => {
   const { userId, languagePreference } = useContext(UserContext);
@@ -24,17 +23,6 @@ const Appointments = () => {
     const fetchAppointments = async () => {
       try {
         const authToken = await AsyncStorage.getItem("authToken");
-        console.log("Auth Token:", authToken); // Log token for debugging
-        if (!authToken) {
-          Alert.alert(
-            languagePreference === "English" ? "Error" : "Error",
-            languagePreference === "English"
-              ? "User not authenticated. Please log in."
-              : "Usuario no autenticado. Por favor inicie sesión."
-          );
-          return;
-        }
-
         const response = await axios.get(
           "http://localhost:5002/api/appointments",
           {
@@ -43,7 +31,7 @@ const Appointments = () => {
         );
         setAppointments(response.data);
       } catch (error) {
-        console.error("Error fetching appointments:", error.message);
+        console.error("Error fetching appointments:", error);
         Alert.alert(
           languagePreference === "English" ? "Error" : "Error",
           languagePreference === "English"
@@ -93,15 +81,12 @@ const Appointments = () => {
         <>
           <FlatList
             data={appointments}
-            keyExtractor={(item, index) =>
-              item._id ? item._id.toString() : index.toString()
-            }
+            keyExtractor={(item) => item._id}
             renderItem={renderAppointmentItem}
             ListEmptyComponent={
               <Text style={styles.noAppointments}>{labels.noAppointments}</Text>
             }
           />
-
           <Button
             title={labels.addAppointment}
             onPress={() => setShowForm(true)}

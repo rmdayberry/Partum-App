@@ -87,8 +87,6 @@ router.post("/register", async (req, res) => {
 });
 
 //Login a user
-const jwt = require("jsonwebtoken");
-
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -97,22 +95,11 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
-
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials." });
     }
-
-    // Generate a token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h", // Token expiration time
-    });
-
-    res.json({
-      message: "Login successful",
-      userId: user._id,
-      authToken: token, // Include token in the response
-    });
+    res.json({ message: "Login successful", userId: user._id });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }

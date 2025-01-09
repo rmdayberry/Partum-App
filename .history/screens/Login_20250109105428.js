@@ -38,17 +38,10 @@ const Login = ({ navigation }) => {
         const data = await response.json();
         Alert.alert("Success", "Login successful!");
 
+        // Save the userId to AsyncStorage
         await AsyncStorage.setItem("userId", data.userId);
-        if (data.authToken) {
-          await AsyncStorage.setItem("authToken", data.authToken); // Store token
-        }
-        await AsyncStorage.setItem(
-          "languagePreference",
-          data.languagePreference || "English"
-        );
 
-        setUserId(data.userId);
-        setLanguagePreference(data.languagePreference || "English");
+        // Navigate to the main tabs
         navigation.navigate("MainTabs");
       } else {
         const errorData = await response.json();

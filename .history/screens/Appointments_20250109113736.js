@@ -93,9 +93,7 @@ const Appointments = () => {
         <>
           <FlatList
             data={appointments}
-            keyExtractor={(item, index) =>
-              item._id ? item._id.toString() : index.toString()
-            }
+            keyExtractor={(item) => item._id.toString()}
             renderItem={renderAppointmentItem}
             ListEmptyComponent={
               <Text style={styles.noAppointments}>{labels.noAppointments}</Text>

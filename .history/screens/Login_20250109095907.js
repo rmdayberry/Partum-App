@@ -39,9 +39,6 @@ const Login = ({ navigation }) => {
         Alert.alert("Success", "Login successful!");
 
         await AsyncStorage.setItem("userId", data.userId);
-        if (data.authToken) {
-          await AsyncStorage.setItem("authToken", data.authToken); // Store token
-        }
         await AsyncStorage.setItem(
           "languagePreference",
           data.languagePreference || "English"
@@ -50,6 +47,7 @@ const Login = ({ navigation }) => {
         setUserId(data.userId);
         setLanguagePreference(data.languagePreference || "English");
         navigation.navigate("MainTabs");
+        console.log("Navigation state:", navigation.getState());
       } else {
         const errorData = await response.json();
         Alert.alert("Error", errorData.message || "Login failed.");

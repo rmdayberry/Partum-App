@@ -14,53 +14,49 @@ import { FontSize, FontFamily, Color } from "../GlobalStyles";
 import Registration from "./Registration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const { setUserId, setLanguagePreference } = useContext(UserContext);
+const handleLogin = async () => {
+  if (!email || !password) {
+    Alert.alert("Error", "Please fill in all fields.");
+    return;
+  }
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert("Error", "Please fill in all fields.");
-      return;
+  setLoading(true);
+  try {
+    const response = await fetch("http://localhost:5002/users/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      Alert.alert("Success", "Login successful!");
+
+      // Store the authToken and userId
+      await AsyncStorage.setItem("authToken", data.token); // Save authToken for authenticated requests
+      await AsyncStorage.setItem("userId", data.userId);
+      await AsyncStorage.setItem(
+        "languagePreference",
+        data.languagePreference || "English"
+      );
+
+      // Set state in context
+      setUserId(data.userId);
+      setLanguagePreference(data.languagePreference || "English");
+
+      // Navigate to MainTabs
+      navigation.navigate("MainTabs");
+      console.log("Navigation state:", navigation.getState());
+    } else {
+      const errorData = await response.json();
+      Alert.alert("Error", errorData.message || "Login failed.");
     }
-
-    setLoading(true);
-    try {
-      const response = await fetch("http://localhost:5002/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        Alert.alert("Success", "Login successful!");
-
-        await AsyncStorage.setItem("userId", data.userId);
-        if (data.authToken) {
-          await AsyncStorage.setItem("authToken", data.authToken); // Store token
-        }
-        await AsyncStorage.setItem(
-          "languagePreference",
-          data.languagePreference || "English"
-        );
-
-        setUserId(data.userId);
-        setLanguagePreference(data.languagePreference || "English");
-        navigation.navigate("MainTabs");
-      } else {
-        const errorData = await response.json();
-        Alert.alert("Error", errorData.message || "Login failed.");
-      }
-    } catch (error) {
-      console.error("Login error:", error.message);
-      Alert.alert("Error", "Server error. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (error) {
+    console.error("Login error:", error.message);
+    Alert.alert("Error", "Server error. Please try again later.");
+  } finally {
+    setLoading(false);
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

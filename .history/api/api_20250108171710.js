@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = "http://localhost:5002";
+const API_BASE_URL = "http://localhost:5002"; // Replace with your server's URL if different
 
 // Fetch pregnancy progress
 export const fetchPregnancyProgress = async (userId) => {
@@ -15,9 +15,9 @@ export const fetchPregnancyProgress = async (userId) => {
   } catch (error) {
     console.error(
       "Error fetching pregnancy progress:",
-      error.response?.data || error.message
+      error.response || error.message
     );
-    throw new Error("Failed to fetch pregnancy progress.");
+    throw error;
   }
 };
 
@@ -33,9 +33,9 @@ export const fetchWeeklyTip = async (week) => {
   } catch (error) {
     console.error(
       "Error fetching weekly tip:",
-      error.response?.data || error.message
+      error.response || error.message
     );
-    throw new Error("Failed to fetch weekly tip.");
+    throw error;
   }
 };
 
@@ -47,11 +47,8 @@ export const fetchDailyTip = async (userId) => {
     console.log("Daily Tip Response:", response.data);
     return response.data; // Ensure it returns the response data
   } catch (error) {
-    console.error(
-      "Error fetching daily tip:",
-      error.response?.data || error.message
-    );
-    throw new Error("Failed to fetch daily tip.");
+    console.error("Error fetching daily tip:", error.response || error.message);
+    throw error;
   }
 };
 
@@ -59,21 +56,17 @@ export const fetchDailyTip = async (userId) => {
 export const fetchAppointments = async () => {
   try {
     const token = await AsyncStorage.getItem("authToken");
-    console.log("Auth Token:", token); // Debugging log
-    if (!token) {
-      throw new Error("User is not authenticated. Please log in.");
-    }
-    const response = await axios.get(`${API_BASE_URL}/api/appointments`, {
+    const response = await axios.get(`${API_BASE_URL}/appointments`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Appointments Response:", response.data);
-    return response.data;
+    return response.data; // Assuming response contains an array of appointments
   } catch (error) {
     console.error(
       "Error fetching appointments:",
-      error.response?.data || error.message
+      error.response || error.message
     );
-    throw new Error("Failed to fetch appointments.");
+    throw error;
   }
 };
 
@@ -81,10 +74,7 @@ export const fetchAppointments = async () => {
 export const fetchNextAppointment = async () => {
   try {
     const token = await AsyncStorage.getItem("authToken");
-    if (!token) {
-      throw new Error("User is not authenticated. Please log in.");
-    }
-    const response = await axios.get(`${API_BASE_URL}/api/appointments/next`, {
+    const response = await axios.get(`${API_BASE_URL}/appointments/next`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Next Appointment Response:", response.data);
@@ -92,9 +82,9 @@ export const fetchNextAppointment = async () => {
   } catch (error) {
     console.error(
       "Error fetching next appointment:",
-      error.response?.data || error.message
+      error.response || error.message
     );
-    throw new Error("Failed to fetch next appointment.");
+    throw error;
   }
 };
 
@@ -102,21 +92,15 @@ export const fetchNextAppointment = async () => {
 export const addAppointment = async (appointmentData) => {
   try {
     const token = await AsyncStorage.getItem("authToken");
-    if (!token) {
-      throw new Error("User is not authenticated. Please log in.");
-    }
     const response = await axios.post(
-      `${API_BASE_URL}/api/appointments`,
+      `${API_BASE_URL}/appointments`,
       appointmentData,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     console.log("Add Appointment Response:", response.data);
     return response.data; // Assuming response contains the created appointment
   } catch (error) {
-    console.error(
-      "Error adding appointment:",
-      error.response?.data || error.message
-    );
-    throw new Error("Failed to add appointment.");
+    console.error("Error adding appointment:", error.response || error.message);
+    throw error;
   }
 };

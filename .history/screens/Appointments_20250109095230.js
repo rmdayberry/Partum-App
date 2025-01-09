@@ -93,15 +93,12 @@ const Appointments = () => {
         <>
           <FlatList
             data={appointments}
-            keyExtractor={(item, index) =>
-              item._id ? item._id.toString() : index.toString()
-            }
+            keyExtractor={(item) => item._id}
             renderItem={renderAppointmentItem}
             ListEmptyComponent={
               <Text style={styles.noAppointments}>{labels.noAppointments}</Text>
             }
           />
-
           <Button
             title={labels.addAppointment}
             onPress={() => setShowForm(true)}
