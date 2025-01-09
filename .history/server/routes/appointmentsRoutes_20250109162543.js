@@ -59,18 +59,17 @@ router.get("/next", authenticate, async (req, res) => {
 
 // Fetch all appointments for the authenticated user
 router.get("/", authenticate, async (req, res) => {
-  const { id: userId } = req.user; // Extract userId from the authenticated token
-  console.log("Fetching appointments for user:", userId);
+  const { id: userId } = req.user;
 
   try {
     const appointments = await Appointment.find({ userId }).sort({
       date: 1,
       time: 1,
     });
-    console.log("Fetched appointments:", appointments);
-    res.status(200).json(appointments);
+
+    // Return an empty array instead of 404
+    res.json(appointments);
   } catch (error) {
-    console.error("Error fetching appointments:", error.message);
     res
       .status(500)
       .json({ message: "Failed to fetch appointments", error: error.message });

@@ -59,7 +59,7 @@ router.get("/next", authenticate, async (req, res) => {
 
 // Fetch all appointments for the authenticated user
 router.get("/", authenticate, async (req, res) => {
-  const { id: userId } = req.user; // Extract userId from the authenticated token
+  const { id: userId } = req.user;
   console.log("Fetching appointments for user:", userId);
 
   try {

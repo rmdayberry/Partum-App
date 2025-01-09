@@ -25,13 +25,12 @@ const Appointments = () => {
     const fetchAppointments = async () => {
       try {
         const authToken = await AsyncStorage.getItem("authToken");
-        console.log("Auth Token:", authToken); // Log token for debugging
+        console.log("Auth Token:", authToken);
         if (!authToken) {
           Alert.alert("Error", "User is not authenticated. Please log in.");
           return;
         }
 
-        // API call to fetch appointments
         const response = await axios.get("http://localhost:5002/appointments", {
           headers: { Authorization: `Bearer ${authToken}` },
         });
@@ -44,7 +43,7 @@ const Appointments = () => {
       }
     };
 
-    fetchAppointments(); // Call the function when the component mounts
+    fetchAppointments();
   }, []);
 
   const handleAppointmentAdded = (newAppointment) => {
@@ -52,36 +51,28 @@ const Appointments = () => {
     setShowForm(false);
   };
 
-  const renderAppointmentItem = ({ item }) => {
-    const title = item.title || "No title";
-    const date = item.date
-      ? new Date(item.date).toLocaleDateString()
-      : "No date";
-    const time = item.time || "No time";
-    const location = item.location || "No location";
-    const notes = item.notes || "No notes";
-
-    return (
-      <View style={styles.appointmentItem}>
-        <Text style={styles.title}>
-          {languagePreference === "English" ? "Title:" : "Título:"} {title}
-        </Text>
+  const renderAppointmentItem = ({ item }) => (
+    <View style={styles.appointmentItem}>
+      <Text style={styles.title}>
+        {languagePreference === "English" ? "Title:" : "Título:"} {item.title}
+      </Text>
+      <Text>
+        {languagePreference === "English" ? "Date:" : "Fecha:"} {item.date}
+      </Text>
+      <Text>
+        {languagePreference === "English" ? "Time:" : "Hora:"} {item.time}
+      </Text>
+      <Text>
+        {languagePreference === "English" ? "Location:" : "Ubicación:"}{" "}
+        {item.location}
+      </Text>
+      {item.notes && (
         <Text>
-          {languagePreference === "English" ? "Date:" : "Fecha:"} {date}
+          {languagePreference === "English" ? "Notes:" : "Notas:"} {item.notes}
         </Text>
-        <Text>
-          {languagePreference === "English" ? "Time:" : "Hora:"} {time}
-        </Text>
-        <Text>
-          {languagePreference === "English" ? "Location:" : "Ubicación:"}{" "}
-          {location}
-        </Text>
-        <Text>
-          {languagePreference === "English" ? "Notes:" : "Notas:"} {notes}
-        </Text>
-      </View>
-    );
-  };
+      )}
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
