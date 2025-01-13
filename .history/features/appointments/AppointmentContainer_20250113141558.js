@@ -121,7 +121,7 @@ const AppointmentContainer = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Upcoming Appointment</Text>
+      <Text style={styles.header}>Upcoming Appointments</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.countdown}>{countdown}</Text>
         <Text style={styles.date}>{formattedDate}</Text>

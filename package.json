@@ -58,7 +58,8 @@
     "react-native-svg": "^15.10.1",
     "react-native-svg-circular-progress": "^1.0.4",
     "react-native-tab-view": "^4.0.5",
-    "react-native-vector-icons": "^10.2.0"
+    "react-native-vector-icons": "^10.2.0",
+    "expo-calendar": "~14.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

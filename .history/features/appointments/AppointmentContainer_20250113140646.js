@@ -121,7 +121,7 @@ const AppointmentContainer = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Upcoming Appointment</Text>
+      <Text style={styles.header}>Upcoming Appointments</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.countdown}>{countdown}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
@@ -138,13 +138,6 @@ const AppointmentContainer = () => {
         </Text>
       </View>
       <View style={styles.actionsContainer}>
-        <Pressable style={styles.button} onPress={handleAddToCalendar}>
-          <Image
-            style={styles.iconSmall}
-            source={require("../../assets/calendarIcon.png")}
-          />
-          <Text style={styles.buttonText}>Add to Calendar</Text>
-        </Pressable>
         <Pressable style={styles.button} onPress={handleGetDirections}>
           <Image
             style={styles.iconSmall}
@@ -239,7 +232,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 1 },
     elevation: 2, // For Android
-    width: "50%",
+    width: "80%", // Optional: Make buttons consistent width
   },
   buttonText: {
     color: "#fff",

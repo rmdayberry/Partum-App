@@ -3,7 +3,6 @@ import { Text, StyleSheet, Pressable, View, Linking } from "react-native";
 import { Image } from "expo-image";
 import { UserContext } from "../../contexts/UserContext";
 import { fetchNextAppointment } from "../../api/api";
-import * as Calendar from "expo-calendar";
 
 const AppointmentContainer = () => {
   const { userId } = useContext(UserContext); // Get userId from context
@@ -41,43 +40,6 @@ const AppointmentContainer = () => {
     Linking.openURL(phoneNumber).catch(() =>
       alert("Unable to open the phone dialer.")
     );
-  };
-  const handleAddToCalendar = async () => {
-    try {
-      const { status } = await Calendar.requestCalendarPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("Permission Denied", "Calendar access is required.");
-        return;
-      }
-
-      const defaultCalendarSource =
-        Platform.OS === "ios"
-          ? await Calendar.getDefaultCalendarAsync()
-          : { isLocalAccount: true, name: "Default" };
-
-      const calendarId = await Calendar.createEventAsync(
-        defaultCalendarSource.id || defaultCalendarSource.name,
-        {
-          title: nextAppointment.title || "Appointment",
-          startDate: new Date(
-            nextAppointment.date + "T" + nextAppointment.time
-          ),
-          endDate: new Date(
-            new Date(
-              nextAppointment.date + "T" + nextAppointment.time
-            ).getTime() +
-              60 * 60 * 1000
-          ), // Assuming 1-hour appointment
-          location: nextAppointment.location,
-          notes: nextAppointment.notes || "",
-        }
-      );
-
-      Alert.alert("Success", "Appointment added to your calendar.");
-    } catch (error) {
-      console.error("Error adding to calendar:", error.message);
-      Alert.alert("Error", "Unable to add to calendar.");
-    }
   };
 
   const getAppointmentCountdown = (appointmentDate) => {
@@ -121,7 +83,7 @@ const AppointmentContainer = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Upcoming Appointment</Text>
+      <Text style={styles.header}>Upcoming Appointments</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.countdown}>{countdown}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
@@ -138,13 +100,6 @@ const AppointmentContainer = () => {
         </Text>
       </View>
       <View style={styles.actionsContainer}>
-        <Pressable style={styles.button} onPress={handleAddToCalendar}>
-          <Image
-            style={styles.iconSmall}
-            source={require("../../assets/calendarIcon.png")}
-          />
-          <Text style={styles.buttonText}>Add to Calendar</Text>
-        </Pressable>
         <Pressable style={styles.button} onPress={handleGetDirections}>
           <Image
             style={styles.iconSmall}
@@ -239,7 +194,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     shadowOffset: { width: 0, height: 1 },
     elevation: 2, // For Android
-    width: "50%",
+    width: "80%", // Optional: Make buttons consistent width
   },
   buttonText: {
     color: "#fff",
