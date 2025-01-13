@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  Animated,
-  Image,
-} from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import { UserContext } from "../contexts/UserContext";
 import Header from "../features/Header";
 import ProgressBar from "../features/progress/ProgressBar";
@@ -20,12 +14,12 @@ import {
 
 const Dashboard = () => {
   const { userId } = useContext(UserContext);
+  const navigation = useNavigation();
   const [currentWeek, setCurrentWeek] = useState(null);
   const [weeklyTip, setWeeklyTip] = useState(null);
   const [dailyTip, setDailyTip] = useState(null);
-  const [loadingWeeklyTip, setLoadingWeeklyTip] = useState(true);
+  const [loadingTip, setLoadingTip] = useState(true);
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
-  const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
 
   useEffect(() => {
     if (!userId) {
@@ -39,8 +33,8 @@ const Dashboard = () => {
         const week = Math.floor((progress / 100) * 40);
         setCurrentWeek(week);
 
-        const weeklyTipData = await fetchWeeklyTip(week);
-        setWeeklyTip(weeklyTipData);
+        const tipData = await fetchWeeklyTip(week);
+        setWeeklyTip(tipData);
 
         const dailyTipData = await fetchDailyTip(userId);
         setDailyTip(dailyTipData);
@@ -48,29 +42,19 @@ const Dashboard = () => {
         console.error("Error fetching data:", error);
         setDailyTip({ tip: "No tip available today." });
       } finally {
-        setLoadingWeeklyTip(false);
+        setLoadingTip(false);
         setLoadingDailyTip(false);
       }
     };
 
     fetchProgressAndTips();
-
-    // Trigger fade-in animation
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
   }, []);
 
   return (
     <View style={styles.container}>
       <Header />
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Pregnancy Overview with Progress Bar and Weekly Tip */}
-        <Animated.View
-          style={[styles.pregnancyOverviewContainer, { opacity: fadeAnim }]}
-        >
+        <View style={styles.card}>
           <Text style={styles.sectionHeader}>Pregnancy Overview</Text>
           <Text style={styles.pregnancyText}>
             You're{" "}
@@ -78,33 +62,13 @@ const Dashboard = () => {
             weeks along!
           </Text>
           <ProgressBar userId={userId} />
-          <View style={styles.weeklyTipContainer}>
-            <Image
-              style={styles.weeklyIcon}
-              source={require("../assets/pregnantPerson.png")}
-            />
-            <Text style={styles.tipHeader}>What to Expect This Week</Text>
-            {loadingWeeklyTip ? (
-              <Text style={styles.loadingText}>Loading...</Text>
-            ) : weeklyTip && weeklyTip.tip ? (
-              <Text style={styles.tipText}>{weeklyTip.tip}</Text>
-            ) : (
-              <Text style={styles.noTipText}>No tip available this week.</Text>
-            )}
-          </View>
-        </Animated.View>
+        </View>
 
-        {/* Appointment Container */}
-        <Animated.View style={[styles.card, { opacity: fadeAnim }]}>
+        <View style={styles.card}>
           <AppointmentContainer />
-        </Animated.View>
+        </View>
 
-        {/* Daily Tip */}
-        <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
-          <Image
-            style={styles.dailyIcon}
-            source={require("../assets/wateringCan.png")}
-          />
+        <View style={styles.card}>
           <Text style={styles.sectionHeader}>Today's Pregnancy Tip</Text>
           {loadingDailyTip ? (
             <Text style={styles.loadingText}>Loading...</Text>
@@ -113,7 +77,7 @@ const Dashboard = () => {
           ) : (
             <Text style={styles.noTipText}>No tip available for today.</Text>
           )}
-        </Animated.View>
+        </View>
 
         <ResourceSection />
       </ScrollView>
@@ -124,79 +88,11 @@ const Dashboard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFF",
+    backgroundColor: "#F4F5FB",
   },
   contentContainer: {
     alignItems: "center",
     paddingBottom: 50,
-  },
-  pregnancyOverviewContainer: {
-    width: "90%",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
-  },
-  sectionHeader: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#6A5ACD",
-    textAlign: "center",
-    marginBottom: 12,
-  },
-  pregnancyText: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#333",
-    marginBottom: 10,
-    fontWeight: "600",
-  },
-  highlight: {
-    color: "#6A5ACD",
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  weeklyTipContainer: {
-    backgroundColor: "#EFEFFF",
-    borderRadius: 12,
-    padding: 16,
-    marginTop: 20,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#D0D0FF",
-  },
-  weeklyIcon: {
-    width: 40,
-    height: 40,
-    marginBottom: 10,
-  },
-  tipHeader: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#4F46E5",
-    marginBottom: 10,
-  },
-  loadingText: {
-    fontSize: 14,
-    color: "#888",
-    textAlign: "center",
-  },
-  tipText: {
-    fontSize: 14,
-    color: "#555",
-    textAlign: "center",
-    lineHeight: 22,
-    marginVertical: 10,
-  },
-  noTipText: {
-    fontSize: 14,
-    color: "#888",
-    textAlign: "center",
   },
   card: {
     backgroundColor: "#fff",
@@ -210,25 +106,38 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "90%",
   },
-  dailyTipFrame: {
-    backgroundColor: "#FFF5EB",
-    borderRadius: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
-    width: "90%",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#FFD3A6",
-  },
-  dailyIcon: {
-    width: 40,
-    height: 40,
+  sectionHeader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#6A5ACD",
+    textAlign: "center",
     marginBottom: 10,
+  },
+  pregnancyText: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#333",
+    marginBottom: 10,
+  },
+  highlight: {
+    color: "#6A5ACD",
+    fontWeight: "bold",
+  },
+  loadingText: {
+    fontSize: 14,
+    color: "#888",
+    textAlign: "center",
+  },
+  tipText: {
+    fontSize: 14,
+    color: "#555",
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  noTipText: {
+    fontSize: 14,
+    color: "#888",
+    textAlign: "center",
   },
 });
 

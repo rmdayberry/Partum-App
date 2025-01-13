@@ -22,17 +22,16 @@ const ProgressBar = ({ userId }) => {
   }, [userId]);
 
   if (loading || progress === null) {
-    return null;
+    return null; // Show nothing while loading or if progress isn't available
   }
 
   return (
     <View style={styles.container}>
       <CircularProgress
-        size={140} // Diameter of the circle
-        width={20} // Thickness of the circle
+        size={150} // Diameter of the circle
+        width={15} // Thickness of the circle
         fill={progress} // Progress value (0 to 100)
-        tintColor="#6A5ACD" // Enforce desired purple color
-        backgroundColor="#e0e0e0" // Light gray background
+        tintColor="#6A5ACD", // Progress bar color
         lineCap="round" // Smooth edge for progress line
       />
     </View>

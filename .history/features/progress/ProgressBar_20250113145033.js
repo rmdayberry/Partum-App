@@ -28,8 +28,8 @@ const ProgressBar = ({ userId }) => {
   return (
     <View style={styles.container}>
       <CircularProgress
-        size={140} // Diameter of the circle
-        width={20} // Thickness of the circle
+        size={150} // Diameter of the circle
+        width={10} // Thickness of the circle
         fill={progress} // Progress value (0 to 100)
         tintColor="#6A5ACD" // Enforce desired purple color
         backgroundColor="#e0e0e0" // Light gray background

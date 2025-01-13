@@ -81,7 +81,7 @@ const Dashboard = () => {
           <View style={styles.weeklyTipContainer}>
             <Image
               style={styles.weeklyIcon}
-              source={require("../assets/pregnantPerson.png")}
+              source={require("../assets/weeklyTipIcon.png")}
             />
             <Text style={styles.tipHeader}>What to Expect This Week</Text>
             {loadingWeeklyTip ? (
@@ -103,7 +103,7 @@ const Dashboard = () => {
         <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
           <Image
             style={styles.dailyIcon}
-            source={require("../assets/wateringCan.png")}
+            source={require("../assets/dailyTipIcon.png")}
           />
           <Text style={styles.sectionHeader}>Today's Pregnancy Tip</Text>
           {loadingDailyTip ? (
@@ -124,7 +124,7 @@ const Dashboard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFF",
+    backgroundColor: "#F4F5FB",
   },
   contentContainer: {
     alignItems: "center",
@@ -141,34 +141,32 @@ const styles = StyleSheet.create({
     elevation: 3,
     padding: 20,
     marginVertical: 10,
+    borderLeftWidth: 8,
+    borderLeftColor: "#6A5ACD", // Purple accent
   },
   sectionHeader: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#6A5ACD",
+    marginBottom: 10,
     textAlign: "center",
-    marginBottom: 12,
   },
   pregnancyText: {
     fontSize: 16,
     textAlign: "center",
     color: "#333",
     marginBottom: 10,
-    fontWeight: "600",
   },
   highlight: {
     color: "#6A5ACD",
     fontWeight: "bold",
-    fontSize: 18,
   },
   weeklyTipContainer: {
-    backgroundColor: "#EFEFFF",
+    backgroundColor: "#F4F1FC",
     borderRadius: 12,
     padding: 16,
-    marginTop: 20,
+    marginTop: 10,
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#D0D0FF",
   },
   weeklyIcon: {
     width: 40,
@@ -178,8 +176,8 @@ const styles = StyleSheet.create({
   tipHeader: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#4F46E5",
-    marginBottom: 10,
+    color: "#6A5ACD",
+    marginBottom: 8,
   },
   loadingText: {
     fontSize: 14,
@@ -190,7 +188,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#555",
     textAlign: "center",
-    lineHeight: 22,
     marginVertical: 10,
   },
   noTipText: {
@@ -211,7 +208,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   dailyTipFrame: {
-    backgroundColor: "#FFF5EB",
+    backgroundColor: "#FFEDE6",
     borderRadius: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,
@@ -222,8 +219,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "90%",
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#FFD3A6",
   },
   dailyIcon: {
     width: 40,
