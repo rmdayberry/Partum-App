@@ -26,24 +26,8 @@ const Appointments = () => {
         const appointmentsData = await fetchAppointments();
         setAppointments(appointmentsData || []);
       } catch (error) {
-        if (error.message === "Token expired") {
-          Alert.alert(
-            "Session Expired",
-            "Please log in again.",
-            [
-              {
-                text: "OK",
-                onPress: () => {
-                  // Log out or redirect to login
-                },
-              },
-            ],
-            { cancelable: false }
-          );
-        } else {
-          console.error("Error fetching appointments:", error.message);
-          Alert.alert("Error", "Failed to fetch appointments.");
-        }
+        console.error("Error fetching appointments:", error.message);
+        Alert.alert("Error", "Failed to fetch appointments.");
       }
     };
 
@@ -59,21 +43,21 @@ const Appointments = () => {
     <View style={styles.appointmentItem}>
       <Text style={styles.title}>
         {languagePreference === "English" ? "Title:" : "Título:"}{" "}
-        {item.title || "No title"}
+        {item?.title || "No title"}
       </Text>
       <Text>
         {languagePreference === "English" ? "Date:" : "Fecha:"}{" "}
-        {item.date ? new Date(item.date).toLocaleDateString() : "No date"}
+        {item?.date ? new Date(item.date).toLocaleDateString() : "No date"}
       </Text>
       <Text>
         {languagePreference === "English" ? "Time:" : "Hora:"}{" "}
-        {item.time || "No time"}
+        {item?.time || "No time"}
       </Text>
       <Text>
         {languagePreference === "English" ? "Location:" : "Ubicación:"}{" "}
-        {item.location || "No location"}
+        {item?.location || "No location"}
       </Text>
-      {item.notes && (
+      {item?.notes && (
         <Text>
           {languagePreference === "English" ? "Notes:" : "Notas:"} {item.notes}
         </Text>
@@ -90,7 +74,9 @@ const Appointments = () => {
         <>
           <FlatList
             data={appointments}
-            keyExtractor={(item) => item._id.toString()}
+            keyExtractor={(item, index) =>
+              item?._id?.toString() || index.toString()
+            }
             renderItem={renderAppointmentItem}
             ListEmptyComponent={
               <Text style={styles.noAppointments}>{labels.noAppointments}</Text>

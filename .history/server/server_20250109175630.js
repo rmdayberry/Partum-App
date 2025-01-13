@@ -4,12 +4,10 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const pregnancyRoutes = require("./routes/pregnancyRoutes");
-const appointmentsRoutes = require("./routes/appointmentsRoutes"); // Import appointments routes
+const appointmentsRoutes = require("./routes/appointmentsRoutes");
 
 // Load environment variables
 dotenv.config();
-require("dotenv").config();
-console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 
 // Validate required environment variables
 if (!process.env.MONGO_URI) {
@@ -25,7 +23,7 @@ app.use(express.json());
 
 // CORS Configuration
 const allowedOrigins = [
-  "http://localhost:3000", // Frontend React
+  "http://localhost:3000", //Frontend React
   "http://10.0.0.106:19000", // Expo development server
 ];
 app.use(
@@ -50,7 +48,6 @@ mongoose
 // Routes
 app.use("/users", userRoutes);
 app.use("/api", pregnancyRoutes);
-app.use("/appointments", appointmentsRoutes); // Register appointments routes
 
 app.get("/", (req, res) => {
   res.send("API is running...");

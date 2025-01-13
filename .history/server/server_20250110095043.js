@@ -8,8 +8,6 @@ const appointmentsRoutes = require("./routes/appointmentsRoutes"); // Import app
 
 // Load environment variables
 dotenv.config();
-require("dotenv").config();
-console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 
 // Validate required environment variables
 if (!process.env.MONGO_URI) {

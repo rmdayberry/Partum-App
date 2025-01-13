@@ -9,8 +9,7 @@ import {
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropDownPicker from "react-native-dropdown-picker";
-import { UserContext } from "../../contexts/UserContext";
-import { addAppointment } from "../../api/api";
+import { UserContext } from "../contexts/UserContext";
 
 const AddAppointmentForm = ({ onAppointmentAdded }) => {
   const { languagePreference } = useContext(UserContext);
@@ -42,7 +41,10 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
   const hideDatePicker = () => setDatePickerVisibility(false);
 
   const handleDateConfirm = (selectedDate) => {
-    setDate(new Date(selectedDate));
+    setDate(
+      (prev) =>
+        new Date(selectedDate.setHours(prev.getHours(), prev.getMinutes()))
+    );
     hideDatePicker();
   };
 
@@ -50,33 +52,47 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
   const hideTimePicker = () => setTimePickerVisibility(false);
 
   const handleTimeConfirm = (selectedTime) => {
-    const updatedDate = new Date(date);
-    updatedDate.setHours(selectedTime.getHours(), selectedTime.getMinutes());
-    setDate(updatedDate);
+    setDate(
+      (prev) =>
+        new Date(
+          prev.setHours(selectedTime.getHours(), selectedTime.getMinutes())
+        )
+    );
     hideTimePicker();
   };
 
   const handleSubmit = async () => {
+    const appointmentData = {
+      ...form,
+      date: date.toISOString(),
+      time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+
     if (!form.title || !form.location) {
-      Alert.alert("Error", "Title and location are required.");
+      Alert.alert(
+        languagePreference === "English" ? "Error" : "Error",
+        languagePreference === "English"
+          ? "Title and location are required."
+          : "El título y la ubicación son obligatorios."
+      );
       return;
     }
 
-    const appointmentData = {
-      title: form.title,
-      location: form.location,
-      date: date.toISOString(),
-      time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      notes: form.notes,
-    };
-
     try {
-      const newAppointment = await addAppointment(appointmentData);
-      onAppointmentAdded(newAppointment);
-      Alert.alert("Success", "Appointment added successfully!");
+      onAppointmentAdded(appointmentData);
+      Alert.alert(
+        languagePreference === "English" ? "Success" : "Éxito",
+        languagePreference === "English"
+          ? "Appointment added successfully."
+          : "Cita agregada exitosamente."
+      );
     } catch (error) {
-      console.error("Error adding appointment:", error.message);
-      Alert.alert("Error", "Failed to add appointment. Please try again.");
+      Alert.alert(
+        languagePreference === "English" ? "Error" : "Error",
+        languagePreference === "English"
+          ? "Failed to add appointment."
+          : "No se pudo agregar la cita."
+      );
     }
   };
 
@@ -133,7 +149,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
           value={form.location}
           items={locations}
           setOpen={setDropdownOpen}
-          setValue={(value) => setForm({ ...form, location: value })}
+          setValue={(value) => setForm({ ...form, location: value() })}
           setItems={setLocations}
           style={styles.dropdown}
           containerStyle={styles.dropdownContainer}
@@ -148,7 +164,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
           value={form.notes}
           onChangeText={(text) => setForm({ ...form, notes: text })}
           placeholder={labels.notes}
-          multiline
+          multiline={true}
           numberOfLines={4}
         />
       </View>

@@ -3,122 +3,102 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const API_BASE_URL = "http://localhost:5002";
 
-// Function to refresh auth token
-const refreshAuthToken = async () => {
-  try {
-    const refreshToken = await AsyncStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      throw new Error("No refresh token available.");
-    }
-
-    const response = await axios.post(`${API_BASE_URL}/users/refresh-token`, {
-      token: refreshToken,
-    });
-
-    const { authToken, refreshToken: newRefreshToken } = response.data;
-
-    // Save new tokens to AsyncStorage
-    if (authToken) {
-      await AsyncStorage.setItem("authToken", authToken);
-    }
-    if (newRefreshToken) {
-      await AsyncStorage.setItem("refreshToken", newRefreshToken);
-    }
-
-    return authToken; // Return the new access token
-  } catch (error) {
-    console.error(
-      "Error refreshing auth token:",
-      error.response?.data || error.message
-    );
-    throw new Error("Failed to refresh auth token.");
-  }
-};
-
-// Helper to make authorized requests with token refresh
-const authorizedRequest = async (callback) => {
-  try {
-    return await callback();
-  } catch (error) {
-    if (error.response?.status === 401) {
-      console.log("Access token expired. Attempting to refresh...");
-      const newToken = await refreshAuthToken();
-
-      if (newToken) {
-        // Retry the original request with a new token
-        return await callback();
-      }
-    }
-
-    throw error;
-  }
-};
-
 // Fetch pregnancy progress
 export const fetchPregnancyProgress = async (userId) => {
-  return await authorizedRequest(async () => {
-    const token = await AsyncStorage.getItem("authToken");
+  try {
     console.log("Fetching pregnancy progress for user:", userId);
     const response = await axios.get(
-      `${API_BASE_URL}/users/${userId}/progress`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      `${API_BASE_URL}/users/${userId}/progress`
     );
     console.log("Pregnancy Progress Response:", response.data);
     return response.data.progress;
-  });
+  } catch (error) {
+    console.error(
+      "Error fetching pregnancy progress:",
+      error.response?.data || error.message
+    );
+    throw new Error("Failed to fetch pregnancy progress.");
+  }
 };
 
 // Fetch weekly tip
 export const fetchWeeklyTip = async (week) => {
-  return await authorizedRequest(async () => {
+  try {
+    console.log("Fetching weekly tip for week:", week);
     const response = await axios.get(
       `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
     );
     console.log("Weekly Tip Response:", response.data);
     return response.data;
-  });
+  } catch (error) {
+    console.error(
+      "Error fetching weekly tip:",
+      error.response?.data || error.message
+    );
+    throw new Error("Failed to fetch weekly tip.");
+  }
 };
 
 // Fetch daily tip
 export const fetchDailyTip = async (userId) => {
-  return await authorizedRequest(async () => {
+  try {
+    console.log("Fetching daily tip for user:", userId);
     const response = await axios.get(`${API_BASE_URL}/api/daily-tip/${userId}`);
     console.log("Daily Tip Response:", response.data);
     return response.data;
-  });
+  } catch (error) {
+    console.error(
+      "Error fetching daily tip:",
+      error.response?.data || error.message
+    );
+    throw new Error("Failed to fetch daily tip.");
+  }
 };
 
 // Fetch all appointments for the user
 export const fetchAppointments = async () => {
-  return await authorizedRequest(async () => {
+  try {
     const token = await AsyncStorage.getItem("authToken");
-    console.log("Auth Token in Fetch Appointments:", token);
+    if (!token) {
+      throw new Error("User is not authenticated. Please log in.");
+    }
     const response = await axios.get(`${API_BASE_URL}/appointments`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Appointments Response:", response.data);
     return response.data;
-  });
+  } catch (error) {
+    throw new Error("Failed to fetch appointments.");
+  }
 };
 
 // Fetch the user's next appointment
 export const fetchNextAppointment = async () => {
-  return await authorizedRequest(async () => {
+  try {
     const token = await AsyncStorage.getItem("authToken");
+    if (!token) {
+      throw new Error("User is not authenticated. Please log in.");
+    }
     const response = await axios.get(`${API_BASE_URL}/appointments/next`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("Next Appointment Response:", response.data);
     return response.data;
-  });
+  } catch (error) {
+    console.error(
+      "Error fetching next appointment:",
+      error.response?.data || error.message
+    );
+    throw new Error("Failed to fetch next appointment.");
+  }
 };
 
 // Add a new appointment
 export const addAppointment = async (appointmentData) => {
-  return await authorizedRequest(async () => {
+  try {
     const token = await AsyncStorage.getItem("authToken");
+    if (!token) {
+      throw new Error("User is not authenticated. Please log in.");
+    }
     const response = await axios.post(
       `${API_BASE_URL}/appointments`,
       appointmentData,
@@ -128,5 +108,11 @@ export const addAppointment = async (appointmentData) => {
     );
     console.log("Add Appointment Response:", response.data);
     return response.data.appointment;
-  });
+  } catch (error) {
+    console.error(
+      "Error adding appointment:",
+      error.response?.data || error.message
+    );
+    throw new Error("Failed to add appointment.");
+  }
 };

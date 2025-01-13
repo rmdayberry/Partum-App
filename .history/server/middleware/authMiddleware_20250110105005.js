@@ -15,21 +15,11 @@ const authenticate = (req, res, next) => {
     console.log("Decoded Token:", decoded);
     console.log("Current Server Time:", Math.floor(Date.now() / 1000));
     console.log("Token Expiry Time:", decoded.exp);
-
-    // Attach decoded user details to the request
     req.user = decoded;
     next();
   } catch (error) {
     console.error("Token verification failed:", error.message);
-
-    if (error.name === "TokenExpiredError") {
-      return res.status(401).json({
-        message: "Token expired. Please refresh your token.",
-        error: error.message,
-      });
-    }
-
-    res.status(401).json({ message: "Invalid token.", error: error.message });
+    res.status(401).json({ message: "Invalid or expired token." });
   }
 };
 

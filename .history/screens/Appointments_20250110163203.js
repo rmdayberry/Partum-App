@@ -57,10 +57,7 @@ const Appointments = () => {
 
   const renderAppointmentItem = ({ item }) => (
     <View style={styles.appointmentItem}>
-      <Text style={styles.title}>
-        {languagePreference === "English" ? "Title:" : "Título:"}{" "}
-        {item.title || "No title"}
-      </Text>
+      <Text style={styles.title}>{item.title || "No title"}</Text>
       <Text>
         {languagePreference === "English" ? "Date:" : "Fecha:"}{" "}
         {item.date ? new Date(item.date).toLocaleDateString() : "No date"}

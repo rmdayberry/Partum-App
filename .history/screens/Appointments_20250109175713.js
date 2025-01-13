@@ -26,24 +26,8 @@ const Appointments = () => {
         const appointmentsData = await fetchAppointments();
         setAppointments(appointmentsData || []);
       } catch (error) {
-        if (error.message === "Token expired") {
-          Alert.alert(
-            "Session Expired",
-            "Please log in again.",
-            [
-              {
-                text: "OK",
-                onPress: () => {
-                  // Log out or redirect to login
-                },
-              },
-            ],
-            { cancelable: false }
-          );
-        } else {
-          console.error("Error fetching appointments:", error.message);
-          Alert.alert("Error", "Failed to fetch appointments.");
-        }
+        console.error("Error fetching appointments:", error.message);
+        Alert.alert("Error", "Failed to fetch appointments.");
       }
     };
 

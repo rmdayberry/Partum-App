@@ -17,15 +17,15 @@ const refreshAuthToken = async () => {
 
     const { authToken, refreshToken: newRefreshToken } = response.data;
 
-    // Save new tokens to AsyncStorage
     if (authToken) {
       await AsyncStorage.setItem("authToken", authToken);
     }
+
     if (newRefreshToken) {
       await AsyncStorage.setItem("refreshToken", newRefreshToken);
     }
 
-    return authToken; // Return the new access token
+    return authToken;
   } catch (error) {
     console.error(
       "Error refreshing auth token:",

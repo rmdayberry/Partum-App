@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Button, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AddAppointmentForm from "../features/appointments/AddAppointmentForm";
 import { UserContext } from "../contexts/UserContext";
-import { fetchAppointments } from "../api/api";
+import { fetchAppointments } from "../api"; // Import the API function
 
 const Appointments = () => {
   const { languagePreference } = useContext(UserContext);
@@ -26,24 +26,8 @@ const Appointments = () => {
         const appointmentsData = await fetchAppointments();
         setAppointments(appointmentsData || []);
       } catch (error) {
-        if (error.message === "Token expired") {
-          Alert.alert(
-            "Session Expired",
-            "Please log in again.",
-            [
-              {
-                text: "OK",
-                onPress: () => {
-                  // Log out or redirect to login
-                },
-              },
-            ],
-            { cancelable: false }
-          );
-        } else {
-          console.error("Error fetching appointments:", error.message);
-          Alert.alert("Error", "Failed to fetch appointments.");
-        }
+        console.error("Error fetching appointments:", error.message);
+        Alert.alert("Error", "Failed to fetch appointments.");
       }
     };
 

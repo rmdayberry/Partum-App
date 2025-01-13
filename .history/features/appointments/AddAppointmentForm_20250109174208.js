@@ -10,7 +10,6 @@ import {
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { UserContext } from "../../contexts/UserContext";
-import { addAppointment } from "../../api/api";
 
 const AddAppointmentForm = ({ onAppointmentAdded }) => {
   const { languagePreference } = useContext(UserContext);
@@ -42,7 +41,10 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
   const hideDatePicker = () => setDatePickerVisibility(false);
 
   const handleDateConfirm = (selectedDate) => {
-    setDate(new Date(selectedDate));
+    setDate(
+      (prev) =>
+        new Date(selectedDate.setHours(prev.getHours(), prev.getMinutes()))
+    );
     hideDatePicker();
   };
 
@@ -50,18 +52,16 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
   const hideTimePicker = () => setTimePickerVisibility(false);
 
   const handleTimeConfirm = (selectedTime) => {
-    const updatedDate = new Date(date);
-    updatedDate.setHours(selectedTime.getHours(), selectedTime.getMinutes());
-    setDate(updatedDate);
+    setDate(
+      (prev) =>
+        new Date(
+          prev.setHours(selectedTime.getHours(), selectedTime.getMinutes())
+        )
+    );
     hideTimePicker();
   };
 
   const handleSubmit = async () => {
-    if (!form.title || !form.location) {
-      Alert.alert("Error", "Title and location are required.");
-      return;
-    }
-
     const appointmentData = {
       title: form.title,
       location: form.location,
@@ -71,8 +71,24 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
     };
 
     try {
-      const newAppointment = await addAppointment(appointmentData);
+      const authToken = await AsyncStorage.getItem("authToken");
+
+      if (!authToken) {
+        Alert.alert("Error", "You must be logged in to add an appointment.");
+        return;
+      }
+
+      const response = await axios.post(
+        "http://localhost:5002/appointments",
+        appointmentData,
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+
+      const newAppointment = response.data.appointment;
+
+      // Update the parent state with the new appointment
       onAppointmentAdded(newAppointment);
+
       Alert.alert("Success", "Appointment added successfully!");
     } catch (error) {
       console.error("Error adding appointment:", error.message);
@@ -133,7 +149,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
           value={form.location}
           items={locations}
           setOpen={setDropdownOpen}
-          setValue={(value) => setForm({ ...form, location: value })}
+          setValue={(value) => setForm({ ...form, location: value() })}
           setItems={setLocations}
           style={styles.dropdown}
           containerStyle={styles.dropdownContainer}
@@ -148,7 +164,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
           value={form.notes}
           onChangeText={(text) => setForm({ ...form, notes: text })}
           placeholder={labels.notes}
-          multiline
+          multiline={true}
           numberOfLines={4}
         />
       </View>

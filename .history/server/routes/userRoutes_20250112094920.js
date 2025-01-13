@@ -25,7 +25,6 @@ router.get("/:id", async (req, res) => {
     }
     res.json(user);
   } catch (err) {
-    console.error("Error fetching user data:", err.message);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -58,7 +57,6 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({ message: "User registered successfully." });
   } catch (error) {
-    console.error("Error during registration:", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
@@ -81,7 +79,7 @@ router.post("/login", async (req, res) => {
     await RefreshToken.findOneAndUpdate(
       { userId: user._id },
       { token: refreshToken },
-      { upsert: true, new: true }
+      { upsert: true } // Create if it doesn't exist
     );
 
     res.json({
@@ -102,7 +100,6 @@ router.post("/refresh-token", async (req, res) => {
   const { token } = req.body;
 
   if (!token) {
-    console.error("No refresh token provided.");
     return res.status(401).json({ message: "Refresh token required." });
   }
 
@@ -110,13 +107,11 @@ router.post("/refresh-token", async (req, res) => {
     // Find the refresh token in the database
     const storedToken = await RefreshToken.findOne({ token });
     if (!storedToken) {
-      console.error("Refresh token not found in database.");
       return res.status(403).json({ message: "Invalid refresh token." });
     }
 
     // Verify the token
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
-    console.log("Token verified for user:", decoded.id);
 
     // Generate new tokens
     const newAccessToken = generateAccessToken(decoded.id);
@@ -125,8 +120,6 @@ router.post("/refresh-token", async (req, res) => {
     // Update the refresh token in the database
     storedToken.token = newRefreshToken;
     await storedToken.save();
-
-    console.log("Refresh token updated successfully.");
 
     res.json({ authToken: newAccessToken, refreshToken: newRefreshToken });
   } catch (error) {
@@ -139,51 +132,16 @@ router.post("/refresh-token", async (req, res) => {
 router.post("/logout", async (req, res) => {
   const { token } = req.body;
 
-  if (!token) {
-    console.error("No token provided for logout.");
-    return res.status(400).json({ message: "Token required for logout." });
-  }
-
   try {
     const deletedToken = await RefreshToken.findOneAndDelete({ token });
     if (!deletedToken) {
-      console.error("Refresh token not found during logout.");
       return res.status(404).json({ message: "Refresh token not found." });
     }
 
-    console.log("Refresh token deleted successfully for logout.");
     res.json({ message: "Logged out successfully." });
   } catch (error) {
     console.error("Logout error:", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
-
-router.get("/:id/progress", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const dueDate = new Date(user.dueDate);
-    const currentDate = new Date();
-    const totalPregnancyDays = 280; // Approx. 40 weeks
-
-    // Calculate progress
-    const daysElapsed = Math.floor(
-      (currentDate - dueDate + totalPregnancyDays * 24 * 60 * 60 * 1000) /
-        (1000 * 60 * 60 * 24)
-    );
-    const progress = Math.max(
-      0,
-      Math.min(100, ((daysElapsed / totalPregnancyDays) * 100).toFixed(2))
-    );
-
-    res.json({ progress });
-  } catch (err) {
-    console.error("Error fetching progress:", err.message);
-    res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 

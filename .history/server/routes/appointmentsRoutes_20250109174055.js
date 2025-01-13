@@ -38,7 +38,6 @@ router.post("/", authenticate, async (req, res) => {
 // Fetch the user's next appointment
 router.get("/next", authenticate, async (req, res) => {
   const { id: userId } = req.user;
-  console.log("Fetching appointments for user:", userId);
 
   try {
     const nextAppointment = await Appointment.findOne({

@@ -37,15 +37,9 @@ const Login = ({ navigation }) => {
         const data = await response.json();
         console.log("Login Response Data:", data);
 
-        // Store tokens securely
         if (data.authToken) {
           console.log("Storing Auth Token:", data.authToken);
           await AsyncStorage.setItem("authToken", data.authToken);
-        }
-
-        if (data.refreshToken) {
-          console.log("Storing Refresh Token:", data.refreshToken);
-          await AsyncStorage.setItem("refreshToken", data.refreshToken);
         }
 
         if (data.userId) {
@@ -61,7 +55,6 @@ const Login = ({ navigation }) => {
           );
         }
 
-        // Update context
         setUserId(data.userId);
         setLanguagePreference(data.languagePreference || "English");
 
@@ -198,5 +191,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
 export default Login;

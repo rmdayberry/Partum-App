@@ -4,12 +4,10 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const pregnancyRoutes = require("./routes/pregnancyRoutes");
-const appointmentsRoutes = require("./routes/appointmentsRoutes"); // Import appointments routes
+const appointmentsRoutes = require("./routes/appointmentsRoutes");
 
 // Load environment variables
 dotenv.config();
-require("dotenv").config();
-console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 
 // Validate required environment variables
 if (!process.env.MONGO_URI) {
@@ -50,7 +48,7 @@ mongoose
 // Routes
 app.use("/users", userRoutes);
 app.use("/api", pregnancyRoutes);
-app.use("/appointments", appointmentsRoutes); // Register appointments routes
+app.use("/appointments", appointmentsRoutes); // Mount appointments routes
 
 app.get("/", (req, res) => {
   res.send("API is running...");
