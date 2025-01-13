@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   appointmentSection: {
     alignSelf: "screenLeft",
-    width: "90%",
+    width: "40%",
     margin: 20,
   },
   dailyTipFrame: {

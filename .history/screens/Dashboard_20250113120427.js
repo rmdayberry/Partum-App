@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 import { UserContext } from "../contexts/UserContext";
 import Header from "../features/Header";
 import ProgressBar from "../features/progress/ProgressBar";
-import AppointmentContainer from "../features/appointments/AppointmentContainer";
+import { AppointmentContainer } from "../features/appointments/AppointmentContainer";
 import ResourceSection from "../features/resources/ResourceSection";
 import {
   fetchPregnancyProgress,
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   appointmentSection: {
     alignSelf: "screenLeft",
-    width: "90%",
+    width: "40%",
     margin: 20,
   },
   dailyTipFrame: {

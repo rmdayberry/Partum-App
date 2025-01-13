@@ -45,19 +45,12 @@ const AppointmentContainer = () => {
     );
   }
 
-  const formattedDate = new Date(nextAppointment.date).toLocaleDateString(
-    "en-US",
-    {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-    }
-  );
+  const formattedDate = new Date(nextAppointment.date).toLocaleDateString();
   const formattedTime = nextAppointment.time;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Upcoming Appointment</Text>
+      <Text style={styles.header}>Upcoming Appointments</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.date}>{formattedDate}</Text>
         <Text style={styles.time}>{formattedTime}</Text>
@@ -93,8 +86,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 2 },
-    alignItems: "center", // Center content horizontally
-    justifyContent: "center", // Center content vertically
   },
   header: {
     fontSize: 16,
@@ -104,31 +95,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   detailsContainer: {
-    alignItems: "center", // Center content horizontally
+    alignItems: "center",
     marginBottom: 16,
   },
   date: {
     fontSize: 14,
     fontWeight: "bold",
     color: "#333",
-    textAlign: "center",
   },
   time: {
     fontSize: 14,
     color: "#555",
     marginBottom: 8,
-    textAlign: "center",
   },
   locationContainer: {
     flexDirection: "row",
-    alignItems: "center", // Align icon and text in a row
-    justifyContent: "center", // Center within the container
+    alignItems: "center",
   },
   clinicName: {
     fontSize: 14,
     color: "#555",
     marginLeft: 8,
-    textAlign: "center",
   },
   notes: {
     fontSize: 12,
@@ -138,7 +125,6 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     marginTop: 16,
-    alignItems: "center", // Center the button horizontally
   },
   button: {
     backgroundColor: "#6A5ACD",
@@ -150,7 +136,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 14,
-    textAlign: "center",
   },
   noAppointmentText: {
     textAlign: "center",

@@ -57,7 +57,7 @@ const AppointmentContainer = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Upcoming Appointment</Text>
+      <Text style={styles.header}>Upcoming Appointments</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.date}>{formattedDate}</Text>
         <Text style={styles.time}>{formattedTime}</Text>
@@ -83,79 +83,95 @@ const AppointmentContainer = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#ffffff", // White background for better contrast
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#e0e0e0",
+    borderColor: "#dcdcdc",
     padding: 16,
     marginVertical: 10,
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-    alignItems: "center", // Center content horizontally
-    justifyContent: "center", // Center content vertically
+    elevation: 3, // Elevation for Android shadow
   },
   header: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#6A5ACD",
     marginBottom: 16,
     textAlign: "center",
   },
   detailsContainer: {
-    alignItems: "center", // Center content horizontally
+    alignItems: "center",
     marginBottom: 16,
   },
   date: {
-    fontSize: 14,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "600",
     color: "#333",
-    textAlign: "center",
+    marginBottom: 4,
   },
   time: {
     fontSize: 14,
-    color: "#555",
+    fontWeight: "500",
+    color: "#666",
     marginBottom: 8,
-    textAlign: "center",
   },
   locationContainer: {
     flexDirection: "row",
-    alignItems: "center", // Align icon and text in a row
-    justifyContent: "center", // Center within the container
+    alignItems: "center",
+    backgroundColor: "#f4f4f4",
+    padding: 8,
+    borderRadius: 8,
+    marginBottom: 8,
+    width: "100%",
+    justifyContent: "center",
   },
   clinicName: {
     fontSize: 14,
+    fontWeight: "500",
     color: "#555",
     marginLeft: 8,
-    textAlign: "center",
   },
   notes: {
     fontSize: 12,
     color: "#777",
     marginTop: 8,
     textAlign: "center",
+    fontStyle: "italic",
   },
   actionsContainer: {
     marginTop: 16,
-    alignItems: "center", // Center the button horizontally
+    alignItems: "center",
   },
   button: {
     backgroundColor: "#6A5ACD",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     borderRadius: 8,
     alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
   },
   buttonText: {
     color: "#fff",
     fontSize: 14,
-    textAlign: "center",
+    fontWeight: "bold",
   },
   noAppointmentText: {
     textAlign: "center",
     fontSize: 14,
     color: "#888",
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    tintColor: "#555", // Subtle color for the icon
   },
 });
 
