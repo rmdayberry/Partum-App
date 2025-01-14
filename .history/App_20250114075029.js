@@ -144,7 +144,7 @@ const BottomTabs = ({ userId }) => (
           iconName = focused ? "home" : "home-outline";
         } else if (route.name === "Appointments") {
           iconName = focused ? "calendar" : "calendar-outline";
-        } else if (route.name === "Learn") {
+        } else if (route.name === "Wellness") {
           iconName = focused ? "book" : "book-outline";
         } else if (route.name === "More") {
           iconName = focused

@@ -60,6 +60,7 @@ const CommunityResources = () => {
     },
   ];
 
+  // The `return` is now inside the `CommunityResources` component
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -90,84 +91,113 @@ const CommunityResources = () => {
 };
 
 const styles = StyleSheet.create({
-  // Match your overall app background color from Dashboard:
   container: {
     flex: 1,
-    backgroundColor: "#F4F5FB",
-    paddingTop: 16,
+    backgroundColor: "#F9FAFF",
   },
-  header: {
-    marginBottom: 16,
-    paddingHorizontal: 20,
-    // Add some vertical spacing to look consistent with the Dashboard
-    marginTop: 40,
+  contentContainer: {
     alignItems: "center",
+    paddingBottom: 50,
   },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#6A5ACD", // Accent color matches the Dashboard
-    textAlign: "center",
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 14,
-    fontWeight: "400",
-    color: "#555",
-    textAlign: "center",
-    marginHorizontal: 10,
-    lineHeight: 20,
-  },
-  content: {
-    paddingBottom: 30,
-    paddingHorizontal: 20,
-  },
-  card: {
-    flexDirection: "row",
+  pregnancyOverviewContainer: {
+    width: "90%",
     backgroundColor: "#fff",
     borderRadius: 16,
-    marginBottom: 16,
-    padding: 16,
-    // Add a similar shadow as in the Dashboard:
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
+    padding: 20,
+    marginVertical: 10,
   },
-  icon: {
-    width: 50,
-    height: 50,
-    marginRight: 16,
-    alignSelf: "center",
+  sectionHeader: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#6A5ACD",
+    textAlign: "center",
+    marginBottom: 12,
   },
-  cardContent: {
-    flex: 1,
-    justifyContent: "center",
+  pregnancyText: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#333",
+    marginBottom: 10,
+    fontWeight: "600",
   },
-  cardTitle: {
+  highlight: {
+    color: "#6A5ACD",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  weeklyTipContainer: {
+    backgroundColor: "#EFEFFF",
+    borderRadius: 12,
+    padding: 16,
+    marginTop: 20,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#D0D0FF",
+  },
+  weeklyIcon: {
+    width: 40,
+    height: 40,
+    marginBottom: 10,
+  },
+  tipHeader: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#333",
-    marginBottom: 4,
+    color: "#4F46E5",
+    marginBottom: 10,
   },
-  cardDescription: {
+  loadingText: {
     fontSize: 14,
-    color: "#666",
-    marginBottom: 8,
-    lineHeight: 20,
+    color: "#888",
+    textAlign: "center",
   },
-  button: {
-    backgroundColor: "#6A5ACD", // Use the accent purple
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    alignSelf: "flex-start",
-  },
-  buttonText: {
+  tipText: {
     fontSize: 14,
-    color: "#fff",
-    fontWeight: "600",
+    color: "#555",
+    textAlign: "center",
+    lineHeight: 22,
+    marginVertical: 10,
+  },
+  noTipText: {
+    fontSize: 14,
+    color: "#888",
+    textAlign: "center",
+  },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+    padding: 20,
+    marginVertical: 10,
+    width: "90%",
+  },
+  dailyTipFrame: {
+    backgroundColor: "#FFF5EB",
+    borderRadius: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+    padding: 20,
+    marginVertical: 10,
+    width: "90%",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#FFD3A6",
+  },
+  dailyIcon: {
+    width: 40,
+    height: 40,
+    marginBottom: 10,
   },
 });
 

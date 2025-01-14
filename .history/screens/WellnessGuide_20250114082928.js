@@ -7,8 +7,8 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Animated,
+  Image,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context"; // <-- Import SafeAreaView
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
@@ -139,56 +139,46 @@ const WellnessGuide = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      {/* 
-        Using SafeAreaView ensures we respect the device’s notch/ status bar area.
-        We can still animate the entire container below to fade in or add paddings 
-        as needed.
-      */}
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
-        {/* Header Section */}
-        <View style={styles.headerSection}>
-          <Text style={styles.headerText}>
-            {translations.header[languagePreference]}
-          </Text>
-          <Text style={styles.subheaderText}>
-            {translations.subheader[languagePreference]}
-          </Text>
-        </View>
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      {/* Header Section */}
+      <View style={styles.headerSection}>
+        <Text style={styles.headerText}>
+          {translations.header[languagePreference]}
+        </Text>
+        <Text style={styles.subheaderText}>
+          {translations.subheader[languagePreference]}
+        </Text>
+      </View>
 
-        {/* Categories */}
-        <FlatList
-          data={topics}
-          renderItem={renderTopicCard}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.flatListContainer}
-          showsVerticalScrollIndicator={false}
-        />
-      </Animated.View>
-    </SafeAreaView>
+      {/* Categories */}
+      <FlatList
+        data={topics}
+        renderItem={renderTopicCard}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContainer}
+        showsVerticalScrollIndicator={false}
+      />
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-    backgroundColor: "#F4F5FB", // to match the rest of your pages
-  },
   container: {
     flex: 1,
+    backgroundColor: "#F4F5FB", // Matches the Dashboard background
     paddingHorizontal: 16,
-    // We remove paddingTop here because SafeAreaView handles the notch area
+    paddingTop: 40,
   },
   headerSection: {
     alignItems: "center",
-    marginVertical: 20,
+    marginBottom: 20,
   },
   headerText: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#6A5ACD", // same accent color
+    color: "#6A5ACD", // Same accent color as in your other pages
     marginBottom: 8,
   },
   subheaderText: {
@@ -212,7 +202,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 12,
     marginBottom: 16,
-    // Shadow to match the style in other pages
+    // Drop shadow to match the style in other pages
     shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowRadius: 6,

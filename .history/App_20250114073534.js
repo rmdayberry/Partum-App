@@ -163,7 +163,7 @@ const BottomTabs = ({ userId }) => (
     </Tab.Screen>
 
     <Tab.Screen name="Appointments" component={AppointmentsStack} />
-    <Tab.Screen name="Learn" component={WellnessGuide} />
+    <Tab.Screen name="Wellness" component={WellnessGuide} />
     <Tab.Screen name="More" component={MoreStack} />
   </Tab.Navigator>
 );
