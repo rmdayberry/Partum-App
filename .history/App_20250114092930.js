@@ -39,12 +39,10 @@ const DashboardStack = ({ userId }) => (
     <Stack.Screen name="Dashboard">
       {() => <Dashboard userId={userId} />}
     </Stack.Screen>
-
-    <Stack.Screen name="CommunityResources" component={CommunityResources} />
-    <Stack.Screen name="Education" component={Education} />
-    <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
-    <Stack.Screen name="GetSupport" component={GetSupport} />
-    <Stack.Screen name="Settings" component={Settings} />
+    {/* You can still add child screens here if needed:
+        <Stack.Screen name="CommunityResources" component={CommunityResources} />
+        etc.
+     */}
   </Stack.Navigator>
 );
 
