@@ -20,9 +20,7 @@ import {
 } from "../api/api";
 
 const Dashboard = () => {
-  // 1) Destructure *both* userId **and** languagePreference from context
-  const { userId, languagePreference } = useContext(UserContext);
-
+  const { userId } = useContext(UserContext);
   const [currentWeek, setCurrentWeek] = useState(null);
   const [weeklyTip, setWeeklyTip] = useState(null);
   const [dailyTip, setDailyTip] = useState(null);
@@ -30,7 +28,6 @@ const Dashboard = () => {
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
   const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
 
-  // 2) Then you can read from dashboardTranslations using languagePreference
   const t =
     dashboardTranslations[languagePreference] || dashboardTranslations.English;
 
@@ -53,7 +50,7 @@ const Dashboard = () => {
         setDailyTip(dailyTipData);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setDailyTip({ tip: t.noDailyTip });
+        setDailyTip({ tip: "No tip available today." });
       } finally {
         setLoadingWeeklyTip(false);
         setLoadingDailyTip(false);
@@ -68,9 +65,7 @@ const Dashboard = () => {
       duration: 1000,
       useNativeDriver: true,
     }).start();
-  }, [userId, languagePreference]);
-  // ^ Notice we add languagePreference to the dependency array so it re-renders
-  //   if the user toggles language mid-session.
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -80,33 +75,25 @@ const Dashboard = () => {
         <Animated.View
           style={[styles.pregnancyOverviewContainer, { opacity: fadeAnim }]}
         >
-          <Text style={styles.sectionHeader}>{t.pregnancyOverview}</Text>
-
+          <Text style={styles.sectionHeader}>Pregnancy Overview</Text>
           <Text style={styles.pregnancyText}>
-            {t.youAre}{" "}
-            <Text style={styles.highlight}>
-              {currentWeek !== null && currentWeek !== undefined
-                ? currentWeek
-                : t.loading}
-            </Text>{" "}
-            {t.weeksAlong}
+            You're{" "}
+            <Text style={styles.highlight}>{currentWeek || "Loading..."}</Text>{" "}
+            weeks along!
           </Text>
-
           <ProgressBar userId={userId} />
-
           <View style={styles.weeklyTipContainer}>
             <Image
               style={styles.weeklyIcon}
               source={require("../assets/pregnantPerson.png")}
             />
-            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
-
+            <Text style={styles.tipHeader}>What to Expect This Week</Text>
             {loadingWeeklyTip ? (
-              <Text style={styles.loadingText}>{t.loading}</Text>
+              <Text style={styles.loadingText}>Loading...</Text>
             ) : weeklyTip && weeklyTip.tip ? (
               <Text style={styles.tipText}>{weeklyTip.tip}</Text>
             ) : (
-              <Text style={styles.noTipText}>{t.noTip}</Text>
+              <Text style={styles.noTipText}>No tip available this week.</Text>
             )}
           </View>
         </Animated.View>
@@ -122,13 +109,13 @@ const Dashboard = () => {
             style={styles.dailyIcon}
             source={require("../assets/wateringCan.png")}
           />
-          <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>
+          <Text style={styles.sectionHeader}>Today's Pregnancy Tip</Text>
           {loadingDailyTip ? (
-            <Text style={styles.loadingText}>{t.loading}</Text>
+            <Text style={styles.loadingText}>Loading...</Text>
           ) : dailyTip && dailyTip.tip ? (
             <Text style={styles.tipText}>{dailyTip.tip}</Text>
           ) : (
-            <Text style={styles.noTipText}>{t.noDailyTip}</Text>
+            <Text style={styles.noTipText}>No tip available for today.</Text>
           )}
         </Animated.View>
 

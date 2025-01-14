@@ -20,17 +20,15 @@ import {
 } from "../api/api";
 
 const Dashboard = () => {
-  // 1) Destructure *both* userId **and** languagePreference from context
-  const { userId, languagePreference } = useContext(UserContext);
-
+  const { userId } = useContext(UserContext);
   const [currentWeek, setCurrentWeek] = useState(null);
   const [weeklyTip, setWeeklyTip] = useState(null);
   const [dailyTip, setDailyTip] = useState(null);
   const [loadingWeeklyTip, setLoadingWeeklyTip] = useState(true);
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
+  const [languagePreference, userId] = useContext(UserContext);
   const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
 
-  // 2) Then you can read from dashboardTranslations using languagePreference
   const t =
     dashboardTranslations[languagePreference] || dashboardTranslations.English;
 
@@ -69,12 +67,11 @@ const Dashboard = () => {
       useNativeDriver: true,
     }).start();
   }, [userId, languagePreference]);
-  // ^ Notice we add languagePreference to the dependency array so it re-renders
-  //   if the user toggles language mid-session.
 
   return (
     <View style={styles.container}>
       <Header />
+
       <ScrollView contentContainerStyle={styles.contentContainer}>
         {/* Pregnancy Overview with Progress Bar and Weekly Tip */}
         <Animated.View
