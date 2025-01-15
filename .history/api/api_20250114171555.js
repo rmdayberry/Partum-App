@@ -130,20 +130,14 @@ export const addAppointment = async (appointmentData) => {
     return response.data.appointment;
   });
 };
-// Submit feedback from user
+
+//Submit feedback from user
 export const submitFeedback = async (userId, message) => {
   return await authorizedRequest(async () => {
-    const token = await AsyncStorage.getItem("authToken");
-    const response = await axios.post(
-      `${API_BASE_URL}/feedback`,
-      {
-        userId,
-        message,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` }, // Optional if you have token-based auth
-      }
-    );
+    const response = await axios.post(`${API_BASE_URL}/feedback`, {
+      userId,
+      message,
+    });
     console.log("Feedback submitted:", response.data);
     return response.data;
   });

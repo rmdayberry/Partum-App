@@ -46,7 +46,6 @@ const DashboardStack = ({ userId }) => (
     <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
     <Stack.Screen name="GetSupport" component={GetSupport} />
     <Stack.Screen name="Settings" component={Settings} />
-    <Stack.Screen name="Feedback" component={FeedbackScreen} />
   </Stack.Navigator>
 );
 
@@ -150,7 +149,7 @@ function MoreFlow() {
       <MoreStack.Screen name="Settings" component={Settings} />
       <MoreStack.Screen name="SymptomChecker" component={SymptomChecker} />
       <MoreStack.Screen name="GetSupport" component={GetSupport} />
-      <MoreStack.Screen name="Feedback" component={FeedbackScreen} />
+      <MoreStack.Screen name="Feedback" component={Feedback} />
     </MoreStack.Navigator>
   );
 }

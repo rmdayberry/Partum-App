@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import {
-  SafeAreaView,
   View,
   Text,
   StyleSheet,
@@ -109,7 +108,7 @@ const GetSupport = () => {
   const texts = translations[languagePreference] || translations.English;
 
   return (
-    <SafeAreaView style={styles.safeContainer}>
+    <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
           <Text style={styles.title}>{texts.title}</Text>
@@ -152,18 +151,18 @@ const GetSupport = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeContainer: {
+  container: {
     flex: 1,
     backgroundColor: "#F9FAFF",
+    paddingHorizontal: 16,
   },
   scrollContent: {
     paddingBottom: 30,
-    paddingHorizontal: 16,
   },
   header: {
     marginVertical: 20,

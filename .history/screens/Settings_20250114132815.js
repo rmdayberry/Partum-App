@@ -196,7 +196,7 @@ const Settings = ({ navigation }) => {
 
   // --- Navigate to Feedback Screen ---
   const goToFeedback = () => {
-    navigation.navigate("Feedback");
+    navigation.navigate("Feedback"); // Make sure you have a "Feedback" route set up
   };
 
   return (

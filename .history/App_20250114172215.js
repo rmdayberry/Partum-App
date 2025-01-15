@@ -46,7 +46,6 @@ const DashboardStack = ({ userId }) => (
     <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
     <Stack.Screen name="GetSupport" component={GetSupport} />
     <Stack.Screen name="Settings" component={Settings} />
-    <Stack.Screen name="Feedback" component={FeedbackScreen} />
   </Stack.Navigator>
 );
 
