@@ -41,11 +41,10 @@ const Dashboard = () => {
     const fetchProgressAndTips = async () => {
       try {
         const progress = await fetchPregnancyProgress(userId);
-        const week = Math.floor((progress / 100) * 40); // Convert progress to current week
+        const week = Math.floor((progress / 100) * 40);
         setCurrentWeek(week);
 
-        // Pass the user's languagePreference explicitly
-        const weeklyTipData = await fetchWeeklyTip(week, languagePreference);
+        const weeklyTipData = await fetchWeeklyTip(week);
         setWeeklyTip(weeklyTipData);
 
         const dailyTipData = await fetchDailyTip(userId);

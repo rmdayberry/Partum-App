@@ -20,6 +20,7 @@ import {
 } from "../api/api";
 
 const Dashboard = () => {
+  // 1) Destructure *both* userId **and** languagePreference from context
   const { userId, languagePreference } = useContext(UserContext);
 
   const [currentWeek, setCurrentWeek] = useState(null);
@@ -29,6 +30,7 @@ const Dashboard = () => {
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
   const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
 
+  // 2) Then you can read from dashboardTranslations using languagePreference
   const t =
     dashboardTranslations[languagePreference] || dashboardTranslations.English;
 
@@ -41,17 +43,17 @@ const Dashboard = () => {
     const fetchProgressAndTips = async () => {
       try {
         const progress = await fetchPregnancyProgress(userId);
-        const week = Math.floor((progress / 100) * 40); // Convert progress to current week
+        const week = Math.floor((progress / 100) * 40);
         setCurrentWeek(week);
 
-        // Pass the user's languagePreference explicitly
-        const weeklyTipData = await fetchWeeklyTip(week, languagePreference);
+        const weeklyTipData = await fetchWeeklyTip(userId);
         setWeeklyTip(weeklyTipData);
 
         const dailyTipData = await fetchDailyTip(userId);
         setDailyTip(dailyTipData);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setWeeklyTip({ tip: t.noTip });
         setDailyTip({ tip: t.noDailyTip });
       } finally {
         setLoadingWeeklyTip(false);
@@ -61,13 +63,14 @@ const Dashboard = () => {
 
     fetchProgressAndTips();
 
-    // Trigger fade-in animation
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 1000,
       useNativeDriver: true,
     }).start();
   }, [userId, languagePreference]);
+  // ^ Notice we add languagePreference to the dependency array so it re-renders
+  //   if the user toggles language mid-session.
 
   return (
     <View style={styles.container}>

@@ -75,8 +75,7 @@ export const fetchWeeklyTip = async (week, languagePreference) => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
     console.log(
-      "Fetching Weekly Tip with Week and Language:",
-      week,
+      "Fetching Weekly Tip with Language Preference:",
       languagePreference
     );
 
@@ -84,7 +83,7 @@ export const fetchWeeklyTip = async (week, languagePreference) => {
       `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`,
       {
         headers: { Authorization: `Bearer ${token}` },
-        params: { language: languagePreference }, // Include languagePreference
+        params: { language: languagePreference }, // Dynamically pass language preference
       }
     );
 

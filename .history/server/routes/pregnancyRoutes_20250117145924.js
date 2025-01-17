@@ -119,15 +119,8 @@ router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
       return res.status(404).json({ message: "Tip for this week not found" });
     }
 
-    console.log("Weekly Tip Object:", weeklyTip);
-
-    // Use the correct field name for Spanish tips
-    const tip =
-      language === "Español" && weeklyTip.tipEs
-        ? weeklyTip.tipEs
-        : weeklyTip.tip;
-
-    console.log("Selected Tip:", tip);
+    // Choose the tip based on the language
+    const tip = language === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
 
     res.json({ week, tip });
   } catch (err) {

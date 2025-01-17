@@ -109,9 +109,9 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
 router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
   try {
     const week = parseInt(req.params.week, 10); // Convert week to an integer
-    const { language = "English" } = req.query; // Default language to English
+    const { language = "English" } = req.query; // Get language from query params, default to English
 
-    console.log("Fetching weekly tip for week:", week, "Language:", language);
+    console.log("Language received from query:", language);
 
     const weeklyTip = await WhatToExpectWeekly.findOne({ week });
 
@@ -119,13 +119,8 @@ router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
       return res.status(404).json({ message: "Tip for this week not found" });
     }
 
-    console.log("Weekly Tip Object:", weeklyTip);
-
-    // Use the correct field name for Spanish tips
-    const tip =
-      language === "Español" && weeklyTip.tipEs
-        ? weeklyTip.tipEs
-        : weeklyTip.tip;
+    // Determine the tip based on the language parameter
+    const tip = language === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
 
     console.log("Selected Tip:", tip);
 
