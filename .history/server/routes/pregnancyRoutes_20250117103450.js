@@ -55,7 +55,6 @@ router.put("/set-due-date/:userId", async (req, res) => {
   }
 });
 
-// Endpoint to fetch weekly tips by userId
 router.get("/whatToExpectWeekly/:userId", async (req, res) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -105,27 +104,6 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
   }
 });
 
-// Endpoint to fetch weekly tips by week with optional language preference
-router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
-  try {
-    const week = parseInt(req.params.week, 10); // Convert week to integer
-    const { language = "English" } = req.query; // Get language from query params, default to English
-
-    const weeklyTip = await WhatToExpectWeekly.findOne({ week });
-
-    if (!weeklyTip) {
-      return res.status(404).json({ message: "Tip for this week not found" });
-    }
-
-    // Determine the tip based on the language parameter
-    const tip = language === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
-
-    res.json({ week, tip });
-  } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
-});
-
 // Fetch daily pregnancy tip with language preference
 router.get("/daily-tip/:userId", async (req, res) => {
   try {
@@ -135,6 +113,7 @@ router.get("/daily-tip/:userId", async (req, res) => {
     }
 
     const { languagePreference = "English" } = user; // Default to English
+    console.log("User's language preference:", languagePreference);
 
     const dueDate = new Date(user.dueDate); // User's due date
     const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000); // 280 days before due date
@@ -152,7 +131,6 @@ router.get("/daily-tip/:userId", async (req, res) => {
     }
 
     const dailyTip = await DailyPregnancyTip.findOne({ day: daysElapsed });
-
     if (!dailyTip) {
       return res.status(404).json({ message: "Tip for this day not found" });
     }
@@ -163,6 +141,7 @@ router.get("/daily-tip/:userId", async (req, res) => {
 
     res.json({ day: daysElapsed, tip });
   } catch (err) {
+    console.error("Error fetching daily tip:", err.message);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });

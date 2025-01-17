@@ -73,16 +73,10 @@ export const fetchPregnancyProgress = async (userId) => {
 // Fetch weekly tip
 export const fetchWeeklyTip = async (week) => {
   return await authorizedRequest(async () => {
-    const token = await AsyncStorage.getItem("authToken");
-    console.log("Fetching Weekly Tip with Language Preference...");
     const response = await axios.get(
-      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { language: "Español" },
-      }
+      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
     );
-    console.log("Weekly Tip Response from API:", response.data);
+    console.log("Weekly Tip Response:", response.data);
     return response.data;
   });
 };

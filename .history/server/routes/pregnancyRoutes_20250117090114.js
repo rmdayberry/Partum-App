@@ -63,44 +63,29 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Extract language preference and default to English
-    const { languagePreference = "English" } = user;
-    console.log(
-      "User's language preference for weekly tip:",
-      languagePreference
-    );
+    const { languagePreference = "English" } = user; // Default to English
 
-    // Calculate the current week of pregnancy
     const dueDate = new Date(user.dueDate); // User's due date
-    const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000); // Start date of pregnancy (280 days before due date)
+    const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000); // 280 days before due date
     const currentDate = new Date();
 
     const daysElapsed = Math.floor(
       (currentDate - startDate) / (1000 * 60 * 60 * 24)
     ); // Days since start of pregnancy
-    const currentWeek = Math.max(1, Math.ceil(daysElapsed / 7)); // Ensure week is at least 1
+    const currentWeek = Math.min(40, Math.max(1, Math.ceil(daysElapsed / 7))); // Ensure week stays between 1 and 40
 
-    console.log("Calculated current week:", currentWeek);
-
-    // Fetch the weekly tip for the current week
     const weeklyTip = await WhatToExpectWeekly.findOne({ week: currentWeek });
 
     if (!weeklyTip) {
-      return res.status(404).json({
-        message: `Tip for week ${currentWeek} not found. Contact support if this is unexpected.`,
-      });
+      return res.status(404).json({ message: "Tip for this week not found" });
     }
 
-    // Select tip based on language preference
+    // Determine the tip based on language preference
     const tip =
       languagePreference === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
 
-    console.log("Selected tip for language:", tip);
-
-    // Return the current week and the selected tip
     res.json({ week: currentWeek, tip });
   } catch (err) {
-    console.error("Error fetching weekly tip:", err.message);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -144,11 +129,10 @@ router.get("/daily-tip/:userId", async (req, res) => {
       (currentDate - startDate) / (1000 * 60 * 60 * 24)
     );
 
-    if (daysElapsed < 1 || daysElapsed > 294) {
-      // Extend range to 294 days (42 weeks)
+    if (daysElapsed < 1 || daysElapsed > 280) {
       return res
         .status(400)
-        .json({ message: "Day of pregnancy is out of range (1-294)." });
+        .json({ message: "Day of pregnancy is out of range (1-280)." });
     }
 
     const dailyTip = await DailyPregnancyTip.findOne({ day: daysElapsed });

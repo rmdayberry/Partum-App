@@ -63,26 +63,18 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Extract language preference and default to English
-    const { languagePreference = "English" } = user;
-    console.log(
-      "User's language preference for weekly tip:",
-      languagePreference
-    );
+    const { languagePreference = "English" } = user; // Default to English
+    console.log("User's language preference:", languagePreference);
 
-    // Calculate the current week of pregnancy
     const dueDate = new Date(user.dueDate); // User's due date
-    const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000); // Start date of pregnancy (280 days before due date)
+    const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000); // 280 days before due date
     const currentDate = new Date();
 
     const daysElapsed = Math.floor(
       (currentDate - startDate) / (1000 * 60 * 60 * 24)
     ); // Days since start of pregnancy
-    const currentWeek = Math.max(1, Math.ceil(daysElapsed / 7)); // Ensure week is at least 1
+    const currentWeek = Math.max(1, Math.ceil(daysElapsed / 7)); // Calculate current week
 
-    console.log("Calculated current week:", currentWeek);
-
-    // Fetch the weekly tip for the current week
     const weeklyTip = await WhatToExpectWeekly.findOne({ week: currentWeek });
 
     if (!weeklyTip) {
@@ -91,13 +83,16 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
       });
     }
 
-    // Select tip based on language preference
+    // Log the weeklyTip document
+    console.log("Weekly Tip Document:", weeklyTip);
+
+    // Log the chosen tip based on language preference
     const tip =
-      languagePreference === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
+      languagePreference.trim().toLowerCase() === "español"
+        ? weeklyTip.tipSpanish
+        : weeklyTip.tip;
+    console.log("Selected Tip:", tip);
 
-    console.log("Selected tip for language:", tip);
-
-    // Return the current week and the selected tip
     res.json({ week: currentWeek, tip });
   } catch (err) {
     console.error("Error fetching weekly tip:", err.message);
@@ -118,7 +113,10 @@ router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
     }
 
     // Determine the tip based on the language parameter
-    const tip = language === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
+    const tip =
+      language.trim().toLowerCase() === "español"
+        ? weeklyTip.tipSpanish
+        : weeklyTip.tip;
 
     res.json({ week, tip });
   } catch (err) {
@@ -159,7 +157,9 @@ router.get("/daily-tip/:userId", async (req, res) => {
 
     // Determine the tip based on language preference
     const tip =
-      languagePreference === "Español" ? dailyTip.tipSpanish : dailyTip.tip;
+      languagePreference.trim().toLowerCase() === "español"
+        ? dailyTip.tipSpanish
+        : dailyTip.tip;
 
     res.json({ day: daysElapsed, tip });
   } catch (err) {
@@ -168,3 +168,4 @@ router.get("/daily-tip/:userId", async (req, res) => {
 });
 
 module.exports = router;
+r;

@@ -1,3 +1,4 @@
+const { requireOptionalNativeModule } = require("expo");
 const mongoose = require("mongoose");
 
 const whatToExpectWeeklySchema = new mongoose.Schema({

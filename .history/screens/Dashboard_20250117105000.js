@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
-import { dashboardTranslations } from "../translations/DashboardTranslations";
+import { dashboardTranslations } from "../translations/dashboardTranslations";
 import Header from "../features/Header";
 import ProgressBar from "../features/progress/ProgressBar";
 import AppointmentContainer from "../features/appointments/AppointmentContainer";
@@ -20,6 +20,7 @@ import {
 } from "../api/api";
 
 const Dashboard = () => {
+  // 1) Destructure *both* userId **and** languagePreference from context
   const { userId, languagePreference } = useContext(UserContext);
 
   const [currentWeek, setCurrentWeek] = useState(null);
@@ -29,6 +30,7 @@ const Dashboard = () => {
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
   const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
 
+  // 2) Then you can read from dashboardTranslations using languagePreference
   const t =
     dashboardTranslations[languagePreference] || dashboardTranslations.English;
 
@@ -45,6 +47,12 @@ const Dashboard = () => {
         setCurrentWeek(week);
 
         const weeklyTipData = await fetchWeeklyTip(week);
+        console.log("Weekly Tip Data Received:", weeklyTipData);
+      setWeeklyTip(weeklyTipData); // Ensure this updates state correctly
+    } catch (error) {
+      console.error("Error fetching weekly tip:", error);
+    }
+  };
         setWeeklyTip(weeklyTipData);
 
         const dailyTipData = await fetchDailyTip(userId);
@@ -67,6 +75,8 @@ const Dashboard = () => {
       useNativeDriver: true,
     }).start();
   }, [userId, languagePreference]);
+  // ^ Notice we add languagePreference to the dependency array so it re-renders
+  //   if the user toggles language mid-session.
 
   return (
     <View style={styles.container}>
