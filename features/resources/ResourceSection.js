@@ -11,6 +11,12 @@ import { useNavigation } from "@react-navigation/native";
 
 const resources = [
   {
+    id: "1",
+    title: "Wellness Guide",
+    icon: require("../../assets/Wellness.png"),
+    route: "WellnessGuide",
+  },
+  {
     id: "2",
     title: "Community Resources",
     icon: require("../../assets/CommunityResources.png"),

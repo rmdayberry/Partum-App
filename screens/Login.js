@@ -1,22 +1,23 @@
 import React, { useState, useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 import {
   View,
   Text,
   TextInput,
+  Button,
+  StyleSheet,
   Alert,
   ScrollView,
   TouchableOpacity,
-  StyleSheet,
 } from "react-native";
-import { UserContext } from "../contexts/UserContext";
 import { FontSize, FontFamily, Color } from "../GlobalStyles";
+import Registration from "./Registration";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
   const { setUserId, setLanguagePreference } = useContext(UserContext);
 
   const handleLogin = async () => {
@@ -35,38 +36,20 @@ const Login = ({ navigation }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Login Response Data:", data);
+        Alert.alert("Success", "Login successful!");
 
-        // Store tokens securely
-        if (data.authToken) {
-          console.log("Storing Auth Token:", data.authToken);
-          await AsyncStorage.setItem("authToken", data.authToken);
-        }
-        if (data.refreshToken) {
-          console.log("Storing Refresh Token:", data.refreshToken);
-          await AsyncStorage.setItem("refreshToken", data.refreshToken);
-        }
-        if (data.userId) {
-          console.log("Storing User ID:", data.userId);
-          await AsyncStorage.setItem("userId", data.userId);
-        }
-        if (data.languagePreference) {
-          console.log("Storing Language Preference:", data.languagePreference);
-          await AsyncStorage.setItem(
-            "languagePreference",
-            data.languagePreference
-          );
-        }
+        await AsyncStorage.setItem("userId", data.userId);
+        await AsyncStorage.setItem(
+          "languagePreference",
+          data.languagePreference || "English"
+        );
 
-        // Update context
         setUserId(data.userId);
         setLanguagePreference(data.languagePreference || "English");
-
-        Alert.alert("Success", "Login successful!");
         navigation.navigate("MainTabs");
+        console.log("Navigation state:", navigation.getState());
       } else {
         const errorData = await response.json();
-        console.error("Login Error Response:", errorData);
         Alert.alert("Error", errorData.message || "Login failed.");
       }
     } catch (error) {
@@ -83,10 +66,9 @@ const Login = ({ navigation }) => {
         <Text style={styles.title}>Login</Text>
         <Text style={styles.subtitle}>Inicio de sesión</Text>
       </View>
-
       <View style={styles.inputContainer}>
         <Text style={styles.label}>
-          Email <Text style={styles.lightText}>(Correo electrónico)</Text>
+          Email <Text style={styles.lightText}>Correo electrónico</Text>
         </Text>
         <TextInput
           style={styles.input}
@@ -96,10 +78,9 @@ const Login = ({ navigation }) => {
           onChangeText={setEmail}
         />
       </View>
-
       <View style={styles.inputContainer}>
         <Text style={styles.label}>
-          Password <Text style={styles.lightText}>(Contraseña)</Text>
+          Password <Text style={styles.lightText}>Constraseña</Text>
         </Text>
         <TextInput
           style={styles.input}
@@ -109,18 +90,10 @@ const Login = ({ navigation }) => {
           onChangeText={setPassword}
         />
       </View>
-
-      {/* Custom Login Button */}
-      <TouchableOpacity
-        style={[styles.loginButton, loading && { opacity: 0.6 }]}
+      <Button
+        title={loading ? "Logging in..." : "Login"}
         onPress={handleLogin}
-        disabled={loading}
-      >
-        <Text style={styles.loginButtonText}>
-          {loading ? "Logging in..." : "Login"}
-        </Text>
-      </TouchableOpacity>
-
+      />
       <TouchableOpacity
         onPress={() => navigation.navigate("Registration")}
         style={styles.registerLink}
@@ -137,81 +110,72 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#F9FAFF",
     justifyContent: "center",
     padding: 20,
+    backgroundColor: Color.nEW,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   titleContainer: {
     alignItems: "center",
-    marginBottom: 40,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#4F46E5",
-    marginBottom: 10,
+    marginBottom: 20,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#888",
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
   label: {
-    fontSize: 16,
-    color: "#333",
-    fontWeight: "600",
+    fontSize: FontSize.size_md,
+    fontFamily: FontFamily.montserrat,
     marginBottom: 5,
+    color: "#333",
   },
   lightText: {
-    fontSize: 14,
+    fontSize: FontSize.size_smi,
     color: "#888",
   },
   input: {
+    width: "100%",
     height: 50,
     borderColor: "#ddd",
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
     backgroundColor: "#fff",
-    fontSize: 16,
-  },
-  loginButton: {
-    backgroundColor: "#6A5ACD",
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  loginButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
   registerLink: {
+    marginTop: 20,
     alignItems: "center",
   },
   registerText: {
-    fontSize: 16,
+    fontSize: FontSize.size_md,
+    fontFamily: FontFamily.montserrat,
     color: "#007Aff",
-    marginBottom: 3,
+    textAlign: "center",
   },
   registerTextSpanish: {
-    fontSize: 14,
-    color: "#666",
+    fontSize: FontSize.size_smi,
+    fontFamily: FontFamily.montserrat,
+    color: "#888",
     marginBottom: 8,
   },
   registerHereText: {
-    fontSize: 16,
+    fontSize: FontSize.size_md,
+    fontFamily: FontFamily.montserrat,
     color: "#007Aff",
-    marginBottom: 3,
+    textAlign: "center",
   },
   registerHereTextSpanish: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 8,
+    fontSize: FontSize.size_smi,
+    fontFamily: FontFamily.montserrat,
+    color: "#888",
+    textAlign: "center",
   },
 });
-
 export default Login;

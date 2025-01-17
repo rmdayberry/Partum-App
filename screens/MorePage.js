@@ -27,19 +27,10 @@ const MorePage = ({ navigation }) => {
 
   const handleLogout = async () => {
     try {
-      // Remove all stored tokens and user data
-      await AsyncStorage.removeItem("authToken");
-      await AsyncStorage.removeItem("refreshToken");
       await AsyncStorage.removeItem("userId");
       await AsyncStorage.removeItem("languagePreference");
-
-      // Reset user context
-      setUserId(null);
-
-      // Show logout success message
+      setUserId(null); // Reset user context
       Alert.alert(t.logout, t.logoutMessage);
-
-      // Redirect to Login page
       navigation.navigate("Login");
     } catch (error) {
       console.error("Logout error:", error);

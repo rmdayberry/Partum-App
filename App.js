@@ -7,155 +7,133 @@ import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { UserContext } from "./contexts/UserContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import "react-native-reanimated";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-
 import Dashboard from "./screens/Dashboard";
+import WellnessGuide from "./screens/WellnessGuide";
+import CommunityResources from "./screens/CommunityResources";
+import Settings from "./screens/Settings";
+import SymptomChecker from "./screens/SymptomChecker";
+import GetSupport from "./screens/GetSupport";
 import Appointments from "./screens/Appointments";
+import Education from "./screens/Education";
 import MorePage from "./screens/MorePage";
 import Registration from "./screens/Registration";
 import Login from "./screens/Login";
-import Education from "./screens/Education";
-import CommunityResources from "./screens/CommunityResources";
-import GetSupport from "./screens/GetSupport";
-import Settings from "./screens/Settings";
-import SymptomChecker from "./screens/SymptomChecker";
-import FeedbackScreen from "./screens/FeedbackScreen";
-
-import WellnessGuide from "./screens/WellnessGuide";
 import FirstTrimester from "./screens/WellnessGuideTrims/FirstTrimesterWG";
 import SecondTrimester from "./screens/WellnessGuideTrims/SecondTrimesterWG";
 import ThirdTrimester from "./screens/WellnessGuideTrims/ThirdTrimesterWG";
 import Postpartum from "./screens/WellnessGuideTrims/PostpartumWG";
-
 import { Color } from "./GlobalStyles";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import "react-native-reanimated";
 
-// -------------- Stack + Tabs -------------- //
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// 1) Dedicated stack for Dashboard stuff
+const fetchFonts = async () => {
+  try {
+    await Font.loadAsync({
+      ArimoRegular: require("./assets/fonts/Arimo-Regular.ttf"),
+    });
+  } catch (error) {
+    console.warn("Font loading error:", error);
+  }
+};
+
 const DashboardStack = ({ userId }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Dashboard">
       {() => <Dashboard userId={userId} />}
     </Stack.Screen>
-
+    <Stack.Screen name="WellnessGuide" component={WellnessGuide} />
+    <Stack.Screen
+      name="FirstTrimesterWG"
+      component={FirstTrimester}
+      options={{
+        headerShown: true,
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: Color.nEW,
+        },
+        headerTintColor: "#000",
+        headerBackTitle: "1st Trimester",
+        shadowOpacity: 0,
+        elevation: 0,
+      }}
+    />
+    <Stack.Screen
+      name="SecondTrimesterWG"
+      component={SecondTrimester}
+      options={{
+        headerShown: true,
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: Color.nEW,
+        },
+        headerTintColor: "#000",
+        headerBackTitle: "2nd Trimester",
+        shadowOpacity: 0,
+        elevation: 0,
+      }}
+    />
+    <Stack.Screen
+      name="ThirdTrimesterWG"
+      component={ThirdTrimester}
+      options={{
+        headerShown: true,
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: Color.nEW,
+        },
+        headerTintColor: "#000",
+        headerBackTitle: "3rd Trimester",
+        shadowOpacity: 0,
+        elevation: 0,
+      }}
+    />
+    <Stack.Screen
+      name="PostpartumWG"
+      component={Postpartum}
+      options={{
+        headerShown: true,
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: Color.nEW,
+        },
+        headerTintColor: "#000",
+        headerBackTitle: "Postpartum",
+        shadowOpacity: 0,
+        elevation: 0,
+      }}
+    />
     <Stack.Screen name="CommunityResources" component={CommunityResources} />
     <Stack.Screen name="Education" component={Education} />
     <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
-    <Stack.Screen name="GetSupport" component={GetSupport} />
     <Stack.Screen name="Settings" component={Settings} />
-    <Stack.Screen name="Feedback" component={FeedbackScreen} />
+    <Stack.Screen name="GetSupport" component={GetSupport} />
   </Stack.Navigator>
 );
 
-// 2) Dedicated stack for Wellness (the “Learn” tab)
-const WellnessStack = createNativeStackNavigator();
-function WellnessFlow() {
-  return (
-    <WellnessStack.Navigator>
-      <WellnessStack.Screen
-        name="WellnessGuide"
-        component={WellnessGuide}
-        options={{ headerShown: false }}
-      />
-      <WellnessStack.Screen
-        name="FirstTrimesterWG"
-        component={FirstTrimester}
-        options={{
-          headerShown: true,
-          headerTitle: "",
-          headerStyle: {
-            backgroundColor: Color.nEW,
-          },
-          headerTintColor: "#000",
-          headerBackTitle: "1st Trimester",
-          shadowOpacity: 0,
-          elevation: 0,
-        }}
-      />
-      <WellnessStack.Screen
-        name="SecondTrimesterWG"
-        component={SecondTrimester}
-        options={{
-          headerShown: true,
-          headerTitle: "",
-          headerStyle: {
-            backgroundColor: Color.nEW,
-          },
-          headerTintColor: "#000",
-          headerBackTitle: "2nd Trimester",
-          shadowOpacity: 0,
-          elevation: 0,
-        }}
-      />
-      <WellnessStack.Screen
-        name="ThirdTrimesterWG"
-        component={ThirdTrimester}
-        options={{
-          headerShown: true,
-          headerTitle: "",
-          headerStyle: {
-            backgroundColor: Color.nEW,
-          },
-          headerTintColor: "#000",
-          headerBackTitle: "3rd Trimester",
-          shadowOpacity: 0,
-          elevation: 0,
-        }}
-      />
-      <WellnessStack.Screen
-        name="PostpartumWG"
-        component={Postpartum}
-        options={{
-          headerShown: true,
-          headerTitle: "",
-          headerStyle: {
-            backgroundColor: Color.nEW,
-          },
-          headerTintColor: "#000",
-          headerBackTitle: "Postpartum",
-          shadowOpacity: 0,
-          elevation: 0,
-        }}
-      />
-      {/* If you want CommunityResources, SymptomChecker, etc. in this flow:
-       <WellnessStack.Screen name="CommunityResources" component={CommunityResources} />
-       ... etc.
-      */}
-    </WellnessStack.Navigator>
-  );
-}
+const AppointmentsStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="AppointmentsHome" component={Appointments} />
+  </Stack.Navigator>
+);
 
-// 3) The Appointments stack
-const AppointmentsStack = createNativeStackNavigator();
-function AppointmentsFlow() {
-  return (
-    <AppointmentsStack.Navigator screenOptions={{ headerShown: false }}>
-      <AppointmentsStack.Screen
-        name="AppointmentsHome"
-        component={Appointments}
-      />
-    </AppointmentsStack.Navigator>
-  );
-}
+const EducationStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="EducationHome" component={Education} />
+  </Stack.Navigator>
+);
 
-// 4) The More stack
-const MoreStack = createNativeStackNavigator();
-function MoreFlow() {
-  return (
-    <MoreStack.Navigator screenOptions={{ headerShown: false }}>
-      <MoreStack.Screen name="MoreHome" component={MorePage} />
-      <MoreStack.Screen name="Settings" component={Settings} />
-      <MoreStack.Screen name="SymptomChecker" component={SymptomChecker} />
-      <MoreStack.Screen name="GetSupport" component={GetSupport} />
-      <MoreStack.Screen name="Feedback" component={FeedbackScreen} />
-    </MoreStack.Navigator>
-  );
-}
+const MoreStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="MoreHome" component={MorePage} />
+    <Stack.Screen name="Settings" component={Settings} />
+    <Stack.Screen name="SymptomChecker" component={SymptomChecker} />
+    <Stack.Screen name="GetSupport" component={GetSupport} />
+  </Stack.Navigator>
+);
 
-// 5) The Bottom Tabs combining the sub-stacks
 const BottomTabs = ({ userId }) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
@@ -183,24 +161,12 @@ const BottomTabs = ({ userId }) => (
     <Tab.Screen name="Home">
       {() => <DashboardStack userId={userId} />}
     </Tab.Screen>
-    <Tab.Screen name="Appointments" component={AppointmentsFlow} />
-    <Tab.Screen name="Learn" component={WellnessFlow} />
-    <Tab.Screen name="More" component={MoreFlow} />
+
+    <Tab.Screen name="Appointments" component={AppointmentsStack} />
+    <Tab.Screen name="Learn" component={EducationStack} />
+    <Tab.Screen name="More" component={MoreStack} />
   </Tab.Navigator>
 );
-
-// ---------------------------------------------------------
-const StackRoot = createNativeStackNavigator();
-
-const fetchFonts = async () => {
-  try {
-    await Font.loadAsync({
-      ArimoRegular: require("./assets/fonts/Arimo-Regular.ttf"),
-    });
-  } catch (error) {
-    console.warn("Font loading error:", error);
-  }
-};
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = React.useState(false);
@@ -248,21 +214,18 @@ const App = () => {
         }}
       >
         <NavigationContainer>
-          <StackRoot.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
             {userId ? (
-              <StackRoot.Screen name="MainTabs">
+              <Stack.Screen name="MainTabs">
                 {() => <BottomTabs userId={userId} />}
-              </StackRoot.Screen>
+              </Stack.Screen>
             ) : (
               <>
-                <StackRoot.Screen name="Login" component={Login} />
-                <StackRoot.Screen
-                  name="Registration"
-                  component={Registration}
-                />
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Registration" component={Registration} />
               </>
             )}
-          </StackRoot.Navigator>
+          </Stack.Navigator>
         </NavigationContainer>
       </UserContext.Provider>
     </GestureHandlerRootView>

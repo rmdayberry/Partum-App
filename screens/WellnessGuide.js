@@ -8,8 +8,8 @@ import {
   TouchableWithoutFeedback,
   Animated,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context"; // <-- Import SafeAreaView
 import axios from "axios";
+import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 import { UserContext } from "../contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
 
@@ -61,10 +61,7 @@ const WellnessGuide = () => {
   const { userId } = useContext(UserContext);
   const [languagePreference, setLanguagePreference] = useState("English");
   const navigation = useNavigation();
-
-  // Animation values
-  const scaleValue = useRef(new Animated.Value(1)).current;
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const scaleValue = useRef(new Animated.Value(1)).current; // Move useRef here
 
   // Fetch user language preference
   useEffect(() => {
@@ -83,16 +80,8 @@ const WellnessGuide = () => {
       }
     };
     fetchLanguagePreference();
+  }, [userId]);
 
-    // Trigger fade-in animation on mount
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, [userId, fadeAnim]);
-
-  // Card press animations
   const handlePressIn = () => {
     Animated.spring(scaleValue, {
       toValue: 0.95,
@@ -108,98 +97,89 @@ const WellnessGuide = () => {
     }).start();
   };
 
-  const renderTopicCard = ({ item }) => {
-    const cardTitle =
-      languagePreference === "Español" ? item.titleSpanish : item.titleEnglish;
-
-    return (
-      <TouchableWithoutFeedback
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        onPress={() => {
-          if (item.navigateTo) {
-            navigation.navigate(item.navigateTo);
-          }
-        }}
+  const renderTopicCard = ({ item }) => (
+    <TouchableWithoutFeedback
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={() => {
+        if (item.navigateTo) {
+          navigation.navigate(item.navigateTo);
+        }
+      }}
+    >
+      <Animated.View
+        style={[styles.card, { transform: [{ scale: scaleValue }] }]}
       >
-        <Animated.View
-          style={[styles.card, { transform: [{ scale: scaleValue }] }]}
+        <ImageBackground
+          source={item.image}
+          style={styles.cardBackground}
+          imageStyle={{ borderRadius: Border.br_md }}
         >
-          <ImageBackground
-            source={item.image}
-            style={styles.cardBackground}
-            imageStyle={styles.cardBackgroundImage}
-          >
-            <View style={styles.overlay} />
-            <Text style={styles.cardTitle}>{cardTitle}</Text>
-          </ImageBackground>
-        </Animated.View>
-      </TouchableWithoutFeedback>
-    );
-  };
+          <View style={styles.gradientOverlay} />
+          <Text style={styles.cardTitle}>
+            {languagePreference === "Español"
+              ? item.titleSpanish
+              : item.titleEnglish}
+          </Text>
+        </ImageBackground>
+      </Animated.View>
+    </TouchableWithoutFeedback>
+  );
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      {/* 
-        Using SafeAreaView ensures we respect the device’s notch/ status bar area.
-        We can still animate the entire container below to fade in or add paddings 
-        as needed.
-      */}
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
-        {/* Header Section */}
-        <View style={styles.headerSection}>
-          <Text style={styles.headerText}>
-            {translations.header[languagePreference]}
-          </Text>
-          <Text style={styles.subheaderText}>
-            {translations.subheader[languagePreference]}
-          </Text>
-        </View>
+    <View style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.headerSection}>
+        <Text style={styles.header}>
+          {translations.header[languagePreference]}
+        </Text>
+        <Text style={styles.subheader}>
+          {translations.subheader[languagePreference]}
+        </Text>
+      </View>
 
-        {/* Categories */}
-        <FlatList
-          data={topics}
-          renderItem={renderTopicCard}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.flatListContainer}
-          showsVerticalScrollIndicator={false}
-        />
-      </Animated.View>
-    </SafeAreaView>
+      {/* Categories */}
+      <FlatList
+        data={topics}
+        renderItem={renderTopicCard}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContainer}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-    backgroundColor: "#F4F5FB", // to match the rest of your pages
-  },
   container: {
     flex: 1,
+    backgroundColor: Color.nEW,
     paddingHorizontal: 16,
-    // We remove paddingTop here because SafeAreaView handles the notch area
+    paddingTop: 40,
   },
   headerSection: {
     alignItems: "center",
-    marginVertical: 20,
+    marginBottom: 20,
+    padding: 20,
   },
-  headerText: {
-    fontSize: 22,
+  header: {
+    fontSize: 30,
     fontWeight: "bold",
-    color: "#6A5ACD", // same accent color
+    fontFamily: FontFamily.montserrat,
+    color: Color.colorDarkslateblue_200,
+    textAlign: "center",
     marginBottom: 8,
   },
-  subheaderText: {
+  subheader: {
     fontSize: 16,
+    fontFamily: FontFamily.arial,
     color: "#555",
     textAlign: "center",
-    paddingHorizontal: 16,
   },
   flatListContainer: {
     alignItems: "center",
-    paddingBottom: 20,
   },
   row: {
     justifyContent: "space-between",
@@ -210,38 +190,36 @@ const styles = StyleSheet.create({
     width: "48%",
     aspectRatio: 3 / 4,
     backgroundColor: "#fff",
-    borderRadius: 12,
-    marginBottom: 16,
-    // Shadow to match the style in other pages
+    borderRadius: Border.br_md,
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOpacity: 0.15,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 4,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
   cardBackground: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 10,
   },
-  cardBackgroundImage: {
-    borderRadius: 12,
-  },
-  overlay: {
+  gradientOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    borderRadius: 12,
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    borderRadius: Border.br_md,
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: FontSize.size_md,
+    fontFamily: FontFamily.montserrat,
     color: "#FFF",
-    fontWeight: "600",
     textAlign: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
     paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 8,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    overflow: "hidden",
+    borderRadius: Border.br_sm,
   },
 });
 
