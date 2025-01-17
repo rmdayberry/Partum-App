@@ -63,12 +63,6 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const { languagePreference = "English" } = user;
-    console.log(
-      "User's language preference for weekly tip:",
-      languagePreference
-    );
-
     const dueDate = new Date(user.dueDate);
     const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000);
     const currentDate = new Date();
@@ -76,58 +70,36 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
     const daysElapsed = Math.floor(
       (currentDate - startDate) / (1000 * 60 * 60 * 24)
     );
-    const currentWeek = Math.max(1, Math.ceil(daysElapsed / 7));
-
-    console.log("Calculated current week:", currentWeek);
+    const currentWeek = Math.min(40, Math.max(1, Math.ceil(daysElapsed / 7)));
 
     const weeklyTip = await WhatToExpectWeekly.findOne({ week: currentWeek });
 
     if (!weeklyTip) {
-      return res.status(404).json({
-        message: `Tip for week ${currentWeek} not found. Contact support if this is unexpected.`,
-      });
+      return res.status(404).json({ message: "Tip for this week not found" });
     }
 
+    // Select the tip based on language preference
     const tip =
-      languagePreference === "Español" && weeklyTip.tipEs
-        ? weeklyTip.tipEs
-        : weeklyTip.tip;
-
-    console.log("Selected tip for language:", tip);
+      user.languagePreference === "Español" ? weeklyTip.tipEs : weeklyTip.tip;
 
     res.json({ week: currentWeek, tip });
   } catch (err) {
-    console.error("Error fetching weekly tip:", err.message);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
 
-// Endpoint to fetch weekly tips by week with optional language preference
+// Endpoint to fetch weekly tips by week
 router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
   try {
     const week = parseInt(req.params.week, 10); // Convert week to integer
-    const { language = "English" } = req.query;
-
-    console.log("Fetching weekly tip for week:", week, "Language:", language);
-
     const weeklyTip = await WhatToExpectWeekly.findOne({ week });
 
     if (!weeklyTip) {
       return res.status(404).json({ message: "Tip for this week not found" });
     }
 
-    console.log("Weekly Tip Object:", weeklyTip);
-
-    const tip =
-      language === "Español" && weeklyTip.tipEs
-        ? weeklyTip.tipEs
-        : weeklyTip.tip;
-
-    console.log("Selected Tip:", tip);
-
-    res.json({ week, tip });
+    res.json({ week, tip: weeklyTip.tip });
   } catch (err) {
-    console.error("Error in /whatToExpectWeekly/week/:week:", err.message);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });
@@ -140,20 +112,20 @@ router.get("/daily-tip/:userId", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const { languagePreference = "English" } = user;
+    const { languagePreference = "English" } = user; // Default to English
 
-    const dueDate = new Date(user.dueDate);
-    const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000);
+    const dueDate = new Date(user.dueDate); // User's due date
+    const startDate = new Date(dueDate.getTime() - 280 * 24 * 60 * 60 * 1000); // 280 days before due date
     const currentDate = new Date();
 
     const daysElapsed = Math.floor(
       (currentDate - startDate) / (1000 * 60 * 60 * 24)
     );
 
-    if (daysElapsed < 1 || daysElapsed > 294) {
+    if (daysElapsed < 1 || daysElapsed > 280) {
       return res
         .status(400)
-        .json({ message: "Day of pregnancy is out of range (1-294)." });
+        .json({ message: "Day of pregnancy is out of range (1-280)." });
     }
 
     const dailyTip = await DailyPregnancyTip.findOne({ day: daysElapsed });
@@ -162,10 +134,9 @@ router.get("/daily-tip/:userId", async (req, res) => {
       return res.status(404).json({ message: "Tip for this day not found" });
     }
 
+    // Determine the tip based on language preference
     const tip =
-      languagePreference === "Español" && dailyTip.tipSpanish
-        ? dailyTip.tipSpanish
-        : dailyTip.tip;
+      languagePreference === "Español" ? dailyTip.tipSpanish : dailyTip.tip;
 
     res.json({ day: daysElapsed, tip });
   } catch (err) {
