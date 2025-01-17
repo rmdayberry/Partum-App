@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import {
-  SafeAreaView,
   View,
   Text,
   StyleSheet,
@@ -51,7 +50,6 @@ const openEmail = (email) => {
       );
     });
 };
-
 const translations = {
   English: {
     title: "Get Support",
@@ -109,13 +107,12 @@ const GetSupport = () => {
   const texts = translations[languagePreference] || translations.English;
 
   return (
-    <SafeAreaView style={styles.safeContainer}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
-          <Text style={styles.title}>{texts.title}</Text>
-          <Text style={styles.subtitle}>{texts.subtitle}</Text>
-        </View>
-
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>{texts.title}</Text>
+        <Text style={styles.subtitle}>{texts.subtitle}</Text>
+      </View>
+      <ScrollView contentContainerStyle={styles.content}>
         {/* Clinic Info */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{texts.clinicName}</Text>
@@ -152,54 +149,58 @@ const GetSupport = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  safeContainer: {
+  container: {
     flex: 1,
-    backgroundColor: "#F9FAFF",
-  },
-  scrollContent: {
-    paddingBottom: 30,
+    backgroundColor: "#f9f9f9",
     paddingHorizontal: 16,
+    paddingTop: 16,
   },
   header: {
-    marginVertical: 20,
-    alignItems: "center",
+    marginBottom: 20,
+    paddingHorizontal: 16,
+    marginTop: 40,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
-    color: "#4F46E5",
+    color: "#333",
     textAlign: "center",
+    marginBottom: 10,
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: "400",
     color: "#666",
     textAlign: "center",
-    marginTop: 8,
+  },
+  content: {
+    paddingBottom: 20,
   },
   card: {
     backgroundColor: "#fff",
     borderRadius: 12,
+    marginBottom: 20,
+    padding: 16,
     shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
+    shadowRadius: 6,
+    elevation: 4,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   cardSubtitle: {
     fontSize: 16,
+    fontWeight: "600",
     color: "#555",
     marginBottom: 8,
   },
@@ -209,36 +210,38 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   section: {
-    marginTop: 16,
+    marginTop: 12,
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: "#444",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   sectionText: {
     fontSize: 14,
     color: "#555",
     marginBottom: 4,
+    lineHeight: 22,
   },
   button: {
-    backgroundColor: "#6A5ACD",
-    paddingVertical: 12,
+    backgroundColor: "#6200EE",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 12,
   },
   buttonText: {
+    fontSize: 14,
     color: "#fff",
     fontWeight: "600",
-    fontSize: 14,
   },
   cardDescription: {
     fontSize: 14,
     color: "#555",
+    marginBottom: 8,
     lineHeight: 20,
-    marginTop: 12,
   },
 });
 

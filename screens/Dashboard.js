@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  Text,
-  Animated,
-  Image,
-} from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import { UserContext } from "../contexts/UserContext";
-import { dashboardTranslations } from "../translations/DashboardTranslations";
 import Header from "../features/Header";
 import ProgressBar from "../features/progress/ProgressBar";
 import AppointmentContainer from "../features/appointments/AppointmentContainer";
@@ -18,19 +11,16 @@ import {
   fetchWeeklyTip,
   fetchDailyTip,
 } from "../api/api";
+import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 
 const Dashboard = () => {
-  const { userId, languagePreference } = useContext(UserContext);
-
+  const { userId } = useContext(UserContext);
+  const navigation = useNavigation();
   const [currentWeek, setCurrentWeek] = useState(null);
   const [weeklyTip, setWeeklyTip] = useState(null);
   const [dailyTip, setDailyTip] = useState(null);
-  const [loadingWeeklyTip, setLoadingWeeklyTip] = useState(true);
+  const [loadingTip, setLoadingTip] = useState(true);
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
-  const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
-
-  const t =
-    dashboardTranslations[languagePreference] || dashboardTranslations.English;
 
   useEffect(() => {
     if (!userId) {
@@ -40,95 +30,86 @@ const Dashboard = () => {
 
     const fetchProgressAndTips = async () => {
       try {
+        // Fetch progress and calculate current week
         const progress = await fetchPregnancyProgress(userId);
-        const week = Math.floor((progress / 100) * 40); // Convert progress to current week
+        const week = Math.floor((progress / 100) * 40); // Convert progress % to week
         setCurrentWeek(week);
 
-        // Pass the user's languagePreference explicitly
-        const weeklyTipData = await fetchWeeklyTip(week, languagePreference);
-        setWeeklyTip(weeklyTipData);
+        // Fetch weekly tip
+        const tipData = await fetchWeeklyTip(week);
+        setWeeklyTip(tipData);
 
+        // Fetch daily tip
         const dailyTipData = await fetchDailyTip(userId);
+        console.log("Daily Tip Data:", dailyTipData); // Log the response
         setDailyTip(dailyTipData);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setDailyTip({ tip: t.noDailyTip });
+        console.error("Error fetching daily tip:", error);
+        setDailyTip({ tip: "No tip available today." });
       } finally {
-        setLoadingWeeklyTip(false);
+        setLoadingTip(false);
         setLoadingDailyTip(false);
       }
     };
 
     fetchProgressAndTips();
-
-    // Trigger fade-in animation
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, [userId, languagePreference]);
+  }, []);
 
   return (
     <View style={styles.container}>
       <Header />
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Pregnancy Overview with Progress Bar and Weekly Tip */}
-        <Animated.View
-          style={[styles.pregnancyOverviewContainer, { opacity: fadeAnim }]}
-        >
-          <Text style={styles.sectionHeader}>{t.pregnancyOverview}</Text>
+      <ScrollView
+        style={styles.dashboard}
+        contentContainerStyle={styles.contentContainer}
+      >
+        {/* Pregnancy Overview */}
+        <View style={styles.pregnancyOverviewContainer}>
+          <View style={styles.frame1}>
+            <Text style={styles.pregnancyOverview}>Pregnancy Overview</Text>
+            <Text style={styles.youreXWeeksContainer}>
+              <Text style={styles.youre}>You're </Text>
+              <Text style={styles.x}>
+                {currentWeek !== null && currentWeek !== undefined
+                  ? currentWeek
+                  : "Loading..."}{" "}
+              </Text>
+              <Text style={styles.youre}>Weeks Along!</Text>
+            </Text>
 
-          <Text style={styles.pregnancyText}>
-            {t.youAre}{" "}
-            <Text style={styles.highlight}>
-              {currentWeek !== null && currentWeek !== undefined
-                ? currentWeek
-                : t.loading}
-            </Text>{" "}
-            {t.weeksAlong}
-          </Text>
+            <ProgressBar userId={userId} />
 
-          <ProgressBar userId={userId} />
-
-          <View style={styles.weeklyTipContainer}>
-            <Image
-              style={styles.weeklyIcon}
-              source={require("../assets/pregnantPerson.png")}
-            />
-            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
-
-            {loadingWeeklyTip ? (
-              <Text style={styles.loadingText}>{t.loading}</Text>
-            ) : weeklyTip && weeklyTip.tip ? (
-              <Text style={styles.tipText}>{weeklyTip.tip}</Text>
-            ) : (
-              <Text style={styles.noTipText}>{t.noTip}</Text>
-            )}
+            {/* Weekly Tip */}
+            <View style={styles.weeklyTipContainer}>
+              <Text style={styles.tipHeader}>
+                What you can expect this week:
+              </Text>
+              {loadingTip ? (
+                <Text>Loading...</Text>
+              ) : weeklyTip ? (
+                <Text style={styles.tipText}>{weeklyTip.tip}</Text>
+              ) : (
+                <Text>No tip available for this week.</Text>
+              )}
+            </View>
           </View>
-        </Animated.View>
+        </View>
 
         {/* Appointment Container */}
-        <Animated.View style={[styles.card, { opacity: fadeAnim }]}>
+        <View style={styles.appointmentSection}>
           <AppointmentContainer />
-        </Animated.View>
+        </View>
 
-        {/* Daily Tip */}
-        <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
-          <Image
-            style={styles.dailyIcon}
-            source={require("../assets/wateringCan.png")}
-          />
-          <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>
+        {/* Pregnancy Tip of the Day */}
+        <View style={styles.dailyTipFrame}>
+          <Text style={styles.dailyTipHeader}>Today's Pregnancy Tip</Text>
           {loadingDailyTip ? (
-            <Text style={styles.loadingText}>{t.loading}</Text>
+            <Text>Loading...</Text>
           ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.tipText}>{dailyTip.tip}</Text>
+            <Text style={styles.tipText}> {dailyTip.tip}</Text>
           ) : (
-            <Text style={styles.noTipText}>{t.noDailyTip}</Text>
+            <Text> No tip available for today.</Text>
           )}
-        </Animated.View>
-
+        </View>
         <ResourceSection />
       </ScrollView>
     </View>
@@ -138,111 +119,119 @@ const Dashboard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFF",
+    backgroundColor: Color.nEW,
+  },
+  dashboard: {
+    flex: 1,
+    backgroundColor: Color.nEW,
   },
   contentContainer: {
     alignItems: "center",
-    paddingBottom: 50,
+    paddingBottom: 50, //Space for scrolling content
+  },
+  header: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: Color.graysWhite,
+    borderBottomWidth: 1,
+    borderBottomColor: Color.colorGray_100,
+  },
+  riverland1Icon: {
+    width: 67,
+    height: 56,
+  },
+  partum: {
+    fontSize: FontSize.size_5xl,
+    fontWeight: "700",
+    fontFamily: FontFamily.montserrat,
+    color: Color.colorDarkslateblue_200,
   },
   pregnancyOverviewContainer: {
     width: "90%",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
-  },
-  sectionHeader: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#6A5ACD",
-    textAlign: "center",
-    marginBottom: 12,
-  },
-  pregnancyText: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#333",
-    marginBottom: 10,
-    fontWeight: "600",
-  },
-  highlight: {
-    color: "#6A5ACD",
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-  weeklyTipContainer: {
-    backgroundColor: "#EFEFFF",
-    borderRadius: 12,
+    backgroundColor: Color.graysWhite,
+    borderRadius: Border.br_xs,
+    borderColor: Color.colorGray_100,
+    borderWidth: 1,
     padding: 16,
     marginTop: 20,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#D0D0FF",
   },
-  weeklyIcon: {
-    width: 40,
-    height: 40,
-    marginBottom: 10,
+  frame1: {
+    alignItems: "center",
+    marginBottom: 16,
+    marginHorizontal: 20,
+  },
+
+  pregnancyOverview: {
+    fontSize: FontSize.size_xs,
+    fontWeight: "700",
+    fontFamily: FontFamily.montserrat,
+    color: "#696969",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  youreXWeeksContainer: {
+    fontSize: FontSize.m3BodyLarge_size,
+    fontFamily: FontFamily.montserrat,
+    textAlign: "center",
+  },
+  weeklyTipContainer: {
+    marginHorizontal: 10,
+    padding: 8,
+    alignItems: "center",
   },
   tipHeader: {
-    fontSize: 16,
+    fontSize: FontSize.size_lg,
     fontWeight: "bold",
-    color: "#4F46E5",
     marginBottom: 10,
-  },
-  loadingText: {
-    fontSize: 14,
-    color: "#888",
     textAlign: "center",
+    color: "#727272",
   },
   tipText: {
-    fontSize: 14,
-    color: "#555",
+    fontSize: FontSize.m3LabelLarge_size,
+    fontFamily: FontFamily.montserrat,
     textAlign: "center",
-    lineHeight: 22,
-    marginVertical: 10,
+    marginHorizontal: 20,
   },
-  noTipText: {
-    fontSize: 14,
-    color: "#888",
-    textAlign: "center",
+  youre: {
+    fontFamily: FontFamily.montserrat,
+    fontSize: 16,
   },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
-    width: "90%",
+  x: {
+    fontFamily: FontFamily.montserrat,
+    fontSize: 16,
+  },
+  appointmentSection: {
+    alignSelf: "screenLeft",
+    width: "40%",
+    margin: 20,
   },
   dailyTipFrame: {
-    backgroundColor: "#FFF5EB",
-    borderRadius: 16,
+    marginBottom: 20,
+    padding: 16,
+    backgroundColor: "#fff",
+    borderRadius: 8,
     shadowColor: "#000",
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
+    shadowRadius: 4,
+    elevation: 2,
     width: "90%",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#FFD3A6",
+    alignSelf: "center",
   },
-  dailyIcon: {
-    width: 40,
-    height: 40,
+  dailyTipHeader: {
+    fontSize: FontSize.size_lg,
+    fontWeight: "bold",
     marginBottom: 10,
+    textAlign: "center",
+    color: "#555555",
+  },
+  tipText: {
+    fontSize: FontSize.m3LabelLarge_size,
+    fontFamily: FontFamily.montserrat,
+    textAlign: "center",
+    marginHorizontal: 20,
   },
 });
 
