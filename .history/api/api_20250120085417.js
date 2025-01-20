@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_BASE_URL = "http://localhost:5002"; // Replace with your server's URL if different
+const API_BASE_URL = "http://localhost:5002";
 
 // Function to refresh auth token
 const refreshAuthToken = async () => {
@@ -72,33 +72,22 @@ export const fetchPregnancyProgress = async (userId) => {
 
 // Fetch weekly tip
 export const fetchWeeklyTip = async (week) => {
-  try {
-    console.log("Fetching weekly tip for week:", week);
+  return await authorizedRequest(async () => {
     const response = await axios.get(
       `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
     );
     console.log("Weekly Tip Response:", response.data);
     return response.data;
-  } catch (error) {
-    console.error(
-      "Error fetching weekly tip:",
-      error.response || error.message
-    );
-    throw error;
-  }
+  });
 };
 
 // Fetch daily tip
 export const fetchDailyTip = async (userId) => {
-  try {
-    console.log("Fetching daily tip for user:", userId);
+  return await authorizedRequest(async () => {
     const response = await axios.get(`${API_BASE_URL}/api/daily-tip/${userId}`);
     console.log("Daily Tip Response:", response.data);
     return response.data;
-  } catch (error) {
-    console.error("Error fetching daily tip:", error.response || error.message);
-    throw error;
-  }
+  });
 };
 
 // Fetch all appointments for the user
@@ -153,7 +142,7 @@ export const submitFeedback = async (userId, message) => {
         message,
       },
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }, // Optional if you have token-based auth
       }
     );
     console.log("Feedback submitted:", response.data);
