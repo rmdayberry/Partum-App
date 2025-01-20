@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { UserContext } from "../contexts/UserContext";
-import { dashboardTranslations } from "../translations/DashboardTranslations";
+import { dashboardTranslations } from "../translations/dashboardTranslations";
 import Header from "../features/Header";
 import ProgressBar from "../features/progress/ProgressBar";
 import AppointmentContainer from "../features/appointments/AppointmentContainer";

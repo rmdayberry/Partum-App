@@ -11,7 +11,7 @@ const refreshAuthToken = async () => {
       throw new Error("No refresh token available.");
     }
 
-    const response = await axios.post(`${API_BASE_URL}/users/refresh-token`, {
+    const response = await axios.post(${API_BASE_URL}/users/refresh-token, {
       token: refreshToken,
     });
 
@@ -60,9 +60,9 @@ export const fetchPregnancyProgress = async (userId) => {
     const token = await AsyncStorage.getItem("authToken");
     console.log("Fetching pregnancy progress for user:", userId);
     const response = await axios.get(
-      `${API_BASE_URL}/users/${userId}/progress`,
+      ${API_BASE_URL}/users/${userId}/progress,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: Bearer ${token} },
       }
     );
     console.log("Pregnancy Progress Response:", response.data);
@@ -74,7 +74,7 @@ export const fetchPregnancyProgress = async (userId) => {
 export const fetchWeeklyTip = async (week) => {
   return await authorizedRequest(async () => {
     const response = await axios.get(
-      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
+      ${API_BASE_URL}/api/whatToExpectWeekly/week/${week}
     );
     console.log("Weekly Tip Response:", response.data);
     return response.data;
@@ -84,7 +84,7 @@ export const fetchWeeklyTip = async (week) => {
 // Fetch daily tip
 export const fetchDailyTip = async (userId) => {
   return await authorizedRequest(async () => {
-    const response = await axios.get(`${API_BASE_URL}/api/daily-tip/${userId}`);
+    const response = await axios.get(${API_BASE_URL}/api/daily-tip/${userId});
     console.log("Daily Tip Response:", response.data);
     return response.data;
   });
@@ -95,8 +95,8 @@ export const fetchAppointments = async () => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
     console.log("Auth Token in Fetch Appointments:", token);
-    const response = await axios.get(`${API_BASE_URL}/appointments`, {
-      headers: { Authorization: `Bearer ${token}` },
+    const response = await axios.get(${API_BASE_URL}/appointments, {
+      headers: { Authorization: Bearer ${token} },
     });
     console.log("Appointments Response:", response.data);
     return response.data;
@@ -107,8 +107,8 @@ export const fetchAppointments = async () => {
 export const fetchNextAppointment = async () => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
-    const response = await axios.get(`${API_BASE_URL}/appointments/next`, {
-      headers: { Authorization: `Bearer ${token}` },
+    const response = await axios.get(${API_BASE_URL}/appointments/next, {
+      headers: { Authorization: Bearer ${token} },
     });
     console.log("Next Appointment Response:", response.data);
     return response.data;
@@ -120,32 +120,64 @@ export const addAppointment = async (appointmentData) => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
     const response = await axios.post(
-      `${API_BASE_URL}/appointments`,
+      ${API_BASE_URL}/appointments,
       appointmentData,
       {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: Bearer ${token} },
       }
     );
     console.log("Add Appointment Response:", response.data);
     return response.data.appointment;
   });
 };
-
 // Submit feedback from user
 export const submitFeedback = async (userId, message) => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
     const response = await axios.post(
-      `${API_BASE_URL}/feedback`,
+      ${API_BASE_URL}/feedback,
       {
         userId,
         message,
       },
       {
-        headers: { Authorization: `Bearer ${token}` }, // Optional if you have token-based auth
+        headers: { Authorization: Bearer ${token} }, // Optional if you have token-based auth
       }
     );
     console.log("Feedback submitted:", response.data);
     return response.data;
   });
 };
+
+const mongoose = require("mongoose");
+
+
+const whatToExpectWeeklySchema = new mongoose.Schema({
+  week: { type: Number, required: true, unique: true },
+  tip: { type: String, required: true },
+  tipSpanish: { type: String, required: true },
+});
+
+const WhatToExpect = mongoose.model(
+  "WhatToExpectWeekly",
+  whatToExpectWeeklySchema,
+  "whatToExpectWeekly"
+);
+
+module.exports = WhatToExpect;
+
+const mongoose = require("mongoose");
+
+const dailyPregnancyTipSchema = new mongoose.Schema({
+  day: { type: Number, required: true, unique: true },
+  tip: { type: String, required: true },
+  tipSpanish: { type: String, required: true },
+});
+
+const DailyTip = mongoose.model(
+  "DailyPregnancyTip",
+  dailyPregnancyTipSchema,
+  "dailyPregnancyTips"
+);
+
+module.exports = DailyTip;
