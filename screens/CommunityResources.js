@@ -60,6 +60,7 @@ const CommunityResources = () => {
     },
   ];
 
+  // The `return` is now inside the `CommunityResources` component
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -90,63 +91,55 @@ const CommunityResources = () => {
 };
 
 const styles = StyleSheet.create({
-  // Match your overall app background color from Dashboard:
   container: {
     flex: 1,
-    backgroundColor: "#F4F5FB",
+    backgroundColor: "#f8f8f8",
+    paddingHorizontal: 16,
     paddingTop: 16,
   },
   header: {
-    marginBottom: 16,
-    paddingHorizontal: 20,
-    // Add some vertical spacing to look consistent with the Dashboard
-    marginTop: 40,
-    alignItems: "center",
+    marginBottom: 20,
+    paddingHorizontal: 16,
+    marginTop: 50,
   },
   title: {
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#6A5ACD", // Accent color matches the Dashboard
+    color: "#333",
     textAlign: "center",
-    marginBottom: 8,
+    marginBottom: 8, // Space between title and subtitle
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "400",
     color: "#555",
     textAlign: "center",
-    marginHorizontal: 10,
-    lineHeight: 20,
   },
   content: {
-    paddingBottom: 30,
-    paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   card: {
     flexDirection: "row",
     backgroundColor: "#fff",
-    borderRadius: 16,
+    borderRadius: 8,
     marginBottom: 16,
     padding: 16,
-    // Add a similar shadow as in the Dashboard:
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
     elevation: 3,
   },
   icon: {
     width: 50,
     height: 50,
     marginRight: 16,
-    alignSelf: "center",
   },
   cardContent: {
     flex: 1,
-    justifyContent: "center",
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#333",
     marginBottom: 4,
@@ -155,18 +148,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#666",
     marginBottom: 8,
-    lineHeight: 20,
   },
   button: {
-    backgroundColor: "#6A5ACD", // Use the accent purple
+    backgroundColor: "#6200EE",
     paddingVertical: 8,
     paddingHorizontal: 12,
-    borderRadius: 8,
-    alignSelf: "flex-start",
+    borderRadius: 4,
   },
   buttonText: {
     fontSize: 14,
     color: "#fff",
+    textAlign: "center",
     fontWeight: "600",
   },
 });

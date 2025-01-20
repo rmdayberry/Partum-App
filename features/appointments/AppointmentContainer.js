@@ -1,208 +1,123 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 import { Text, StyleSheet, Pressable, View, Linking } from "react-native";
 import { Image } from "expo-image";
-import { UserContext } from "../../contexts/UserContext";
-import { fetchNextAppointment } from "../../api/api";
-import * as Calendar from "expo-calendar";
+import { useNavigation } from "@react-navigation/native";
+import { Color } from "../../GlobalStyles";
 
 const AppointmentContainer = () => {
-  const { userId } = useContext(UserContext); // Get userId from context
-  const [nextAppointment, setNextAppointment] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    const loadNextAppointment = async () => {
-      try {
-        const appointment = await fetchNextAppointment(userId);
-        setNextAppointment(appointment);
-      } catch (error) {
-        console.error("Error fetching next appointment:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (userId) {
-      loadNextAppointment();
-    }
-  }, [userId]);
+  const CLINIC_ADDRESS = "1026 7th St W, St Paul, MN 55102";
 
   const handleGetDirections = () => {
-    if (nextAppointment?.location) {
-      const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        nextAppointment.location
-      )}`;
-      Linking.openURL(url).catch(() => alert("Error opening maps"));
-    }
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      CLINIC_ADDRESS
+    )}`;
+    Linking.openURL(url).catch(() => alert("Error opening maps"));
   };
 
-  const handleCallReschedule = () => {
-    const phoneNumber = "tel:651-758-9500";
-    Linking.openURL(phoneNumber).catch(() =>
-      alert("Unable to open the phone dialer.")
-    );
+  const handleNavigate = (route) => {
+    navigation.navigate(route);
   };
-  const handleAddToCalendar = async () => {
-    try {
-      const { status } = await Calendar.requestCalendarPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert("Permission Denied", "Calendar access is required.");
-        return;
-      }
-
-      const defaultCalendarSource =
-        Platform.OS === "ios"
-          ? await Calendar.getDefaultCalendarAsync()
-          : { isLocalAccount: true, name: "Default" };
-
-      const calendarId = await Calendar.createEventAsync(
-        defaultCalendarSource.id || defaultCalendarSource.name,
-        {
-          title: nextAppointment.title || "Appointment",
-          startDate: new Date(
-            nextAppointment.date + "T" + nextAppointment.time
-          ),
-          endDate: new Date(
-            new Date(
-              nextAppointment.date + "T" + nextAppointment.time
-            ).getTime() +
-              60 * 60 * 1000
-          ), // Assuming 1-hour appointment
-          location: nextAppointment.location,
-          notes: nextAppointment.notes || "",
-        }
-      );
-
-      Alert.alert("Success", "Appointment added to your calendar.");
-    } catch (error) {
-      console.error("Error adding to calendar:", error.message);
-      Alert.alert("Error", "Unable to add to calendar.");
-    }
-  };
-
-  const getAppointmentCountdown = (appointmentDate) => {
-    const now = new Date();
-    const appointment = new Date(appointmentDate);
-    const differenceInMs = appointment - now;
-
-    if (differenceInMs <= 0) return "Appointment time has passed.";
-    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (differenceInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-
-    return days > 0
-      ? `${days} day${days > 1 ? "s" : ""} and ${hours} hour${
-          hours !== 1 ? "s" : ""
-        }`
-      : `${hours} hour${hours !== 1 ? "s" : ""}`;
-  };
-
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (!nextAppointment) {
-    return (
-      <Text style={styles.noAppointmentText}>No upcoming appointments</Text>
-    );
-  }
-
-  const formattedDate = new Date(nextAppointment.date).toLocaleDateString(
-    "en-US",
-    {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-    }
-  );
-  const formattedTime = nextAppointment.time;
-  const countdown = getAppointmentCountdown(nextAppointment.date);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Upcoming Appointment</Text>
+      {/* Header*/}
+      <Text style={styles.header}>Upcoming Appointments</Text>
+      {/* Countdown Section */}
+      <View style={styles.countdownContainer}>
+        <Text style={styles.countdownText}>
+          In <Text style={styles.highlight}>2</Text> Days
+        </Text>
+      </View>
+
+      {/* Appointment Details */}
       <View style={styles.detailsContainer}>
-        <Text style={styles.countdown}>{countdown}</Text>
-        <Text style={styles.date}>{formattedDate}</Text>
-        <Text style={styles.time}>{formattedTime}</Text>
+        <Text style={styles.date}>Wednesday, Nov 15</Text>
+        <Text style={styles.time}>at 10:00 AM</Text>
         <View style={styles.locationContainer}>
           <Image
             style={styles.icon}
             source={require("../../assets/locationIcon.png")}
           />
-          <Text style={styles.clinicName}>{nextAppointment.location}</Text>
+          <Text style={styles.clinicName}>Riverland Community Health</Text>
         </View>
-        <Text style={styles.notes}>
-          {nextAppointment.notes || "No notes available"}
-        </Text>
       </View>
+
+      {/* Action Buttons */}
       <View style={styles.actionsContainer}>
-        <Pressable style={styles.button} onPress={handleAddToCalendar}>
-          <Image
-            style={styles.iconSmall}
-            source={require("../../assets/calendarIcon.png")}
-          />
-          <Text style={styles.buttonText}>Add to Calendar</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={handleGetDirections}>
+        <Pressable
+          style={styles.button}
+          onPress={handleGetDirections}
+          accessibilityLabel="Get Directions"
+        >
           <Image
             style={styles.iconSmall}
             source={require("../../assets/navigationIcon.png")}
           />
-          <Text style={styles.buttonText}>Get Directions</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={handleCallReschedule}>
-          <Image
-            style={styles.iconSmall}
-            source={require("../../assets/phone.png")}
-          />
-          <Text style={styles.buttonText}>Call to Reschedule</Text>
+          <Text style={styles.buttonText}>Directions</Text>
         </Pressable>
       </View>
+      <Pressable onPress={() => handleNavigate("CommunityResources1")}>
+        <Text style={styles.link}>Need a ride?</Text>
+      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f8f9fa", // Subtle light gray
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#e6e6e6",
-    padding: 20,
+    borderColor: "#e0e0e0",
+    padding: 16,
     marginVertical: 10,
+    alignSelf: "stretch",
     shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 4, // For Android shadow
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
   },
   header: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#6A5ACD",
-    marginBottom: 12,
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  countdownContainer: {
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  countdownText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  highlight: {
+    color: "#6A5ACD",
+  },
+  link: {
+    fontSize: 12,
+    color: "#696969",
+    textDecorationLine: "underline",
+    marginTop: 12,
     textAlign: "center",
   },
   detailsContainer: {
     alignItems: "center",
-    marginBottom: 16,
-  },
-  countdown: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#6A5ACD",
-    marginBottom: 8,
   },
   date: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "bold",
-    color: "#333333",
+    color: "#333",
+    marginBottom: 2,
   },
   time: {
-    fontSize: 14,
-    color: "#555555",
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#333",
     marginBottom: 12,
   },
   locationContainer: {
@@ -211,57 +126,42 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   clinicName: {
-    fontSize: 14,
-    color: "#555555",
+    fontSize: 12,
+    color: "#555",
+    textDecorationLine: "underline",
     marginLeft: 8,
   },
-  notes: {
-    fontSize: 12,
-    color: "#777777",
-    marginTop: 8,
-    textAlign: "center",
-    lineHeight: 18,
-  },
   actionsContainer: {
-    marginTop: 20,
-    flexDirection: "column", // Buttons stacked vertically
-    alignItems: "center",
-    gap: 10,
+    flexDirection: "row",
+    justifyContent: "center",
   },
   button: {
-    backgroundColor: "#6A5ACD",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    backgroundColor: "#6A5ACD",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     borderRadius: 8,
     shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2, // For Android shadow
-    width: "80%",
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 2, // For Android
   },
   buttonText: {
-    color: "#ffffff",
-    fontSize: 14,
-    fontWeight: "600",
-    marginLeft: 8,
+    fontSize: 10,
+    color: "#fff",
+    marginLeft: 5,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
   },
   iconSmall: {
-    width: 18,
-    height: 18,
-    tintColor: "#ffffff",
-  },
-  noAppointmentText: {
-    textAlign: "center",
-    fontSize: 14,
-    color: "#888888",
+    width: 12,
+    height: 12,
+    tintColor: "#fff",
   },
 });
 

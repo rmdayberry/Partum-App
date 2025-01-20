@@ -3,13 +3,13 @@ import {
   View,
   Text,
   TextInput,
+  Button,
+  StyleSheet,
   Alert,
   KeyboardAvoidingView,
-  TouchableOpacity,
-  StyleSheet,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { FontSize, FontFamily, Color } from "../GlobalStyles";
+import { FontSize, FontFamily, Color, Border } from "../GlobalStyles";
 
 const translations = {
   English: {
@@ -21,10 +21,6 @@ const translations = {
     languagePreferencePlaceholder: "Language Preference",
     registerButton: "Register",
     toggleToSpanish: "Español",
-    allFieldsError: "All fields are required.",
-    dateFormatError: "Due Date must be in the format YYYY-MM-DD.",
-    success: "User registered successfully!",
-    error: "Error",
   },
   Español: {
     registerTitle: "Registro",
@@ -34,11 +30,7 @@ const translations = {
     dueDatePlaceholder: "Fecha de parto (AAAA-MM-DD)",
     languagePreferencePlaceholder: "Preferencia de idioma",
     registerButton: "Registrar",
-    toggleToSpanish: "English",
-    allFieldsError: "Todos los campos son obligatorios.",
-    dateFormatError: "La Fecha de Parto debe estar en el formato AAAA-MM-DD.",
-    success: "¡Usuario registrado con éxito!",
-    error: "Error",
+    toggleToEnglish: "English",
   },
 };
 
@@ -51,21 +43,7 @@ const Registration = ({ navigation }) => {
   const [languagePreference, setLanguagePreference] = useState("");
   const [open, setOpen] = useState(false);
 
-  const t = translations[language];
-
   const handleRegister = async () => {
-    if (!name || !email || !password || !dueDate || !languagePreference) {
-      Alert.alert(t.error, t.allFieldsError);
-      return;
-    }
-
-    // Validate due date format (YYYY-MM-DD)
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateRegex.test(dueDate)) {
-      Alert.alert(t.error, t.dateFormatError);
-      return;
-    }
-
     try {
       const response = await fetch("http://localhost:5002/users/register", {
         method: "POST",
@@ -80,17 +58,27 @@ const Registration = ({ navigation }) => {
       });
 
       if (response.ok) {
-        Alert.alert(language === "English" ? "Success" : "Éxito", t.success);
+        Alert.alert(
+          language === "English" ? "Success" : "Éxito",
+          language === "English"
+            ? "User registered successfully!"
+            : "¡Usuario registrado con éxito!"
+        );
         navigation.navigate("Login");
       } else {
         const errorData = await response.json();
-        Alert.alert(t.error, errorData.message || "Server error.");
+        Alert.alert(
+          language === "English" ? "Error" : "Error",
+          errorData.message || "Server error"
+        );
       }
     } catch (error) {
-      console.error("Registration error:", error);
-      Alert.alert(t.error, "Server error.");
+      console.error("Registration error:", error.message);
+      Alert.alert(language === "English" ? "Error" : "Error", "Server error");
     }
   };
+
+  const t = translations[language];
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -101,7 +89,7 @@ const Registration = ({ navigation }) => {
           setLanguage(language === "English" ? "Español" : "English")
         }
       >
-        {language === "English" ? t.toggleToSpanish : t.toggleToSpanish}
+        {language === "English" ? t.toggleToSpanish : t.toggleToEnglish}
       </Text>
 
       {/* Header */}
@@ -152,14 +140,12 @@ const Registration = ({ navigation }) => {
         setOpen={setOpen}
         setValue={setLanguagePreference}
         placeholder={t.languagePreferencePlaceholder}
-        style={styles.dropdown}
+        style={styles.input} // Match input field styling
         dropDownContainerStyle={styles.dropdownContainer}
       />
 
-      {/* Register Button (Custom Touchable for styling) */}
-      <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-        <Text style={styles.registerButtonText}>{t.registerButton}</Text>
-      </TouchableOpacity>
+      {/* Register Button */}
+      <Button title={t.registerButton} onPress={handleRegister} />
     </KeyboardAvoidingView>
   );
 };
@@ -167,52 +153,33 @@ const Registration = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFF",
-    padding: 20,
     justifyContent: "center",
+    padding: 20,
+    backgroundColor: Color.nEW,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  input: {
+    width: "100%",
+    height: 50,
+    borderColor: "#ddd",
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    backgroundColor: "#fff",
+  },
+  dropdownContainer: {
+    borderColor: "#ddd",
   },
   languageToggle: {
     alignSelf: "flex-end",
     marginBottom: 10,
     fontSize: 16,
-    color: "#6A5ACD",
-    fontWeight: "600",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#4F46E5",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  input: {
-    height: 50,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    backgroundColor: "#fff",
-    fontSize: 16,
-    marginBottom: 15,
-  },
-  dropdown: {
-    borderColor: "#ddd",
-    borderRadius: 8,
-  },
-  dropdownContainer: {
-    borderColor: "#ddd",
-  },
-  registerButton: {
-    backgroundColor: "#6A5ACD",
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  registerButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+    color: "#007Aff",
   },
 });
 

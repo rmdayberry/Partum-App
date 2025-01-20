@@ -1,7 +1,7 @@
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const API_BASE_URL = "http://localhost:5002"; // Replace with your server's URL if different
+
 
 // Function to refresh auth token
 const refreshAuthToken = async () => {
@@ -77,7 +77,7 @@ export const fetchWeeklyTip = async (week) => {
   try {
     console.log("Fetching weekly tip for week:", week);
     const response = await axios.get(
-      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}`
+      `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}` // Add a slash before `${week}`
     );
     console.log("Weekly Tip Response:", response.data);
     return response.data; // Assuming API response has { week: currentWeek, tip: "Your tip for the week" }
@@ -101,6 +101,7 @@ export const fetchDailyTip = async (userId) => {
     console.error("Error fetching daily tip:", error.response || error.message);
     throw error;
   }
+
 };
 
 // Fetch all appointments for the user

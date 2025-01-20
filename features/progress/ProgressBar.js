@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { CircularProgress } from "react-native-svg-circular-progress";
+import { View, Text, StyleSheet } from "react-native";
 import { fetchPregnancyProgress } from "../../api/api";
 
 const ProgressBar = ({ userId }) => {
@@ -21,29 +20,43 @@ const ProgressBar = ({ userId }) => {
     getProgress();
   }, [userId]);
 
-  if (loading || progress === null) {
-    return null;
+  if (loading) {
+    return <Text>Loading...</Text>;
   }
 
   return (
     <View style={styles.container}>
-      <CircularProgress
-        size={140} // Diameter of the circle
-        width={20} // Thickness of the circle
-        fill={progress} // Progress value (0 to 100)
-        tintColor="#6A5ACD" // Enforce desired purple color
-        backgroundColor="#e0e0e0" // Light gray background
-        lineCap="round" // Smooth edge for progress line
-      />
+      <Text style={styles.text}>Pregnancy Progress: {progress}%</Text>
+      <View style={styles.progressBarContainer}>
+        <View style={[styles.progressBar, { width: `${progress}%` }]} />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 15,
+    marginBottom: 10,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 20,
+    width: "100%",
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: "bold",
+    display: "none",
+  },
+  progressBarContainer: {
+    width: "90%",
+    height: 20,
+    backgroundColor: "#e0e0e0", //light gray for unfilled bar
+    borderRadius: 10,
+    overflow: "hidden", //Ensure no overflow
+  },
+  progressBar: {
+    height: "100%",
+    backgroundColor: "#9083FC",
   },
 });
 
