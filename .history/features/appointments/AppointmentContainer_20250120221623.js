@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  Text,
-  StyleSheet,
-  Pressable,
-  View,
-  Linking,
-  Alert,
-} from "react-native";
+import { Text, StyleSheet, Pressable, View, Linking } from "react-native";
 import { Image } from "expo-image";
 import { UserContext } from "../../contexts/UserContext";
 import { fetchNextAppointment } from "../../api/api";
@@ -32,7 +25,7 @@ const appointmentTranslations = {
 };
 
 const AppointmentContainer = () => {
-  const { userId, languagePreference } = useContext(UserContext);
+  const { userId } = useContext(UserContext); // Get userId from context
   const [nextAppointment, setNextAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -62,7 +55,7 @@ const AppointmentContainer = () => {
       const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
         nextAppointment.location
       )}`;
-      Linking.openURL(url).catch(() => alert(t.getDirections));
+      Linking.openURL(url).catch(() => alert("Error opening maps"));
     }
   };
 
@@ -75,7 +68,7 @@ const AppointmentContainer = () => {
     try {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status !== "granted") {
-        Alert.alert("Permission Denied", t.addToCalendar);
+        Alert.alert("Permission Denied", "Calendar access is required.");
         return;
       }
 
@@ -96,7 +89,7 @@ const AppointmentContainer = () => {
               nextAppointment.date + "T" + nextAppointment.time
             ).getTime() +
               60 * 60 * 1000
-          ),
+          ), // Assuming 1-hour appointment
           location: nextAppointment.location,
           notes: nextAppointment.notes || "",
         }
@@ -105,26 +98,8 @@ const AppointmentContainer = () => {
       Alert.alert("Success", t.addToCalendar);
     } catch (error) {
       console.error("Error adding to calendar:", error.message);
-      Alert.alert("Error", t.addToCalendar);
+      Alert.alert("Error", "Unable to add to calendar.");
     }
-  };
-
-  const getAppointmentCountdown = (appointmentDate) => {
-    const now = new Date();
-    const appointment = new Date(appointmentDate);
-    const differenceInMs = appointment - now;
-
-    if (differenceInMs <= 0) return t.noAppointments;
-    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (differenceInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-
-    return days > 0
-      ? `${days} day${days > 1 ? "s" : ""} and ${hours} hour${
-          hours !== 1 ? "s" : ""
-        }`
-      : `${hours} hour${hours !== 1 ? "s" : ""}`;
   };
 
   if (loading) {
@@ -144,13 +119,11 @@ const AppointmentContainer = () => {
     }
   );
   const formattedTime = nextAppointment.time;
-  const countdown = getAppointmentCountdown(nextAppointment.date);
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>{t.noAppointments}</Text>
       <View style={styles.detailsContainer}>
-        <Text style={styles.countdown}>{countdown}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
         <Text style={styles.time}>{formattedTime}</Text>
         <View style={styles.locationContainer}>
@@ -201,7 +174,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 4,
+    elevation: 4, // For Android shadow
   },
   header: {
     fontSize: 18,
@@ -249,7 +222,7 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     marginTop: 20,
-    flexDirection: "column",
+    flexDirection: "column", // Buttons stacked vertically
     alignItems: "center",
     gap: 10,
   },
@@ -265,7 +238,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    elevation: 2, // For Android shadow
     width: "80%",
   },
   buttonText: {

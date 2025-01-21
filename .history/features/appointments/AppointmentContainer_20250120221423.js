@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  Text,
-  StyleSheet,
-  Pressable,
-  View,
-  Linking,
-  Alert,
-} from "react-native";
+import { Text, StyleSheet, Pressable, View, Linking } from "react-native";
 import { Image } from "expo-image";
 import { UserContext } from "../../contexts/UserContext";
 import { fetchNextAppointment } from "../../api/api";
@@ -32,13 +25,9 @@ const appointmentTranslations = {
 };
 
 const AppointmentContainer = () => {
-  const { userId, languagePreference } = useContext(UserContext);
+  const { userId } = useContext(UserContext); // Get userId from context
   const [nextAppointment, setNextAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const t =
-    appointmentTranslations[languagePreference] ||
-    appointmentTranslations.English;
 
   useEffect(() => {
     const loadNextAppointment = async () => {
@@ -62,20 +51,21 @@ const AppointmentContainer = () => {
       const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
         nextAppointment.location
       )}`;
-      Linking.openURL(url).catch(() => alert(t.getDirections));
+      Linking.openURL(url).catch(() => alert("Error opening maps"));
     }
   };
 
   const handleCallReschedule = () => {
     const phoneNumber = "tel:651-758-9500";
-    Linking.openURL(phoneNumber).catch(() => alert(t.callToReschedule));
+    Linking.openURL(phoneNumber).catch(() =>
+      alert("Unable to open the phone dialer.")
+    );
   };
-
   const handleAddToCalendar = async () => {
     try {
       const { status } = await Calendar.requestCalendarPermissionsAsync();
       if (status !== "granted") {
-        Alert.alert("Permission Denied", t.addToCalendar);
+        Alert.alert("Permission Denied", "Calendar access is required.");
         return;
       }
 
@@ -84,7 +74,7 @@ const AppointmentContainer = () => {
           ? await Calendar.getDefaultCalendarAsync()
           : { isLocalAccount: true, name: "Default" };
 
-      await Calendar.createEventAsync(
+      const calendarId = await Calendar.createEventAsync(
         defaultCalendarSource.id || defaultCalendarSource.name,
         {
           title: nextAppointment.title || "Appointment",
@@ -96,16 +86,16 @@ const AppointmentContainer = () => {
               nextAppointment.date + "T" + nextAppointment.time
             ).getTime() +
               60 * 60 * 1000
-          ),
+          ), // Assuming 1-hour appointment
           location: nextAppointment.location,
           notes: nextAppointment.notes || "",
         }
       );
 
-      Alert.alert("Success", t.addToCalendar);
+      Alert.alert("Success", "Appointment added to your calendar.");
     } catch (error) {
       console.error("Error adding to calendar:", error.message);
-      Alert.alert("Error", t.addToCalendar);
+      Alert.alert("Error", "Unable to add to calendar.");
     }
   };
 
@@ -114,7 +104,7 @@ const AppointmentContainer = () => {
     const appointment = new Date(appointmentDate);
     const differenceInMs = appointment - now;
 
-    if (differenceInMs <= 0) return t.noAppointments;
+    if (differenceInMs <= 0) return "Appointment time has passed.";
     const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
       (differenceInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -128,15 +118,17 @@ const AppointmentContainer = () => {
   };
 
   if (loading) {
-    return <Text>{t.loading}</Text>;
+    return <Text>Loading...</Text>;
   }
 
   if (!nextAppointment) {
-    return <Text style={styles.noAppointmentText}>{t.noAppointments}</Text>;
+    return (
+      <Text style={styles.noAppointmentText}>No upcoming appointments</Text>
+    );
   }
 
   const formattedDate = new Date(nextAppointment.date).toLocaleDateString(
-    languagePreference === "Español" ? "es-ES" : "en-US",
+    "en-US",
     {
       weekday: "long",
       month: "long",
@@ -148,7 +140,7 @@ const AppointmentContainer = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{t.noAppointments}</Text>
+      <Text style={styles.header}>Upcoming Appointment</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.countdown}>{countdown}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
@@ -160,7 +152,9 @@ const AppointmentContainer = () => {
           />
           <Text style={styles.clinicName}>{nextAppointment.location}</Text>
         </View>
-        <Text style={styles.notes}>{nextAppointment.notes || t.noNotes}</Text>
+        <Text style={styles.notes}>
+          {nextAppointment.notes || "No notes available"}
+        </Text>
       </View>
       <View style={styles.actionsContainer}>
         <Pressable style={styles.button} onPress={handleAddToCalendar}>
@@ -168,21 +162,21 @@ const AppointmentContainer = () => {
             style={styles.iconSmall}
             source={require("../../assets/calendarIcon.png")}
           />
-          <Text style={styles.buttonText}>{t.addToCalendar}</Text>
+          <Text style={styles.buttonText}>Add to Calendar</Text>
         </Pressable>
         <Pressable style={styles.button} onPress={handleGetDirections}>
           <Image
             style={styles.iconSmall}
             source={require("../../assets/navigationIcon.png")}
           />
-          <Text style={styles.buttonText}>{t.getDirections}</Text>
+          <Text style={styles.buttonText}>Get Directions</Text>
         </Pressable>
         <Pressable style={styles.button} onPress={handleCallReschedule}>
           <Image
             style={styles.iconSmall}
             source={require("../../assets/phone.png")}
           />
-          <Text style={styles.buttonText}>{t.callToReschedule}</Text>
+          <Text style={styles.buttonText}>Call to Reschedule</Text>
         </Pressable>
       </View>
     </View>
@@ -201,7 +195,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 4 },
-    elevation: 4,
+    elevation: 4, // For Android shadow
   },
   header: {
     fontSize: 18,
@@ -249,7 +243,7 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     marginTop: 20,
-    flexDirection: "column",
+    flexDirection: "column", // Buttons stacked vertically
     alignItems: "center",
     gap: 10,
   },
@@ -265,7 +259,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    elevation: 2, // For Android shadow
     width: "80%",
   },
   buttonText: {
