@@ -249,7 +249,7 @@ export const translations = {
   },
   symptoms: {
     English: {
-      heading: "Symptoms",
+      heading: "Danger Signs & Symptoms",
       content:
         "The first trimester of pregnancy can be an anxious time as you wait to hear your baby’s heartbeat or feel their first movements. Remember, you can always reach out to us if you have questions. Here are some signs and symptoms that require immediate attention:",
       title1: "When to Call Us",
