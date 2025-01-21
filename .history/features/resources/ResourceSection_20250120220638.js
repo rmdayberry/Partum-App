@@ -17,7 +17,18 @@ const resources = [
     icon: require("../../assets/CommunityResources.png"),
     route: "CommunityResources",
   },
-
+  {
+    id: "3",
+    titleKey: "education",
+    icon: require("../../assets/EducationIcon.png"),
+    route: "Education",
+  },
+  {
+    id: "4",
+    titleKey: "settings",
+    icon: require("../../assets/Settings.png"),
+    route: "Settings",
+  },
   {
     id: "5",
     titleKey: "symptomChecker",
@@ -29,12 +40,6 @@ const resources = [
     titleKey: "getSupport",
     icon: require("../../assets/GetSupport.png"),
     route: "GetSupport",
-  },
-  {
-    id: "4",
-    titleKey: "settings",
-    icon: require("../../assets/Settings.png"),
-    route: "Settings",
   },
 ];
 
