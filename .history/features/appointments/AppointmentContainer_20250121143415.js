@@ -150,9 +150,7 @@ const AppointmentContainer = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>
-        {nextAppointment ? t.upcomingAppointment : t.noAppointments}
-      </Text>
+      <Text style={styles.header}>{t.noAppointments}</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.countdown}>{countdown}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
@@ -222,17 +220,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#6A5ACD",
-    marginBottom: 10,
+    marginBottom: 8,
   },
   date: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333333",
-    marginBottom: 10,
-  },
-  time: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#333333",
+  },
+  time: {
+    fontSize: 14,
     color: "#555555",
     marginBottom: 12,
   },

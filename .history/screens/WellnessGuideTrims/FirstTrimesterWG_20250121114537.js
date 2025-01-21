@@ -335,6 +335,23 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     color: "#777",
   },
+  bottomSection: {
+    marginTop: 20,
+    padding: 16,
+    backgroundColor: "#E0F7FA",
+    borderRadius: 8,
+  },
+  bottomTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#6200EE",
+    marginBottom: 8,
+  },
+  bottomContent: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 8,
+  },
 });
 
 export default FirstTrimester;

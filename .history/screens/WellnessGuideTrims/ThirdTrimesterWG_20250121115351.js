@@ -10,23 +10,24 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
-import { translations } from "../../translations/secondTrimesterWGTranslations";
+import { translations } from "../../translations/thirdTrimesterWGTranslation";
 import axios from "axios";
 
 const { width: screenWidth } = Dimensions.get("window");
 
 const topicImages = {
-  sleep: require("../../assets/sleepWG2.png"),
-  nutrition: require("../../assets/nutritionWG2.png"),
-  mentalHealth: require("../../assets/mentalWG2.png"),
-  exercise: require("../../assets/secondTExercise.png"),
-  symptoms: require("../../assets/symptomsWG2.png"),
+  nutrition: require("../../assets/NutritionWG2.png"),
+  sleep: require("../../assets/SleepWG.png"),
+  exercise: require("../../assets/ExerciseWG3.png"),
+  symptoms: require("../../assets/symptomsWG3.png"),
+  support: require("../../assets/SupportWG.png"),
+  labor: require("../../assets/LaborWG.png"),
 };
 
-const SecondTrimester = () => {
+const ThirdTrimester = () => {
   const { userId } = useContext(UserContext);
   const [languagePreference, setLanguagePreference] = useState("English");
-  const [activeTab, setActiveTab] = useState("sleep");
+  const [activeTab, setActiveTab] = useState("nutrition");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -176,10 +177,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: screenWidth * 0.8,
-    height: screenWidth * 0.5,
-    resizeMode: "cover",
+    height: screenWidth * 0.5, // Maintaining a consistent aspect ratio
+    resizeMode: "cover", // Ensures proper scaling
     marginBottom: 20,
-    borderRadius: 10,
+    borderRadius: 10, // Rounded corners for consistency
   },
   card: {
     backgroundColor: "#FFFFFF",
@@ -235,4 +236,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SecondTrimester;
+export default ThirdTrimester;

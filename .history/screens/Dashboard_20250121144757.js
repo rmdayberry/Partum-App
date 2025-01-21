@@ -19,8 +19,11 @@ import {
   fetchDailyTip,
 } from "../api/api";
 
+const Card = ({ children, style }) => (
+  <View style={[styles.card, style]}>{children}</View>
+);
+
 const Dashboard = () => {
-  // 1) Destructure *both* userId **and** languagePreference from context
   const { userId, languagePreference } = useContext(UserContext);
 
   const [currentWeek, setCurrentWeek] = useState(null);
@@ -30,7 +33,6 @@ const Dashboard = () => {
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
   const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
 
-  // 2) Then you can read from dashboardTranslations using languagePreference
   const t =
     dashboardTranslations[languagePreference] || dashboardTranslations.English;
 
@@ -43,10 +45,10 @@ const Dashboard = () => {
     const fetchProgressAndTips = async () => {
       try {
         const progress = await fetchPregnancyProgress(userId);
-        const week = Math.floor((progress / 100) * 40);
+        const week = Math.floor((progress / 100) * 40); // Convert progress to current week
         setCurrentWeek(week);
 
-        const weeklyTipData = await fetchWeeklyTip(week);
+        const weeklyTipData = await fetchWeeklyTip(week, languagePreference);
         setWeeklyTip(weeklyTipData);
 
         const dailyTipData = await fetchDailyTip(userId);
@@ -69,68 +71,80 @@ const Dashboard = () => {
       useNativeDriver: true,
     }).start();
   }, [userId, languagePreference]);
-  // ^ Notice we add languagePreference to the dependency array so it re-renders
-  //   if the user toggles language mid-session.
 
   return (
     <View style={styles.container}>
       <Header />
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Pregnancy Overview with Progress Bar and Weekly Tip */}
+        {/* Personalized Greeting */}
         <Animated.View
+          style={[styles.greetingContainer, { opacity: fadeAnim }]}
+        >
+          <Text style={styles.greetingText}>
+            {t.welcome}, <Text style={styles.highlight}>User!</Text>
+          </Text>
+        </Animated.View>
+
+        {/* Pregnancy Overview */}
+        <Card
           style={[styles.pregnancyOverviewContainer, { opacity: fadeAnim }]}
         >
           <Text style={styles.sectionHeader}>{t.pregnancyOverview}</Text>
-
           <Text style={styles.pregnancyText}>
             {t.youAre}{" "}
             <Text style={styles.highlight}>
-              {currentWeek !== null && currentWeek !== undefined
-                ? currentWeek
-                : t.loading}
+              {currentWeek !== null ? currentWeek : t.loading}
             </Text>{" "}
             {t.weeksAlong}
           </Text>
 
-          <ProgressBar userId={userId} />
-
-          <View style={styles.weeklyTipContainer}>
-            <Image
-              style={styles.weeklyIcon}
-              source={require("../assets/pregnantPerson.png")}
-            />
-            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
-
-            {loadingWeeklyTip ? (
-              <Text style={styles.loadingText}>{t.loading}</Text>
-            ) : weeklyTip && weeklyTip.tip ? (
-              <Text style={styles.tipText}>{weeklyTip.tip}</Text>
-            ) : (
-              <Text style={styles.noTipText}>{t.noTip}</Text>
-            )}
-          </View>
-        </Animated.View>
-
-        {/* Appointment Container */}
-        <Animated.View style={[styles.card, { opacity: fadeAnim }]}>
-          <AppointmentContainer />
-        </Animated.View>
-
-        {/* Daily Tip */}
-        <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
-          <Image
-            style={styles.dailyIcon}
-            source={require("../assets/wateringCan.png")}
+          <ProgressBar
+            userId={userId}
+            progressColor={
+              currentWeek < 13
+                ? "#A3E635"
+                : currentWeek < 27
+                ? "#FACC15"
+                : "#FB7185"
+            }
           />
-          <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>
+
+          <View style={styles.tipContainer}>
+            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
+            <Image
+              source={require("../assets/berry.png")}
+              style={styles.tipIcon}
+            />
+            <Text style={styles.tipText}>
+              {loadingWeeklyTip
+                ? t.loading
+                : (weeklyTip?.tip ?? t.noTip).toString()}
+            </Text>
+          </View>
+        </Card>
+
+        {/* Appointments Section */}
+        <Card>
+          <AppointmentContainer />
+        </Card>
+
+        {/* Daily Tip Section */}
+        <Card style={styles.dailyTipFrame}>
+          <View style={styles.dailyTipHeaderContainer}>
+            <Image
+              source={require("../assets/wateringCan.png")}
+              style={styles.dailyTipIcon}
+            />
+            <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>
+          </View>
           {loadingDailyTip ? (
             <Text style={styles.loadingText}>{t.loading}</Text>
           ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.tipText}>{dailyTip.tip}</Text>
+            <Text style={styles.dailyTipText}>{dailyTip.tip}</Text>
           ) : (
             <Text style={styles.noTipText}>{t.noDailyTip}</Text>
           )}
-        </Animated.View>
+        </Card>
 
         <ResourceSection />
       </ScrollView>
@@ -147,17 +161,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 50,
   },
+  greetingContainer: {
+    marginVertical: 20,
+  },
+  greetingText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#6A5ACD",
+  },
   pregnancyOverviewContainer: {
-    width: "90%",
-    backgroundColor: "#fff",
+    backgroundColor: "linear-gradient(180deg, #FFFFFF, #F3F4FF)",
     borderRadius: 16,
+    padding: 20,
+    marginVertical: 10,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
-    padding: 20,
-    marginVertical: 10,
   },
   sectionHeader: {
     fontSize: 18,
@@ -178,73 +200,37 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
-  weeklyTipContainer: {
-    backgroundColor: "#EFEFFF",
-    borderRadius: 12,
-    padding: 16,
-    marginTop: 20,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#D0D0FF",
+  card: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 20,
+    marginVertical: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
   },
-  weeklyIcon: {
-    width: 40,
-    height: 40,
-    marginBottom: 10,
+  tipContainer: {
+    backgroundColor: "#FFF3E6",
+    borderRadius: 12,
+    padding: 20,
+    marginVertical: 20,
+    alignItems: "center",
   },
   tipHeader: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
-    color: "#4F46E5",
+    color: "#6A5ACD",
     marginBottom: 10,
   },
-  loadingText: {
-    fontSize: 14,
-    color: "#888",
-    textAlign: "center",
-  },
-  tipText: {
-    fontSize: 14,
-    color: "#555",
-    textAlign: "center",
-    lineHeight: 22,
-    marginVertical: 10,
-  },
-  noTipText: {
-    fontSize: 14,
-    color: "#888",
-    textAlign: "center",
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
-    width: "90%",
-  },
   dailyTipFrame: {
-    backgroundColor: "#FFF5EB",
-    borderRadius: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    padding: 20,
-    marginVertical: 10,
-    width: "90%",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#FFD3A6",
+    backgroundColor: "#D2CBE7",
   },
-  dailyIcon: {
-    width: 40,
-    height: 40,
+  dailyTipHeaderContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
   },
 });

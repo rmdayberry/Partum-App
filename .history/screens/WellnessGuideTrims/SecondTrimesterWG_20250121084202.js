@@ -7,7 +7,6 @@ import {
   Image,
   ScrollView,
   Dimensions,
-  ActivityIndicator,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
 import { translations } from "../../translations/secondTrimesterWGTranslations";
@@ -16,18 +15,17 @@ import axios from "axios";
 const { width: screenWidth } = Dimensions.get("window");
 
 const topicImages = {
-  sleep: require("../../assets/sleepWG2.png"),
-  nutrition: require("../../assets/nutritionWG2.png"),
-  mentalHealth: require("../../assets/mentalWG2.png"),
+  sleep: require("../../assets/secondTSleep.png"),
+  nutrition: require("../../assets/secondTNutrition.png"),
+  mentalHealth: require("../../assets/secondTMentalHealth.png"),
   exercise: require("../../assets/secondTExercise.png"),
-  symptoms: require("../../assets/symptomsWG2.png"),
+  symptoms: require("../../assets/secondTSymptoms.png"),
 };
 
 const SecondTrimester = () => {
   const { userId } = useContext(UserContext);
   const [languagePreference, setLanguagePreference] = useState("English");
   const [activeTab, setActiveTab] = useState("sleep");
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLanguagePreference = async () => {
@@ -38,66 +36,68 @@ const SecondTrimester = () => {
         setLanguagePreference(response.data.languagePreference || "English");
       } catch (error) {
         console.error("Error fetching language preference:", error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchLanguagePreference();
   }, [userId]);
 
   const renderContent = () => {
-    const tabContent =
+    const { heading, content, sections } =
       translations[activeTab]?.[languagePreference] ||
       translations[activeTab]?.English ||
       {};
 
-    const { heading, content, sections } = tabContent;
-
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
+        {/* Image */}
         <Image source={topicImages[activeTab]} style={styles.image} />
-        <View style={styles.card}>
-          <Text style={styles.heading}>{heading || "Content Unavailable"}</Text>
+
+        {/* Main Content */}
+        <View style={styles.section}>
+          {heading && <Text style={styles.heading}>{heading}</Text>}
           {content && <Text style={styles.content}>{content}</Text>}
 
-          {sections &&
-            sections.map((section, index) => (
-              <View key={index} style={styles.section}>
-                {section.title && (
-                  <Text style={styles.subheading}>{section.title}</Text>
-                )}
-                {section.subtitleBold && (
-                  <Text style={styles.subtitleBold}>
-                    {section.subtitleBold}
+          {/* Sections */}
+          {sections?.map((section, index) => (
+            <View key={index} style={styles.subsection}>
+              {section.title && (
+                <Text style={styles.subheading}>{section.title}</Text>
+              )}
+
+              {section.subtitleBold && (
+                <Text style={styles.subtitleBold}>{section.subtitleBold}</Text>
+              )}
+
+              {Array.isArray(section.bulletPoints) &&
+                section.bulletPoints.map((point, idx) => (
+                  <Text key={idx} style={styles.bulletPoint}>
+                    • {point}
                   </Text>
-                )}
-                {Array.isArray(section.bulletPoints) &&
-                  section.bulletPoints.map((point, idx) => (
-                    <Text key={idx} style={styles.bulletPoint}>
-                      • {point}
-                    </Text>
-                  ))}
-              </View>
-            ))}
+                ))}
+
+              {Array.isArray(section.content) &&
+                section.content.map((item, idx) => (
+                  <View key={idx} style={styles.detailsSection}>
+                    {item.subtitle && (
+                      <Text style={styles.subtitle}>{item.subtitle}</Text>
+                    )}
+                    <Text style={styles.content}>{item.details}</Text>
+                  </View>
+                ))}
+            </View>
+          ))}
         </View>
       </ScrollView>
     );
   };
 
-  if (loading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#6200EE" />
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
+      {/* Tabs */}
       <ScrollView
         horizontal
-        style={styles.tabBar}
         contentContainerStyle={styles.tabBarContent}
+        style={styles.tabBar}
       >
         {Object.keys(translations).map((tab) => (
           <TouchableOpacity
@@ -121,6 +121,8 @@ const SecondTrimester = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+      {/* Render Content */}
       {renderContent()}
     </View>
   );
@@ -129,109 +131,91 @@ const SecondTrimester = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFF",
+    backgroundColor: "#f8f8f8",
   },
   tabBar: {
+    backgroundColor: "#fff",
     borderBottomWidth: 1,
-    borderBottomColor: "#E0E0E0",
-    backgroundColor: "#FFF",
+    borderColor: "#ddd",
   },
   tabBarContent: {
     flexDirection: "row",
-    paddingHorizontal: 10,
-    alignItems: "center",
-    justifyContent: "space-between",
+    paddingVertical: 10,
   },
   tabButton: {
-    flexDirection: "row",
+    marginHorizontal: 16,
+    justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-    marginHorizontal: 5,
-    backgroundColor: "#F9FAFF",
   },
   activeTabButton: {
-    backgroundColor: "#E0E7FF",
+    borderBottomWidth: 2,
+    borderBottomColor: "#6200EE",
   },
   tabText: {
-    fontSize: 14,
-    marginLeft: 5,
+    fontSize: 16,
     color: "#777",
-    fontWeight: "500",
   },
   activeTabText: {
     color: "#6200EE",
     fontWeight: "bold",
   },
-  loaderContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   contentContainer: {
-    padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    padding: 16,
   },
   image: {
-    width: screenWidth * 0.8,
-    height: screenWidth * 0.5,
+    width: "100%",
+    height: 200,
     resizeMode: "cover",
-    marginBottom: 20,
-    borderRadius: 10,
-  },
-  card: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 16,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 5,
-    width: "95%",
-    marginBottom: 20,
-  },
-  heading: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 15,
-    textAlign: "center",
+    borderRadius: 12,
+    marginBottom: 16,
   },
   section: {
-    marginTop: 15,
+    marginBottom: 16,
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  heading: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 10,
+  },
+  subsection: {
+    marginTop: 12,
   },
   subheading: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "600",
     color: "#444",
-    marginBottom: 5,
+    marginVertical: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: "600",
+    marginBottom: 6,
+    color: "#555",
   },
   subtitleBold: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
-    color: "#555",
-    marginBottom: 5,
+    color: "#444",
+    marginBottom: 6,
   },
   content: {
-    fontSize: 12,
-    fontWeight: "800",
-    color: "#555",
+    fontSize: 16,
     lineHeight: 22,
-    textAlign: "center",
+    color: "#555",
     marginBottom: 10,
-    backgroundColor: "#F4ECF8",
-    padding: 14,
-    borderRadius: 8,
   },
   bulletPoint: {
-    fontSize: 14,
-    color: "#555",
-    marginBottom: 8,
-    lineHeight: 22,
-    marginLeft: 10,
+    fontSize: 16,
+    color: "#333",
+    marginVertical: 4,
   },
 });
 

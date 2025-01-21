@@ -232,7 +232,6 @@ const styles = StyleSheet.create({
   },
   time: {
     fontSize: 16,
-    fontWeight: "bold",
     color: "#555555",
     marginBottom: 12,
   },

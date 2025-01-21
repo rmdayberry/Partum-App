@@ -18,7 +18,7 @@ const { width: screenWidth } = Dimensions.get("window");
 const topicImages = {
   sleep: require("../../assets/sleepWG2.png"),
   nutrition: require("../../assets/nutritionWG2.png"),
-  mentalHealth: require("../../assets/mentalWG2.png"),
+  mentalHealth: require("../../assets/secondTMentalHealth.png"),
   exercise: require("../../assets/secondTExercise.png"),
   symptoms: require("../../assets/symptomsWG2.png"),
 };

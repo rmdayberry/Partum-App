@@ -225,14 +225,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   date: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#333333",
     marginBottom: 10,
   },
   time: {
     fontSize: 16,
-    fontWeight: "bold",
     color: "#555555",
     marginBottom: 12,
   },

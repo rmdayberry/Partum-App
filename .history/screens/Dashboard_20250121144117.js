@@ -46,7 +46,8 @@ const Dashboard = () => {
         const week = Math.floor((progress / 100) * 40);
         setCurrentWeek(week);
 
-        const weeklyTipData = await fetchWeeklyTip(week);
+        // Pass languagePreference when fetching the weekly tip
+        const weeklyTipData = await fetchWeeklyTip(week, languagePreference);
         setWeeklyTip(weeklyTipData);
 
         const dailyTipData = await fetchDailyTip(userId);
@@ -68,9 +69,7 @@ const Dashboard = () => {
       duration: 1000,
       useNativeDriver: true,
     }).start();
-  }, [userId, languagePreference]);
-  // ^ Notice we add languagePreference to the dependency array so it re-renders
-  //   if the user toggles language mid-session.
+  }, [userId, languagePreference]); // Add languagePreference as a dependency
 
   return (
     <View style={styles.container}>
@@ -117,20 +116,23 @@ const Dashboard = () => {
         </Animated.View>
 
         {/* Daily Tip */}
-        <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
-          <Image
-            style={styles.dailyIcon}
-            source={require("../assets/wateringCan.png")}
-          />
-          <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>
+        {/* Daily Tip Section */}
+        <Card style={styles.dailyTipFrame}>
+          <View style={styles.dailyTipHeaderContainer}>
+            <Image
+              source={require("../assets/wateringCan.png")}
+              style={styles.dailyTipIcon}
+            />
+            <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>
+          </View>
           {loadingDailyTip ? (
             <Text style={styles.loadingText}>{t.loading}</Text>
           ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.tipText}>{dailyTip.tip}</Text>
+            <Text style={styles.dailyTipText}>{dailyTip.tip}</Text>
           ) : (
             <Text style={styles.noTipText}>{t.noDailyTip}</Text>
           )}
-        </Animated.View>
+        </Card>
 
         <ResourceSection />
       </ScrollView>

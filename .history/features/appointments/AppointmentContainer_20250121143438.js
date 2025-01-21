@@ -222,17 +222,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#6A5ACD",
-    marginBottom: 10,
+    marginBottom: 8,
   },
   date: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#333333",
-    marginBottom: 10,
-  },
-  time: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#333333",
+  },
+  time: {
+    fontSize: 14,
     color: "#555555",
     marginBottom: 12,
   },
