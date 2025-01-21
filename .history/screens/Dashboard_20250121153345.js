@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
+    fontWeight,
   },
 
   dailyTipIcon: {
@@ -273,8 +274,6 @@ const styles = StyleSheet.create({
   sectionHeader2: {
     fontSize: 16,
     color: "#4F46E5",
-    fontWeight: "600",
-    marginRight: 20,
   },
 });
 

@@ -95,11 +95,11 @@ const Dashboard = () => {
           <ProgressBar userId={userId} />
 
           <View style={styles.weeklyTipContainer}>
-            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
             <Image
               style={styles.weeklyIcon}
               source={require("../assets/pregnantPerson.png")}
             />
+            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
 
             {loadingWeeklyTip ? (
               <Text style={styles.loadingText}>{t.loading}</Text>
@@ -118,18 +118,15 @@ const Dashboard = () => {
 
         {/* Daily Tip */}
         <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
-          <View style={styles.dailyTipHeaderContainer}>
-            <Image
-              source={require("../assets/wateringCan.png")}
-              style={styles.dailyTipIcon}
-            />
-            <Text style={styles.sectionHeader2}>{t.dailyTipHeader}</Text>{" "}
-            {/* Purple title */}
-          </View>
+          <Image
+            style={styles.dailyIcon}
+            source={require("../assets/wateringCan.png")}
+          />
+          <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>
           {loadingDailyTip ? (
             <Text style={styles.loadingText}>{t.loading}</Text>
           ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.dailyTipText}>{dailyTip.tip}</Text>
+            <Text style={styles.tipText}>{dailyTip.tip}</Text>
           ) : (
             <Text style={styles.noTipText}>{t.noDailyTip}</Text>
           )}
@@ -163,14 +160,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   sectionHeader: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#6A5ACD",
     textAlign: "center",
     marginBottom: 12,
   },
   pregnancyText: {
-    fontSize: 20,
+    fontSize: 16,
     textAlign: "center",
     color: "#333",
     marginBottom: 10,
@@ -231,50 +228,24 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   dailyTipFrame: {
-    backgroundColor: "#FDE2D7",
+    backgroundColor: "#FFF5EB",
     borderRadius: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
-    paddingHorizontal: 24, //
-    paddingVertical: 16, //
+    padding: 20,
     marginVertical: 10,
     width: "90%",
     alignItems: "center",
-    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#FFD3A6",
   },
-
-  dailyTipHeaderContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 12,
-  },
-
-  dailyTipIcon: {
+  dailyIcon: {
     width: 40,
     height: 40,
-    marginRight: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
-
-  dailyTipText: {
-    fontSize: 14,
-    color: "#4A4A4A",
-    textAlign: "center",
-    lineHeight: 26,
-    marginVertical: 12,
-    fontWeight: "500",
-  },
-  sectionHeader2: {
-    fontSize: 16,
-    color: "#4F46E5",
-    fontWeight: "600",
-    marginRight: 20,
+    marginBottom: 10,
   },
 });
 

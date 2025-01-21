@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   tipHeader: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "500",
     color: "#4F46E5",
     marginBottom: 10,
   },
@@ -273,8 +273,6 @@ const styles = StyleSheet.create({
   sectionHeader2: {
     fontSize: 16,
     color: "#4F46E5",
-    fontWeight: "600",
-    marginRight: 20,
   },
 });
 

@@ -123,7 +123,7 @@ const Dashboard = () => {
               source={require("../assets/wateringCan.png")}
               style={styles.dailyTipIcon}
             />
-            <Text style={styles.sectionHeader2}>{t.dailyTipHeader}</Text>{" "}
+            <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text>{" "}
             {/* Purple title */}
           </View>
           {loadingDailyTip ? (
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   tipHeader: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#4F46E5",
     marginBottom: 10,
@@ -243,7 +243,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "90%",
     alignItems: "center",
-    marginBottom: 20,
   },
 
   dailyTipHeaderContainer: {
@@ -263,18 +262,12 @@ const styles = StyleSheet.create({
   },
 
   dailyTipText: {
-    fontSize: 14,
-    color: "#4A4A4A",
+    fontSize: 14, // Slightly larger text
+    color: "#4A4A4A", // Softer dark gray
     textAlign: "center",
     lineHeight: 26,
     marginVertical: 12,
-    fontWeight: "500",
-  },
-  sectionHeader2: {
-    fontSize: 16,
-    color: "#4F46E5",
-    fontWeight: "600",
-    marginRight: 20,
+    fontWeight: "500", // Medium weight for emphasis
   },
 });
 

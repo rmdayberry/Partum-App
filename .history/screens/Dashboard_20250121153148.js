@@ -243,7 +243,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: "90%",
     alignItems: "center",
-    marginBottom: 20,
   },
 
   dailyTipHeaderContainer: {
@@ -273,8 +272,6 @@ const styles = StyleSheet.create({
   sectionHeader2: {
     fontSize: 16,
     color: "#4F46E5",
-    fontWeight: "600",
-    marginRight: 20,
   },
 });
 

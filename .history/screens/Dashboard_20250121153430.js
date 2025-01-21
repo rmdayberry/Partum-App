@@ -274,7 +274,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#4F46E5",
     fontWeight: "600",
-    marginRight: 20,
   },
 });
 

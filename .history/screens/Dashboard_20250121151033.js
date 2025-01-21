@@ -95,11 +95,11 @@ const Dashboard = () => {
           <ProgressBar userId={userId} />
 
           <View style={styles.weeklyTipContainer}>
-            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
             <Image
               style={styles.weeklyIcon}
               source={require("../assets/pregnantPerson.png")}
             />
+            <Text style={styles.tipHeader}>{t.whatToExpectHeader}</Text>
 
             {loadingWeeklyTip ? (
               <Text style={styles.loadingText}>{t.loading}</Text>
@@ -118,22 +118,20 @@ const Dashboard = () => {
 
         {/* Daily Tip */}
         <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
-          <View style={styles.dailyTipHeaderContainer}>
-            <Image
-              source={require("../assets/wateringCan.png")}
-              style={styles.dailyTipIcon}
-            />
-            <Text style={styles.sectionHeader2}>{t.dailyTipHeader}</Text>{" "}
-            {/* Purple title */}
-          </View>
-          {loadingDailyTip ? (
-            <Text style={styles.loadingText}>{t.loading}</Text>
-          ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.dailyTipText}>{dailyTip.tip}</Text>
-          ) : (
-            <Text style={styles.noTipText}>{t.noDailyTip}</Text>
-          )}
-        </Animated.View>
+  <View style={styles.dailyTipHeaderContainer}>
+    <Image
+      source={require("../assets/wateringCan.png")}
+      style={styles.dailyTipIcon}
+    />
+    <Text style={styles.sectionHeader}>{t.dailyTipHeader}</Text> {/* Purple title */}
+  </View>
+  {loadingDailyTip ? (
+    <Text style={styles.loadingText}>{t.loading}</Text>
+  ) : dailyTip && dailyTip.tip ? (
+    <Text style={styles.dailyTipText}>{dailyTip.tip}</Text> {/* Regular text */}
+  ) : (
+    <Text style={styles.noTipText}>{t.noDailyTip}</Text>
+</Animated.View>
 
         <ResourceSection />
       </ScrollView>
@@ -163,14 +161,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   sectionHeader: {
-    fontSize: 14,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#6A5ACD",
     textAlign: "center",
     marginBottom: 12,
   },
   pregnancyText: {
-    fontSize: 20,
+    fontSize: 16,
     textAlign: "center",
     color: "#333",
     marginBottom: 10,
@@ -231,19 +229,20 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   dailyTipFrame: {
-    backgroundColor: "#FDE2D7",
+    backgroundColor: "#B0A3D4", // Or use a gradient
     borderRadius: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
-    paddingHorizontal: 24, //
-    paddingVertical: 16, //
+    paddingHorizontal: 24, // Add horizontal padding
+    paddingVertical: 16, // Add vertical padding
     marginVertical: 10,
     width: "90%",
     alignItems: "center",
-    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#D1C4E9", // Softer border
   },
 
   dailyTipHeaderContainer: {
@@ -256,6 +255,10 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     marginRight: 10,
+    borderRadius: 20, // Circular icon
+    backgroundColor: "#FFFFFF", // Contrast background
+    borderWidth: 1,
+    borderColor: "#B0A3D4",
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -263,18 +266,12 @@ const styles = StyleSheet.create({
   },
 
   dailyTipText: {
-    fontSize: 14,
-    color: "#4A4A4A",
+    fontSize: 14, // Slightly larger text
+    color: "#4A4A4A", // Softer dark gray
     textAlign: "center",
     lineHeight: 26,
     marginVertical: 12,
-    fontWeight: "500",
-  },
-  sectionHeader2: {
-    fontSize: 16,
-    color: "#4F46E5",
-    fontWeight: "600",
-    marginRight: 20,
+    fontWeight: "500", // Medium weight for emphasis
   },
 });
 
