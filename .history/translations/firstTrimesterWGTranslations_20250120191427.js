@@ -185,7 +185,7 @@ export const translations = {
   },
   mentalHealth: {
     English: {
-      heading: "Mental Health During Pregnancy",
+      heading: "Mental Health",
       content:
         "Caring for your mental health is just as important as caring for your physical health. Pregnancy is a time of incredible change, and it’s natural to experience a range of emotions. As you grow this new life inside you, remember to be kind to yourself and prioritize your mental well-being.",
       title1: "Depression or Anxiety",
@@ -249,7 +249,7 @@ export const translations = {
   },
   symptoms: {
     English: {
-      heading: "Symptoms",
+      heading: "Danger Signs & Symptoms",
       content:
         "The first trimester of pregnancy can be an anxious time as you wait to hear your baby’s heartbeat or feel their first movements. Remember, you can always reach out to us if you have questions. Here are some signs and symptoms that require immediate attention:",
       title1: "When to Call Us",

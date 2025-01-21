@@ -69,7 +69,9 @@ const Dashboard = () => {
       duration: 1000,
       useNativeDriver: true,
     }).start();
-  }, [userId, languagePreference]); // Add languagePreference as a dependency
+  }, [userId, languagePreference]);
+  // ^ Notice we add languagePreference to the dependency array so it re-renders
+  //   if the user toggles language mid-session.
 
   return (
     <View style={styles.container}>

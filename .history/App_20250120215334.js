@@ -200,35 +200,12 @@ const BottomTabs = ({ userId }) => {
         tabBarStyle: { backgroundColor: "#fff" },
       })}
     >
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarLabel: t.home,
-        }}
-      >
+      <Tab.Screen name="Home">
         {() => <DashboardStack userId={userId} />}
       </Tab.Screen>
-      <Tab.Screen
-        name="Appointments"
-        component={AppointmentsFlow}
-        options={{
-          tabBarLabel: t.appointments,
-        }}
-      />
-      <Tab.Screen
-        name="Learn"
-        component={WellnessFlow}
-        options={{
-          tabBarLabel: t.learn,
-        }}
-      />
-      <Tab.Screen
-        name="More"
-        component={MoreFlow}
-        options={{
-          tabBarLabel: t.more,
-        }}
-      />
+      <Tab.Screen name="Appointments" component={AppointmentsFlow} />
+      <Tab.Screen name="Learn" component={WellnessFlow} />
+      <Tab.Screen name="More" component={MoreFlow} />
     </Tab.Navigator>
   );
 };

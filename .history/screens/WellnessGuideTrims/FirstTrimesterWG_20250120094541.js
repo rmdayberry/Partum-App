@@ -51,7 +51,6 @@ const FirstTrimester = () => {
       translations[activeTab]?.[languagePreference] ||
       translations[activeTab]?.English ||
       {};
-
     const {
       heading,
       content,
@@ -63,7 +62,7 @@ const FirstTrimester = () => {
       content3,
       title4,
       content4,
-      vitamins, // May not exist for all tabs
+      vitamins,
       avoidTitle,
       avoid,
       nuggetTitle,
@@ -73,113 +72,71 @@ const FirstTrimester = () => {
       bottomText,
     } = tabContent;
 
-    const renderSubsections = (subsections) => {
-      if (!Array.isArray(subsections)) return null;
-
-      return subsections.map(({ title, content }, index) => (
-        <View key={index}>
-          {title && <Text style={styles.subheading}>{title}</Text>}
-          {content && Array.isArray(content) ? (
-            content.map((item, i) => (
-              <Text key={i} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content}</Text>
-          )}
-        </View>
-      ));
-    };
-
-    const renderSection = (title, contentArrayOrText) => {
-      if (
-        !title ||
-        (!contentArrayOrText && !Array.isArray(contentArrayOrText))
-      ) {
-        return null;
-      }
-
-      return (
-        <>
-          <Text style={styles.subheading}>{title}</Text>
-          {Array.isArray(contentArrayOrText) ? (
-            contentArrayOrText.map((item, index) => (
-              <Text key={index} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{contentArrayOrText}</Text>
-          )}
-        </>
-      );
-    };
-
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <Image source={topicImages[activeTab]} style={styles.image} />
         <View style={styles.card}>
-          {/* Heading */}
           <Text style={styles.heading}>{heading || "Content Unavailable"}</Text>
-
-          {/* Main Content */}
           {content && <Text style={styles.content}>{content}</Text>}
 
-          {/* Dynamic Sections */}
-          {renderSection(title1, content1)}
-          {renderSection(title2, content2)}
+          {/* Sections */}
+          {title1 && <Text style={styles.subheading}>{title1}</Text>}
+          {content1 &&
+            content1.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))}
 
-          {/* Subsections under "Common Symptoms in the First Trimester" */}
-          {activeTab === "symptoms" && (
-            <View>
-              <Text style={styles.subheading}>{title2}</Text>
-              {renderSubsections([
-                {
-                  title: "Nausea and Vomiting",
-                  content: [
-                    "Eat small, frequent meals.",
-                    "Try to eat something every 2 hours.",
-                    "Listen to your cravings. Eat what sounds good, even if it’s not your usual diet.",
-                    "Eat before getting out of bed. A small snack, like crackers or dry cereal, can help.",
-                    "Adjust prenatal vitamins if they worsen nausea; switch to folic acid.",
-                    "Try ginger (tea, candies, or ginger ale) or lemon drops.",
-                    "Use Sea Bands for acupressure or supplement with Vitamin B-6 (50mg twice a day).",
-                    "Consider Unisom for sleep and nausea relief (ask for a prescription).",
-                    "Note: If you can’t keep food or fluids down for 24 hours, call us—you may need IV hydration or stronger medication.",
-                  ],
-                },
-                {
-                  title: "Sore Breasts",
-                  content: [
-                    "Your breasts may grow larger and feel tender or sensitive.",
-                    "Some people notice a small amount of leaking, but most do not.",
-                    "Milk production won’t start until after your baby and the placenta are delivered.",
-                    "Throughout pregnancy, your body is getting ready to provide the perfect nourishment for your baby. After birth, your milk will adapt by the hour and day to meet their exact needs. It’s a truly miraculous process.",
-                  ],
-                },
-              ])}
-            </View>
+          {title2 && <Text style={styles.subheading}>{title2}</Text>}
+          {content2 && <Text style={styles.content}>{content2}</Text>}
+
+          {title3 && <Text style={styles.subheading}>{title3}</Text>}
+          {content3 &&
+            content3.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))}
+
+          {title4 && <Text style={styles.subheading}>{title4}</Text>}
+          {content4 &&
+            content4.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))}
+
+          {vitamins && (
+            <>
+              <Text style={styles.subheading}>Vitamins & Supplements</Text>
+              {vitamins.map((item, index) => (
+                <Text key={index} style={styles.bulletPoint}>
+                  • {item}
+                </Text>
+              ))}
+            </>
           )}
 
-          {renderSection(title3, content3)}
-          {renderSection(title4, content4)}
+          {avoidTitle && <Text style={styles.subheading}>{avoidTitle}</Text>}
+          {avoid &&
+            avoid.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))}
 
-          {/* Vitamins & Supplements */}
-          {vitamins?.length > 0 &&
-            renderSection("Vitamins & Supplements", vitamins)}
-
-          {/* Avoid List */}
-          {renderSection(avoidTitle, avoid)}
-
-          {/* Nutrition Nugget */}
           {nuggetTitle && <Text style={styles.subheading}>{nuggetTitle}</Text>}
           {nuggetContent && <Text style={styles.content}>{nuggetContent}</Text>}
 
-          {/* Quick Tips */}
-          {renderSection(tipsTitle, tips)}
+          {tipsTitle && <Text style={styles.subheading}>{tipsTitle}</Text>}
+          {tips &&
+            tips.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))}
 
-          {/* Bottom Text */}
           {bottomText && (
             <Text style={[styles.content, styles.bottomText]}>
               {bottomText}
@@ -214,6 +171,11 @@ const FirstTrimester = () => {
               activeTab === tab && styles.activeTabButton,
             ]}
           >
+            <Ionicons
+              name="ios-heart-outline"
+              size={18}
+              color={activeTab === tab ? "#6200EE" : "#777"}
+            />
             <Text
               style={[
                 styles.tabText,

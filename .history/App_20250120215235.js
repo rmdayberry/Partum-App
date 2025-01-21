@@ -172,66 +172,38 @@ function MoreFlow() {
 }
 
 // 5) The Bottom Tabs combining the sub-stacks
-const BottomTabs = ({ userId }) => {
-  const { languagePreference } = React.useContext(UserContext); // Access the language preference
-  const t = tabTranslations[languagePreference] || tabTranslations.English;
-
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Appointments") {
-            iconName = focused ? "calendar" : "calendar-outline";
-          } else if (route.name === "Learn") {
-            iconName = focused ? "book" : "book-outline";
-          } else if (route.name === "More") {
-            iconName = focused
-              ? "ellipsis-horizontal"
-              : "ellipsis-horizontal-outline";
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: "#007Aff",
-        tabBarInactiveTintColor: "gray",
-        tabBarStyle: { backgroundColor: "#fff" },
-      })}
-    >
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarLabel: t.home,
-        }}
-      >
-        {() => <DashboardStack userId={userId} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="Appointments"
-        component={AppointmentsFlow}
-        options={{
-          tabBarLabel: t.appointments,
-        }}
-      />
-      <Tab.Screen
-        name="Learn"
-        component={WellnessFlow}
-        options={{
-          tabBarLabel: t.learn,
-        }}
-      />
-      <Tab.Screen
-        name="More"
-        component={MoreFlow}
-        options={{
-          tabBarLabel: t.more,
-        }}
-      />
-    </Tab.Navigator>
-  );
-};
+const BottomTabs = ({ userId }) => (
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      headerShown: false,
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+        if (route.name === "Home") {
+          iconName = focused ? "home" : "home-outline";
+        } else if (route.name === "Appointments") {
+          iconName = focused ? "calendar" : "calendar-outline";
+        } else if (route.name === "Learn") {
+          iconName = focused ? "book" : "book-outline";
+        } else if (route.name === "More") {
+          iconName = focused
+            ? "ellipsis-horizontal"
+            : "ellipsis-horizontal-outline";
+        }
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: "#007Aff",
+      tabBarInactiveTintColor: "gray",
+      tabBarStyle: { backgroundColor: "#fff" },
+    })}
+  >
+    <Tab.Screen name="Home">
+      {() => <DashboardStack userId={userId} />}
+    </Tab.Screen>
+    <Tab.Screen name="Appointments" component={AppointmentsFlow} />
+    <Tab.Screen name="Learn" component={WellnessFlow} />
+    <Tab.Screen name="More" component={MoreFlow} />
+  </Tab.Navigator>
+);
 
 // ---------------------------------------------------------
 const StackRoot = createNativeStackNavigator();

@@ -51,7 +51,7 @@ const FirstTrimester = () => {
       translations[activeTab]?.[languagePreference] ||
       translations[activeTab]?.English ||
       {};
-
+  
     const {
       heading,
       content,
@@ -72,34 +72,12 @@ const FirstTrimester = () => {
       tips,
       bottomText,
     } = tabContent;
-
-    const renderSubsections = (subsections) => {
-      if (!Array.isArray(subsections)) return null;
-
-      return subsections.map(({ title, content }, index) => (
-        <View key={index}>
-          {title && <Text style={styles.subheading}>{title}</Text>}
-          {content && Array.isArray(content) ? (
-            content.map((item, i) => (
-              <Text key={i} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content}</Text>
-          )}
-        </View>
-      ));
-    };
-
+  
     const renderSection = (title, contentArrayOrText) => {
-      if (
-        !title ||
-        (!contentArrayOrText && !Array.isArray(contentArrayOrText))
-      ) {
+      if (!title || (!contentArrayOrText && !Array.isArray(contentArrayOrText))) {
         return null;
       }
-
+  
       return (
         <>
           <Text style={styles.subheading}>{title}</Text>
@@ -115,70 +93,36 @@ const FirstTrimester = () => {
         </>
       );
     };
-
+  
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <Image source={topicImages[activeTab]} style={styles.image} />
         <View style={styles.card}>
           {/* Heading */}
           <Text style={styles.heading}>{heading || "Content Unavailable"}</Text>
-
+  
           {/* Main Content */}
           {content && <Text style={styles.content}>{content}</Text>}
-
+  
           {/* Dynamic Sections */}
           {renderSection(title1, content1)}
           {renderSection(title2, content2)}
-
-          {/* Subsections under "Common Symptoms in the First Trimester" */}
-          {activeTab === "symptoms" && (
-            <View>
-              <Text style={styles.subheading}>{title2}</Text>
-              {renderSubsections([
-                {
-                  title: "Nausea and Vomiting",
-                  content: [
-                    "Eat small, frequent meals.",
-                    "Try to eat something every 2 hours.",
-                    "Listen to your cravings. Eat what sounds good, even if it’s not your usual diet.",
-                    "Eat before getting out of bed. A small snack, like crackers or dry cereal, can help.",
-                    "Adjust prenatal vitamins if they worsen nausea; switch to folic acid.",
-                    "Try ginger (tea, candies, or ginger ale) or lemon drops.",
-                    "Use Sea Bands for acupressure or supplement with Vitamin B-6 (50mg twice a day).",
-                    "Consider Unisom for sleep and nausea relief (ask for a prescription).",
-                    "Note: If you can’t keep food or fluids down for 24 hours, call us—you may need IV hydration or stronger medication.",
-                  ],
-                },
-                {
-                  title: "Sore Breasts",
-                  content: [
-                    "Your breasts may grow larger and feel tender or sensitive.",
-                    "Some people notice a small amount of leaking, but most do not.",
-                    "Milk production won’t start until after your baby and the placenta are delivered.",
-                    "Throughout pregnancy, your body is getting ready to provide the perfect nourishment for your baby. After birth, your milk will adapt by the hour and day to meet their exact needs. It’s a truly miraculous process.",
-                  ],
-                },
-              ])}
-            </View>
-          )}
-
           {renderSection(title3, content3)}
           {renderSection(title4, content4)}
-
+  
           {/* Vitamins & Supplements */}
-          {vitamins?.length > 0 &&
-            renderSection("Vitamins & Supplements", vitamins)}
-
+          {vitamins?.length > 0 && renderSection("Vitamins & Supplements", vitamins)}
+  
           {/* Avoid List */}
           {renderSection(avoidTitle, avoid)}
-
+  
           {/* Nutrition Nugget */}
           {nuggetTitle && <Text style={styles.subheading}>{nuggetTitle}</Text>}
           {nuggetContent && <Text style={styles.content}>{nuggetContent}</Text>}
-
+  
           {/* Quick Tips */}
           {renderSection(tipsTitle, tips)}
-
+  
           {/* Bottom Text */}
           {bottomText && (
             <Text style={[styles.content, styles.bottomText]}>
@@ -189,48 +133,6 @@ const FirstTrimester = () => {
       </ScrollView>
     );
   };
-
-  if (loading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#6200EE" />
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        horizontal
-        style={styles.tabBar}
-        contentContainerStyle={styles.tabBarContent}
-      >
-        {Object.keys(translations).map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            onPress={() => setActiveTab(tab)}
-            style={[
-              styles.tabButton,
-              activeTab === tab && styles.activeTabButton,
-            ]}
-          >
-            <Text
-              style={[
-                styles.tabText,
-                activeTab === tab && styles.activeTabText,
-              ]}
-            >
-              {languagePreference === "Español"
-                ? translations[tab]?.Español?.heading.split(" ")[0]
-                : translations[tab]?.English?.heading.split(" ")[0]}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      {renderContent()}
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

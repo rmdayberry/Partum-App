@@ -118,7 +118,7 @@ router.get("/whatToExpectWeekly/week/:week", async (req, res) => {
     }
 
     // Determine the tip based on the language parameter
-    const tip = language === "Español" ? weeklyTip.tipEs : weeklyTip.tip;
+    const tip = language === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
 
     res.json({ week, tip });
   } catch (err) {

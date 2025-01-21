@@ -73,25 +73,6 @@ const FirstTrimester = () => {
       bottomText,
     } = tabContent;
 
-    const renderSubsections = (subsections) => {
-      if (!Array.isArray(subsections)) return null;
-
-      return subsections.map(({ title, content }, index) => (
-        <View key={index}>
-          {title && <Text style={styles.subheading}>{title}</Text>}
-          {content && Array.isArray(content) ? (
-            content.map((item, i) => (
-              <Text key={i} style={styles.bulletPoint}>
-                • {item}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.content}>{content}</Text>
-          )}
-        </View>
-      ));
-    };
-
     const renderSection = (title, contentArrayOrText) => {
       if (
         !title ||
@@ -129,39 +110,6 @@ const FirstTrimester = () => {
           {/* Dynamic Sections */}
           {renderSection(title1, content1)}
           {renderSection(title2, content2)}
-
-          {/* Subsections under "Common Symptoms in the First Trimester" */}
-          {activeTab === "symptoms" && (
-            <View>
-              <Text style={styles.subheading}>{title2}</Text>
-              {renderSubsections([
-                {
-                  title: "Nausea and Vomiting",
-                  content: [
-                    "Eat small, frequent meals.",
-                    "Try to eat something every 2 hours.",
-                    "Listen to your cravings. Eat what sounds good, even if it’s not your usual diet.",
-                    "Eat before getting out of bed. A small snack, like crackers or dry cereal, can help.",
-                    "Adjust prenatal vitamins if they worsen nausea; switch to folic acid.",
-                    "Try ginger (tea, candies, or ginger ale) or lemon drops.",
-                    "Use Sea Bands for acupressure or supplement with Vitamin B-6 (50mg twice a day).",
-                    "Consider Unisom for sleep and nausea relief (ask for a prescription).",
-                    "Note: If you can’t keep food or fluids down for 24 hours, call us—you may need IV hydration or stronger medication.",
-                  ],
-                },
-                {
-                  title: "Sore Breasts",
-                  content: [
-                    "Your breasts may grow larger and feel tender or sensitive.",
-                    "Some people notice a small amount of leaking, but most do not.",
-                    "Milk production won’t start until after your baby and the placenta are delivered.",
-                    "Throughout pregnancy, your body is getting ready to provide the perfect nourishment for your baby. After birth, your milk will adapt by the hour and day to meet their exact needs. It’s a truly miraculous process.",
-                  ],
-                },
-              ])}
-            </View>
-          )}
-
           {renderSection(title3, content3)}
           {renderSection(title4, content4)}
 
