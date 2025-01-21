@@ -187,7 +187,7 @@ const BottomTabs = ({ userId }) => {
           } else if (route.name === "Appointments") {
             iconName = focused ? "calendar" : "calendar-outline";
           } else if (route.name === "Wellness") {
-            iconName = focused ? "accessibility" : "accessibility-outline";
+            iconName = focused ? "person" : "person-outline";
           } else if (route.name === "More") {
             iconName = focused
               ? "ellipsis-horizontal"

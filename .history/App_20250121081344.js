@@ -216,10 +216,10 @@ const BottomTabs = ({ userId }) => {
         }}
       />
       <Tab.Screen
-        name="Wellness"
+        name="Learn"
         component={WellnessFlow}
         options={{
-          tabBarLabel: t.wellness,
+          tabBarLabel: t.learn,
         }}
       />
       <Tab.Screen
