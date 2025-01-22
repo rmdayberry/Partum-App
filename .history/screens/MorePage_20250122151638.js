@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     fontFamily: "Arial",
   },
   logoutButton: {
-    width: "60%",
+    width: "75%",
     paddingVertical: 10,
     borderRadius: 30,
     borderWidth: 3,
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   logoutButtonText: {
-    color: "#F36D35",
+    color: "#FFA500",
     fontSize: 16,
     fontWeight: "bold",
   },

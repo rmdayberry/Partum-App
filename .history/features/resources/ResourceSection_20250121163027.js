@@ -14,28 +14,25 @@ const resources = [
   {
     id: "2",
     titleKey: "communityResources",
-    subtitleKey: "communityResourcesSubtitle",
     icon: require("../../assets/CommunityResources.png"),
     route: "CommunityResources",
   },
+
   {
     id: "5",
     titleKey: "symptomChecker",
-    subtitleKey: "symptomCheckerSubtitle",
     icon: require("../../assets/SymptomChecker.png"),
     route: "SymptomChecker",
   },
   {
     id: "6",
     titleKey: "getSupport",
-    subtitleKey: "getSupportSubtitle",
     icon: require("../../assets/GetSupport.png"),
     route: "GetSupport",
   },
   {
     id: "4",
     titleKey: "settings",
-    subtitleKey: "settingsSubtitle",
     icon: require("../../assets/Settings.png"),
     route: "Settings",
   },
@@ -44,29 +41,17 @@ const resources = [
 const resourceTranslations = {
   English: {
     communityResources: "Community Resources",
-    communityResourcesSubtitle:
-      "Find transportation options, food banks, and healthcare support.",
-    symptomChecker: "Symptom Checker",
-    symptomCheckerSubtitle:
-      "Check symptoms and learn more about health concerns.",
-    getSupport: "Get Support",
-    getSupportSubtitle:
-      "Reach out to your clinic or discover helpful answers here.",
+    education: "Education",
     settings: "Settings",
-    settingsSubtitle: "Customize your experience.",
+    symptomChecker: "Symptom Checker",
+    getSupport: "Get Support",
   },
   Español: {
     communityResources: "Recursos Comunitarios",
-    communityResourcesSubtitle:
-      "Encuentra opciones de transporte, bancos de alimentos y apoyo sanitario.",
-    symptomChecker: "Revisión de Síntomas",
-    symptomCheckerSubtitle:
-      "Revisa síntomas y aprende más sobre preocupaciones de salud.",
-    getSupport: "Obtener Ayuda",
-    getSupportSubtitle:
-      "Comunícate con tu clínica o descubre respuestas útiles aquí.",
+    education: "Educación",
     settings: "Configuraciones",
-    settingsSubtitle: "Personaliza tu experiencia.",
+    symptomChecker: "Revisión de Síntomas",
+    getSupport: "Obtener Ayuda",
   },
 };
 

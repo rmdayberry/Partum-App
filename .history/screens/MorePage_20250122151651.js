@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     fontFamily: "Arial",
   },
   logoutButton: {
-    width: "60%",
+    width: "75%",
     paddingVertical: 10,
     borderRadius: 30,
     borderWidth: 3,

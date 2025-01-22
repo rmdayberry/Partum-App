@@ -44,29 +44,17 @@ const resources = [
 const resourceTranslations = {
   English: {
     communityResources: "Community Resources",
-    communityResourcesSubtitle:
-      "Find transportation options, food banks, and healthcare support.",
-    symptomChecker: "Symptom Checker",
-    symptomCheckerSubtitle:
-      "Check symptoms and learn more about health concerns.",
-    getSupport: "Get Support",
-    getSupportSubtitle:
-      "Reach out to your clinic or discover helpful answers here.",
+    education: "Education",
     settings: "Settings",
-    settingsSubtitle: "Customize your experience.",
+    symptomChecker: "Symptom Checker",
+    getSupport: "Get Support",
   },
   Español: {
     communityResources: "Recursos Comunitarios",
-    communityResourcesSubtitle:
-      "Encuentra opciones de transporte, bancos de alimentos y apoyo sanitario.",
-    symptomChecker: "Revisión de Síntomas",
-    symptomCheckerSubtitle:
-      "Revisa síntomas y aprende más sobre preocupaciones de salud.",
-    getSupport: "Obtener Ayuda",
-    getSupportSubtitle:
-      "Comunícate con tu clínica o descubre respuestas útiles aquí.",
+    education: "Educación",
     settings: "Configuraciones",
-    settingsSubtitle: "Personaliza tu experiencia.",
+    symptomChecker: "Revisión de Síntomas",
+    getSupport: "Obtener Ayuda",
   },
 };
 

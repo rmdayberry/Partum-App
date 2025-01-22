@@ -80,10 +80,11 @@ const ResourceSection = () => {
   const renderResource = ({ item }) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate(item.route)}
+      onPress={() => onNavigate(item.route)}
     >
       <Image source={item.icon} style={styles.image} />
       <Text style={styles.title}>{t[item.titleKey]}</Text>
+      <Text style={styles.subtitle}>{t[item.subtitleKey]}</Text>
     </TouchableOpacity>
   );
 
@@ -105,22 +106,8 @@ const ResourceSection = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  listContainer: {
-    paddingVertical: 10,
-  },
   card: {
-    width: 150,
-    height: 125,
+    flex: 1,
     backgroundColor: "#fff",
     borderRadius: 8,
     padding: 20,
@@ -135,15 +122,21 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
+    marginBottom: 8,
     borderRadius: 8,
     alignSelf: "center",
   },
   title: {
-    marginTop: 8,
     fontSize: 12,
     fontWeight: "bold",
     textAlign: "center",
+    marginBottom: 4,
   },
-});
+  subtitle: {
+    fontSize: 10,
+    color: "#555",
+    textAlign: "center",
+    lineHeight: 14,
+  },
 
 export default ResourceSection;

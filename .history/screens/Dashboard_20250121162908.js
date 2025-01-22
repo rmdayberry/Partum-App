@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   dailyTipFrame: {
-    backgroundColor: "#FFEFE8",
+    backgroundColor: "#FDE2D7",
     borderRadius: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,

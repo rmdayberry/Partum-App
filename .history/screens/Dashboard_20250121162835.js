@@ -12,7 +12,7 @@ import { dashboardTranslations } from "../translations/DashboardTranslations";
 import Header from "../features/Header";
 import ProgressBar from "../features/progress/ProgressBar";
 import AppointmentContainer from "../features/appointments/AppointmentContainer";
-import ResourceSection from "../features/resources/ResourceSection";
+import ResourceGrid from "../features/resources/ResourceGrid";
 import {
   fetchPregnancyProgress,
   fetchWeeklyTip,
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   dailyTipFrame: {
-    backgroundColor: "#FFEFE8",
+    backgroundColor: "#FDE2D7",
     borderRadius: 16,
     shadowColor: "#000",
     shadowOpacity: 0.1,

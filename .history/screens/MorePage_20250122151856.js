@@ -48,7 +48,7 @@ const resourceTranslations = {
       "Reach out to your clinic or discover helpful answers here.",
     settings: "Settings",
     settingsSubtitle: "Customize your experience.",
-    logout: "Logout",
+    logout: "LOGOUT",
     logoutMessage: "You have been logged out.",
     error: "Error",
     errorMessage: "An error occurred while logging out.",

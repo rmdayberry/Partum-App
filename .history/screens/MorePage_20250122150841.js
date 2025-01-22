@@ -48,10 +48,6 @@ const resourceTranslations = {
       "Reach out to your clinic or discover helpful answers here.",
     settings: "Settings",
     settingsSubtitle: "Customize your experience.",
-    logout: "Logout",
-    logoutMessage: "You have been logged out.",
-    error: "Error",
-    errorMessage: "An error occurred while logging out.",
   },
   Español: {
     communityResources: "Recursos Comunitarios",
@@ -65,10 +61,6 @@ const resourceTranslations = {
       "Comunícate con tu clínica o descubre respuestas útiles aquí.",
     settings: "Configuraciones",
     settingsSubtitle: "Personaliza tu experiencia.",
-    logout: "Cerrar sesión",
-    logoutMessage: "Has cerrado sesión.",
-    error: "Error",
-    errorMessage: "Ocurrió un error al cerrar sesión.",
   },
 };
 
@@ -129,11 +121,11 @@ const styles = StyleSheet.create({
     fontFamily: "Arial",
   },
   logoutButton: {
-    width: "60%",
-    paddingVertical: 10,
+    width: "100%",
+    paddingVertical: 14,
     borderRadius: 30,
-    borderWidth: 3,
-    borderColor: "#F36D35",
+    borderWidth: 2,
+    borderColor: "#FFA500",
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
@@ -141,7 +133,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   logoutButtonText: {
-    color: "#F36D35",
+    color: "#000",
     fontSize: 16,
     fontWeight: "bold",
   },

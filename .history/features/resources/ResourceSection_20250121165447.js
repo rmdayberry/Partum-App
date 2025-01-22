@@ -80,10 +80,11 @@ const ResourceSection = () => {
   const renderResource = ({ item }) => (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate(item.route)}
+      onPress={() => onNavigate(item.route)}
     >
       <Image source={item.icon} style={styles.image} />
       <Text style={styles.title}>{t[item.titleKey]}</Text>
+      <Text style={styles.subtitle}>{t[item.subtitleKey]}</Text>
     </TouchableOpacity>
   );
 

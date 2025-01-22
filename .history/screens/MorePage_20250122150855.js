@@ -1,42 +1,36 @@
 import React, { useContext } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../contexts/UserContext";
+import ResourceGrid from "../features/resources/ResourceGrid";
 
 const resources = [
   {
     id: "2",
     titleKey: "communityResources",
     subtitleKey: "communityResourcesSubtitle",
-    icon: require("../../assets/CommunityResources.png"),
+    icon: require("../assets/CommunityResources.png"),
     route: "CommunityResources",
   },
   {
     id: "5",
     titleKey: "symptomChecker",
     subtitleKey: "symptomCheckerSubtitle",
-    icon: require("../../assets/SymptomChecker.png"),
+    icon: require("../assets/SymptomChecker.png"),
     route: "SymptomChecker",
   },
   {
     id: "6",
     titleKey: "getSupport",
     subtitleKey: "getSupportSubtitle",
-    icon: require("../../assets/GetSupport.png"),
+    icon: require("../assets/GetSupport.png"),
     route: "GetSupport",
   },
   {
     id: "4",
     titleKey: "settings",
     subtitleKey: "settingsSubtitle",
-    icon: require("../../assets/Settings.png"),
+    icon: require("../assets/Settings.png"),
     route: "Settings",
   },
 ];
@@ -70,80 +64,62 @@ const resourceTranslations = {
   },
 };
 
-const ResourceSection = () => {
-  const navigation = useNavigation();
-  const { languagePreference } = useContext(UserContext);
+const MorePage = ({ navigation }) => {
+  const { setUserId, languagePreference } = useContext(UserContext);
+  const t = resourceTranslations[languagePreference || "English"];
 
-  const t =
-    resourceTranslations[languagePreference] || resourceTranslations.English;
+  const handleLogout = async () => {
+    try {
+      // Remove all stored tokens and user data
+      await AsyncStorage.removeItem("authToken");
+      await AsyncStorage.removeItem("refreshToken");
+      await AsyncStorage.removeItem("userId");
+      await AsyncStorage.removeItem("languagePreference");
 
-  const renderResource = ({ item }) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress={() => navigation.navigate(item.route)}
-    >
-      <Image source={item.icon} style={styles.image} />
-      <Text style={styles.title}>{t[item.titleKey]}</Text>
-    </TouchableOpacity>
-  );
+      // Reset user context
+      setUserId(null);
+
+      // Show logout success message
+      Alert.alert(t.logout, t.logoutMessage);
+
+      // Redirect to Login page
+      navigation.navigate("Login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      Alert.alert(t.error, t.errorMessage);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.sectionTitle}>
-        {languagePreference === "Español" ? "Recursos" : "Resources"}
-      </Text>
-      <FlatList
-        data={resources}
-        renderItem={renderResource}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
+      <ResourceGrid
+        resources={resources}
+        translations={resourceTranslations}
+        languagePreference={languagePreference}
+        onNavigate={(route) => navigation.navigate(route)}
       />
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutButtonText}>{t.logout}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingHorizontal: 16,
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  listContainer: {
-    paddingVertical: 10,
-  },
-  card: {
-    width: 150,
-    height: 125,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 20,
-    marginHorizontal: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 8,
-    alignSelf: "center",
+    paddingVertical: 20,
+    marginTop: 100,
   },
   title: {
-    marginTop: 8,
-    fontSize: 12,
+    fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 20,
+    marginTop: 50,
     textAlign: "center",
+    fontFamily: "Arial",
   },
 });
 
-export default ResourceSection;
+export default MorePage;
