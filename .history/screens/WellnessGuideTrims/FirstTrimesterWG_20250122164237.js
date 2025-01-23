@@ -247,19 +247,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 10,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   tabButton: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 5,
+    paddingVertical: 10,
     paddingHorizontal: 10,
     borderRadius: 20,
     marginHorizontal: 5,
     marginVertical: 5,
     backgroundColor: "#F9FAFF",
-    minWidth: 80,
   },
   activeTabButton: {
     backgroundColor: "#E0E7FF",
@@ -270,7 +268,6 @@ const styles = StyleSheet.create({
     color: "#777",
     fontWeight: "500",
     padding: 5,
-    textAlign: "center",
   },
   activeTabText: {
     color: "#6200EE",
@@ -291,6 +288,7 @@ const styles = StyleSheet.create({
     height: screenWidth * 0.5,
     resizeMode: "contain",
     marginBottom: 20,
+    borderRadius: 100,
   },
   card: {
     backgroundColor: "#FFFFFF",

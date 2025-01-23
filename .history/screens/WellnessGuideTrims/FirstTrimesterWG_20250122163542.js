@@ -8,7 +8,6 @@ import {
   ScrollView,
   Dimensions,
   ActivityIndicator,
-  SafeAreaView,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
 import { translations } from "../../translations/firstTrimesterWGTranslations";
@@ -118,76 +117,84 @@ const FirstTrimester = () => {
     };
 
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Image source={topicImages[activeTab]} style={styles.image} />
-        <View style={styles.card}>
-          {/* Heading */}
-          <Text style={styles.heading}>{heading || "Content Unavailable"}</Text>
-
-          {/* Main Content */}
-          {content && <Text style={styles.content}>{content}</Text>}
-
-          {/* Dynamic Sections */}
-          {renderSection(title1, content1)}
-          {renderSection(title2, content2)}
-
-          {/* Subsections under "Common Symptoms in the First Trimester" */}
-          {activeTab === "symptoms" && (
-            <View>
-              <Text style={styles.subheading}>{title2}</Text>
-              {renderSubsections([
-                {
-                  title: "Nausea and Vomiting",
-                  content: [
-                    "Eat small, frequent meals.",
-                    "Try to eat something every 2 hours.",
-                    "Listen to your cravings. Eat what sounds good, even if it’s not your usual diet.",
-                    "Eat before getting out of bed. A small snack, like crackers or dry cereal, can help.",
-                    "Adjust prenatal vitamins if they worsen nausea; switch to folic acid.",
-                    "Try ginger (tea, candies, or ginger ale) or lemon drops.",
-                    "Use Sea Bands for acupressure or supplement with Vitamin B-6 (50mg twice a day).",
-                    "Consider Unisom for sleep and nausea relief (ask for a prescription).",
-                    "Note: If you can’t keep food or fluids down for 24 hours, call us—you may need IV hydration or stronger medication.",
-                  ],
-                },
-                {
-                  title: "Sore Breasts",
-                  content: [
-                    "Your breasts may grow larger and feel tender or sensitive.",
-                    "Some people notice a small amount of leaking, but most do not.",
-                    "Milk production won’t start until after your baby and the placenta are delivered.",
-                    "Throughout pregnancy, your body is getting ready to provide the perfect nourishment for your baby. After birth, your milk will adapt by the hour and day to meet their exact needs. It’s a truly miraculous process.",
-                  ],
-                },
-              ])}
-            </View>
-          )}
-
-          {renderSection(title3, content3)}
-          {renderSection(title4, content4)}
-
-          {/* Vitamins & Supplements */}
-          {vitamins?.length > 0 &&
-            renderSection("Vitamins & Supplements", vitamins)}
-
-          {/* Avoid List */}
-          {renderSection(avoidTitle, avoid)}
-
-          {/* Nutrition Nugget */}
-          {nuggetTitle && <Text style={styles.subheading}>{nuggetTitle}</Text>}
-          {nuggetContent && <Text style={styles.content}>{nuggetContent}</Text>}
-
-          {/* Quick Tips */}
-          {renderSection(tipsTitle, tips)}
-
-          {/* Bottom Text */}
-          {bottomText && (
-            <Text style={[styles.content, styles.bottomText]}>
-              {bottomText}
+      <SafeAreaView style={styles.safeAreaContainer}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <Image source={topicImages[activeTab]} style={styles.image} />
+          <View style={styles.card}>
+            {/* Heading */}
+            <Text style={styles.heading}>
+              {heading || "Content Unavailable"}
             </Text>
-          )}
-        </View>
-      </ScrollView>
+
+            {/* Main Content */}
+            {content && <Text style={styles.content}>{content}</Text>}
+
+            {/* Dynamic Sections */}
+            {renderSection(title1, content1)}
+            {renderSection(title2, content2)}
+
+            {/* Subsections under "Common Symptoms in the First Trimester" */}
+            {activeTab === "symptoms" && (
+              <View>
+                <Text style={styles.subheading}>{title2}</Text>
+                {renderSubsections([
+                  {
+                    title: "Nausea and Vomiting",
+                    content: [
+                      "Eat small, frequent meals.",
+                      "Try to eat something every 2 hours.",
+                      "Listen to your cravings. Eat what sounds good, even if it’s not your usual diet.",
+                      "Eat before getting out of bed. A small snack, like crackers or dry cereal, can help.",
+                      "Adjust prenatal vitamins if they worsen nausea; switch to folic acid.",
+                      "Try ginger (tea, candies, or ginger ale) or lemon drops.",
+                      "Use Sea Bands for acupressure or supplement with Vitamin B-6 (50mg twice a day).",
+                      "Consider Unisom for sleep and nausea relief (ask for a prescription).",
+                      "Note: If you can’t keep food or fluids down for 24 hours, call us—you may need IV hydration or stronger medication.",
+                    ],
+                  },
+                  {
+                    title: "Sore Breasts",
+                    content: [
+                      "Your breasts may grow larger and feel tender or sensitive.",
+                      "Some people notice a small amount of leaking, but most do not.",
+                      "Milk production won’t start until after your baby and the placenta are delivered.",
+                      "Throughout pregnancy, your body is getting ready to provide the perfect nourishment for your baby. After birth, your milk will adapt by the hour and day to meet their exact needs. It’s a truly miraculous process.",
+                    ],
+                  },
+                ])}
+              </View>
+            )}
+
+            {renderSection(title3, content3)}
+            {renderSection(title4, content4)}
+
+            {/* Vitamins & Supplements */}
+            {vitamins?.length > 0 &&
+              renderSection("Vitamins & Supplements", vitamins)}
+
+            {/* Avoid List */}
+            {renderSection(avoidTitle, avoid)}
+
+            {/* Nutrition Nugget */}
+            {nuggetTitle && (
+              <Text style={styles.subheading}>{nuggetTitle}</Text>
+            )}
+            {nuggetContent && (
+              <Text style={styles.content}>{nuggetContent}</Text>
+            )}
+
+            {/* Quick Tips */}
+            {renderSection(tipsTitle, tips)}
+
+            {/* Bottom Text */}
+            {bottomText && (
+              <Text style={[styles.content, styles.bottomText]}>
+                {bottomText}
+              </Text>
+            )}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   };
 
@@ -200,7 +207,7 @@ const FirstTrimester = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView
         horizontal
         style={styles.tabBar}
@@ -229,7 +236,7 @@ const FirstTrimester = () => {
         ))}
       </ScrollView>
       {renderContent()}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -247,19 +254,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 10,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   tabButton: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     borderRadius: 20,
     marginHorizontal: 5,
-    marginVertical: 5,
     backgroundColor: "#F9FAFF",
-    minWidth: 80,
   },
   activeTabButton: {
     backgroundColor: "#E0E7FF",
@@ -269,8 +273,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: "#777",
     fontWeight: "500",
-    padding: 5,
-    textAlign: "center",
   },
   activeTabText: {
     color: "#6200EE",

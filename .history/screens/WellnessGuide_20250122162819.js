@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   flatListContainer: {
     alignItems: "center",
     paddingBottom: 20,
+    marginTop: 50,
   },
   row: {
     justifyContent: "space-between",

@@ -169,7 +169,7 @@ const WellnessGuide = () => {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "#F4F5FB",
+    backgroundColor: "#F4F5FB", 
   },
   container: {
     flex: 1,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#6A5ACD",
+    color: "#6A5ACD", 
     marginBottom: 8,
   },
   subheaderText: {
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 12,
     marginBottom: 16,
-
+   
     shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowRadius: 6,

@@ -8,7 +8,6 @@ import {
   ScrollView,
   Dimensions,
   ActivityIndicator,
-  SafeAreaView,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
 import { translations } from "../../translations/firstTrimesterWGTranslations";
@@ -200,7 +199,7 @@ const FirstTrimester = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView
         horizontal
         style={styles.tabBar}
@@ -229,7 +228,7 @@ const FirstTrimester = () => {
         ))}
       </ScrollView>
       {renderContent()}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -237,6 +236,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FAFF",
+    marginTop: 100,
   },
   tabBar: {
     borderBottomWidth: 1,
@@ -247,19 +247,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 10,
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   tabButton: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
     borderRadius: 20,
     marginHorizontal: 5,
-    marginVertical: 5,
     backgroundColor: "#F9FAFF",
-    minWidth: 80,
   },
   activeTabButton: {
     backgroundColor: "#E0E7FF",
@@ -269,8 +266,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: "#777",
     fontWeight: "500",
-    padding: 5,
-    textAlign: "center",
   },
   activeTabText: {
     color: "#6200EE",

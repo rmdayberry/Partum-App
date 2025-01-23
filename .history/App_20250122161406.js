@@ -79,7 +79,17 @@ function WellnessFlow() {
       <WellnessStack.Screen
         name="FirstTrimesterWG"
         component={FirstTrimester}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerStyle: {
+            backgroundColor: Color.nEW,
+          },
+          headerTintColor: "#000",
+          headerBackTitle: "1st Trimester",
+          shadowOpacity: 0,
+          elevation: 0,
+        }}
       />
       <WellnessStack.Screen
         name="SecondTrimesterWG"
