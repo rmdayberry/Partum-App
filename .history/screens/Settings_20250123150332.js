@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import ModalDropdown from "react-native-modal-dropdown";
 import { UserContext } from "../contexts/UserContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Picker } from "react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 
 const translations = {
@@ -57,10 +57,6 @@ const Settings = ({ navigation }) => {
     }
   };
 
-  const handleLanguageChange = (index, value) => {
-    setLanguagePreference(value);
-  };
-
   const handleEditAccount = () => {
     navigation.navigate("EditAccount", { userData, setUserData });
   };
@@ -72,15 +68,14 @@ const Settings = ({ navigation }) => {
       {/* Language Preference */}
       <View style={styles.section}>
         <Text style={styles.sectionHeader}>{t.language}</Text>
-        <ModalDropdown
-          options={["English", "Español"]}
-          defaultValue={languagePreference}
-          onSelect={handleLanguageChange}
-          style={styles.dropdown}
-          textStyle={styles.dropdownText}
-          dropdownStyle={styles.dropdownMenu}
-          dropdownTextStyle={styles.dropdownMenuText}
-        />
+        <Picker
+          selectedValue={language}
+          onValueChange={(value) => setLanguage(value)}
+          style={styles.picker}
+        >
+          <Picker.Item label="English" value="English" />
+          <Picker.Item label="Español" value="Español" />
+        </Picker>
       </View>
 
       {/* Account Settings */}
@@ -109,6 +104,31 @@ const Settings = ({ navigation }) => {
       </TouchableOpacity>
     </View>
   );
+};
+
+const pickerSelectStyles = {
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 8,
+    color: "#333",
+    backgroundColor: "#FFF",
+    marginTop: 10,
+  },
+  inputAndroid: {
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 8,
+    color: "#333",
+    backgroundColor: "#FFF",
+    marginTop: 10,
+  },
 };
 
 const styles = StyleSheet.create({
@@ -169,28 +189,6 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 16,
     fontWeight: "bold",
-  },
-  dropdown: {
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    backgroundColor: "#FFF",
-    width: 200,
-    marginTop: 10,
-  },
-  dropdownText: {
-    fontSize: 16,
-    color: "#333",
-  },
-  dropdownMenu: {
-    width: 200,
-    borderRadius: 8,
-  },
-  dropdownMenuText: {
-    fontSize: 16,
-    color: "#333",
   },
 });
 
