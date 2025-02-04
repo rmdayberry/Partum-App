@@ -12,7 +12,6 @@ import AddAppointmentForm from "../features/appointments/AddAppointmentForm";
 import { UserContext } from "../contexts/UserContext";
 import { fetchAppointments } from "../api/api";
 import { MaterialIcons } from "@expo/vector-icons";
-import { deleteAppointment } from "../api/api";
 
 const Appointments = () => {
   const { languagePreference } = useContext(UserContext);
@@ -83,51 +82,14 @@ const Appointments = () => {
     }
   };
 
-  const handleDelete = async (appointmentId) => {
-    Alert.alert(
-      "Delete Appointment",
-      "Are you sure you want to delete this appointment?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await deleteAppointment(appointmentId);
-              setUpcomingAppointments((prev) =>
-                prev.filter((appt) => appt._id !== appointmentId)
-              );
-              setPastAppointments((prev) =>
-                prev.filter((appt) => appt._id !== appointmentId)
-              );
-              Alert.alert("Success", "Appointment deleted.");
-            } catch (error) {
-              console.error("Error deleting appointment:", error);
-              Alert.alert("Error", "Failed to delete appointment.");
-            }
-          },
-        },
-      ]
-    );
-  };
-
   const renderAppointmentItem = ({ item }) => (
     <View style={styles.appointmentCard}>
-      <View style={styles.cardHeader}>
-        <Text style={styles.cardTitle}>
-          {languagePreference === "English" ? "Title:" : "Título:"}{" "}
-          <Text style={styles.cardTitleHighlight}>
-            {item.title || "No title"}
-          </Text>
+      <Text style={styles.cardTitle}>
+        {languagePreference === "English" ? "Title:" : "Título:"}{" "}
+        <Text style={styles.cardTitleHighlight}>
+          {item.title || "No title"}
         </Text>
-        <TouchableOpacity onPress={() => handleDelete(item._id)}>
-          <MaterialIcons name="delete" size={20} color="gray" />
-        </TouchableOpacity>
-      </View>
+      </Text>
       <View style={styles.cardRow}>
         <Text style={styles.cardLabel}>
           {languagePreference === "English" ? "Date:" : "Fecha:"}{" "}
@@ -158,6 +120,7 @@ const Appointments = () => {
       )}
     </View>
   );
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.headerText}>{labels.title}</Text>
@@ -225,13 +188,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
   },
-  cardHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-
   headerText: {
     fontSize: 22,
     fontWeight: "bold",

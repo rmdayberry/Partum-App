@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Text,
   StyleSheet,
@@ -43,34 +43,22 @@ const AppointmentContainer = () => {
     appointmentTranslations[languagePreference] ||
     appointmentTranslations.English;
 
-  // ✅ Move `loadNextAppointment()` here so it can be used in both `useEffect` and `useFocusEffect`
-  const loadNextAppointment = async () => {
-    try {
-      const appointment = await fetchNextAppointment(userId);
-      setNextAppointment(appointment);
-    } catch (error) {
-      console.error("Error fetching next appointment:", error);
-      setNextAppointment(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 🔹 Initial fetch when component mounts
   useEffect(() => {
+    const loadNextAppointment = async () => {
+      try {
+        const appointment = await fetchNextAppointment(userId);
+        setNextAppointment(appointment);
+      } catch (error) {
+        console.error("Error fetching next appointment:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (userId) {
       loadNextAppointment();
     }
   }, [userId]);
-
-  // 🔹 Refresh the appointment when navigating back to Dashboard
-  useFocusEffect(
-    useCallback(() => {
-      if (userId) {
-        loadNextAppointment();
-      }
-    }, [userId])
-  );
 
   const handleGetDirections = () => {
     if (nextAppointment?.location) {
@@ -124,6 +112,24 @@ const AppointmentContainer = () => {
     }
   };
 
+  const getAppointmentCountdown = (appointmentDate) => {
+    const now = new Date();
+    const appointment = new Date(appointmentDate);
+    const differenceInMs = appointment - now;
+
+    if (differenceInMs <= 0) return t.noAppointments;
+    const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (differenceInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+
+    return days > 0
+      ? `${days} day${days > 1 ? "s" : ""} and ${hours} hour${
+          hours !== 1 ? "s" : ""
+        }`
+      : `${hours} hour${hours !== 1 ? "s" : ""}`;
+  };
+
   if (loading) {
     return <Text>{t.loading}</Text>;
   }
@@ -140,13 +146,18 @@ const AppointmentContainer = () => {
       day: "numeric",
     }
   );
+  const formattedTime = nextAppointment.time;
+  const countdown = getAppointmentCountdown(nextAppointment.date);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{t.upcomingAppointment}</Text>
+      <Text style={styles.header}>
+        {nextAppointment ? t.upcomingAppointment : t.noAppointments}
+      </Text>
       <View style={styles.detailsContainer}>
+        <Text style={styles.countdown}>{countdown}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
-        <Text style={styles.time}>{nextAppointment.time}</Text>
+        <Text style={styles.time}>{formattedTime}</Text>
         <View style={styles.locationContainer}>
           <Image
             style={styles.icon}

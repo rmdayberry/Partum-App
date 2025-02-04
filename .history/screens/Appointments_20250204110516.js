@@ -12,7 +12,6 @@ import AddAppointmentForm from "../features/appointments/AddAppointmentForm";
 import { UserContext } from "../contexts/UserContext";
 import { fetchAppointments } from "../api/api";
 import { MaterialIcons } from "@expo/vector-icons";
-import { deleteAppointment } from "../api/api";
 
 const Appointments = () => {
   const { languagePreference } = useContext(UserContext);
@@ -125,7 +124,7 @@ const Appointments = () => {
           </Text>
         </Text>
         <TouchableOpacity onPress={() => handleDelete(item._id)}>
-          <MaterialIcons name="delete" size={20} color="gray" />
+          <MaterialIcons name="delete" size={24} color="red" />
         </TouchableOpacity>
       </View>
       <View style={styles.cardRow}>

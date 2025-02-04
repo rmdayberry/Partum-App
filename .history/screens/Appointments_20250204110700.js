@@ -12,7 +12,6 @@ import AddAppointmentForm from "../features/appointments/AddAppointmentForm";
 import { UserContext } from "../contexts/UserContext";
 import { fetchAppointments } from "../api/api";
 import { MaterialIcons } from "@expo/vector-icons";
-import { deleteAppointment } from "../api/api";
 
 const Appointments = () => {
   const { languagePreference } = useContext(UserContext);

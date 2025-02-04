@@ -144,24 +144,7 @@ export const addAppointment = async (appointmentData) => {
   });
 };
 //Delete an appointment
-
-export const deleteAppointment = async (appointmentId) => {
-  return await authorizedRequest(async () => {
-    const token = await AsyncStorage.getItem("authToken");
-
-    console.log("Deleting appointment:", appointmentId);
-
-    const response = await axios.delete(
-      `${API_BASE_URL}/appointments/${appointmentId}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-
-    console.log("Delete Response:", response.data);
-    return response.data;
-  });
-};
+export const 
 
 // Submit feedback from user
 export const submitFeedback = async (userId, message) => {
