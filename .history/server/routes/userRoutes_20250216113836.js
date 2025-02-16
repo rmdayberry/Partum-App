@@ -130,7 +130,7 @@ router.post("/refresh-token", async (req, res) => {
     const newRefreshToken = generateRefreshToken(decoded.id);
 
     // 🔹 **Replace old refresh token with the new one**
-    user.refreshTokens = user.refreshTokens.filter((t) => t !== token); // Remove old token
+    user.refreshTokens = user.refreshTokens.filter(t => t !== token); // Remove old token
     user.refreshTokens.push(newRefreshToken); // Add new token
     await user.save();
 
@@ -169,8 +169,5 @@ router.post("/logout", async (req, res) => {
     res.json({ message: "Logged out successfully." });
   } catch (error) {
     console.error("Logout error:", error.message);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
+    res.status(500).json({ mes
 
-module.exports = router;
