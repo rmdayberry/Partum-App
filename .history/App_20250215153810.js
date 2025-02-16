@@ -9,7 +9,6 @@ import { UserContext } from "./contexts/UserContext";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import axios from "axios"; // 🌟 Import axios for API requests
 
 import Dashboard from "./screens/Dashboard";
 import Appointments from "./screens/Appointments";
@@ -31,14 +30,28 @@ import Postpartum from "./screens/WellnessGuideTrims/PostpartumWG";
 
 import { Color } from "./GlobalStyles";
 
-// 🌟 Define your API Base URL
+//Test Render
+import { useEffect } from "react";
+import axios from "axios";
+
 const API_BASE_URL = "https://partum-app.onrender.com";
+
+export default function App() {
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/api/health`)
+      .then((response) => console.log("API Health Check:", response.data))
+      .catch((error) => console.error("API Health Check Failed:", error));
+  }, []);
+
+  return null;
+}
 
 // -------------- Stack + Tabs -------------- //
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Tab translations
+//Tab translations
 const tabTranslations = {
   English: {
     home: "Home",
@@ -130,6 +143,10 @@ function WellnessFlow() {
           elevation: 0,
         }}
       />
+      {/* If you want CommunityResources, SymptomChecker, etc. in this flow:
+       <WellnessStack.Screen name="CommunityResources" component={CommunityResources} />
+       ... etc.
+      */}
     </WellnessStack.Navigator>
   );
 }
@@ -163,7 +180,7 @@ function MoreFlow() {
 
 // 5) The Bottom Tabs combining the sub-stacks
 const BottomTabs = ({ userId }) => {
-  const { languagePreference } = React.useContext(UserContext);
+  const { languagePreference } = React.useContext(UserContext); // Access the language preference
   const t = tabTranslations[languagePreference] || tabTranslations.English;
 
   return (
@@ -190,12 +207,35 @@ const BottomTabs = ({ userId }) => {
         tabBarStyle: { backgroundColor: "#fff" },
       })}
     >
-      <Tab.Screen name="Home">
+      <Tab.Screen
+        name="Home"
+        options={{
+          tabBarLabel: t.home,
+        }}
+      >
         {() => <DashboardStack userId={userId} />}
       </Tab.Screen>
-      <Tab.Screen name="Appointments" component={AppointmentsFlow} />
-      <Tab.Screen name="Wellness" component={WellnessFlow} />
-      <Tab.Screen name="More" component={MoreFlow} />
+      <Tab.Screen
+        name="Appointments"
+        component={AppointmentsFlow}
+        options={{
+          tabBarLabel: t.appointments,
+        }}
+      />
+      <Tab.Screen
+        name="Wellness"
+        component={WellnessFlow}
+        options={{
+          tabBarLabel: t.wellness,
+        }}
+      />
+      <Tab.Screen
+        name="More"
+        component={MoreFlow}
+        options={{
+          tabBarLabel: t.more,
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -224,24 +264,16 @@ const App = () => {
         await SplashScreen.preventAutoHideAsync();
         await fetchFonts();
 
+        // Retrieve stored userId and languagePreference
         const storedUserId = await AsyncStorage.getItem("userId");
         const storedLanguagePreference = await AsyncStorage.getItem(
           "languagePreference"
         );
+        console.log("Stored User ID:", storedUserId);
 
         if (storedUserId) setUserId(storedUserId);
         if (storedLanguagePreference)
           setLanguagePreference(storedLanguagePreference);
-
-        // 🌟 Step 1: Check if API is reachable
-        axios
-          .get(`${API_BASE_URL}/api/health`)
-          .then((response) =>
-            console.log("✅ API Health Check:", response.data)
-          )
-          .catch((error) =>
-            console.error("❌ API Health Check Failed:", error)
-          );
 
         setFontsLoaded(true);
         await SplashScreen.hideAsync();
@@ -252,24 +284,40 @@ const App = () => {
     loadResources();
   }, []);
 
-  return fontsLoaded ? (
+  if (!fontsLoaded) {
+    return null; // Show nothing while fonts are being loaded
+  }
+
+  return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <StackRoot.Navigator screenOptions={{ headerShown: false }}>
-          {userId ? (
-            <StackRoot.Screen name="BottomTabs">
-              {() => <BottomTabs userId={userId} />}
-            </StackRoot.Screen>
-          ) : (
-            <>
-              <StackRoot.Screen name="Login" component={Login} />
-              <StackRoot.Screen name="Registration" component={Registration} />
-            </>
-          )}
-        </StackRoot.Navigator>
-      </NavigationContainer>
+      <UserContext.Provider
+        value={{
+          userId,
+          setUserId,
+          languagePreference,
+          setLanguagePreference,
+        }}
+      >
+        <NavigationContainer>
+          <StackRoot.Navigator screenOptions={{ headerShown: false }}>
+            {userId ? (
+              <StackRoot.Screen name="BottomTabs">
+                {() => <BottomTabs userId={userId} />}
+              </StackRoot.Screen>
+            ) : (
+              <>
+                <StackRoot.Screen name="Login" component={Login} />
+                <StackRoot.Screen
+                  name="Registration"
+                  component={Registration}
+                />
+              </>
+            )}
+          </StackRoot.Navigator>
+        </NavigationContainer>
+      </UserContext.Provider>
     </GestureHandlerRootView>
-  ) : null;
+  );
 };
 
 export default App;
