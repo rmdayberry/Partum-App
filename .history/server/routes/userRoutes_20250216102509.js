@@ -91,7 +91,6 @@ router.post("/login", async (req, res) => {
       { token: refreshToken },
       { upsert: true, new: true }
     );
-    console.log("Login successful for user:", user._id); // ✅ Step 8: Final confirmation
 
     res.json({
       message: "Login successful",

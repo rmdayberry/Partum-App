@@ -82,16 +82,12 @@ router.post("/login", async (req, res) => {
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
 
-    console.log("Access Token Generated:", accessToken); //  Step 6: Confirm token creation
-    console.log("Refresh Token Generated:", refreshToken); //  Step 7: Confirm refresh token creation
-
     // Check if a refresh token already exists for this user
     await RefreshToken.findOneAndUpdate(
       { userId: user._id },
       { token: refreshToken },
       { upsert: true, new: true }
     );
-    console.log("Login successful for user:", user._id); // ✅ Step 8: Final confirmation
 
     res.json({
       message: "Login successful",

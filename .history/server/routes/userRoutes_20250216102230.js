@@ -74,16 +74,11 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      console.log("User not found for email:", email); // Step 3: Debug if user not found
       return res.status(401).json({ message: "Invalid credentials." });
     }
-    console.log("User authenticated:", user._id); // Step 5: User authentication successful
 
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
-
-    console.log("Access Token Generated:", accessToken); //  Step 6: Confirm token creation
-    console.log("Refresh Token Generated:", refreshToken); //  Step 7: Confirm refresh token creation
 
     // Check if a refresh token already exists for this user
     await RefreshToken.findOneAndUpdate(
@@ -91,7 +86,6 @@ router.post("/login", async (req, res) => {
       { token: refreshToken },
       { upsert: true, new: true }
     );
-    console.log("Login successful for user:", user._id); // ✅ Step 8: Final confirmation
 
     res.json({
       message: "Login successful",
