@@ -87,12 +87,6 @@ router.post("/login", async (req, res) => {
     console.log("Access Token Generated:", accessToken); //  Step 6: Confirm token creation
     console.log("Refresh Token Generated:", refreshToken); //  Step 7: Confirm refresh token creation
 
-    // 🔹 Store refresh token inside the `User` document instead of separate model
-    user.refreshTokens.push({ token: refreshToken });
-    await user.save();
-
-    console.log("Updated User Refresh Tokens:", user.refreshTokens);
-
     // Check if a refresh token already exists for this user
     await RefreshToken.findOneAndUpdate(
       { userId: user._id },
@@ -124,8 +118,8 @@ router.post("/refresh-token", async (req, res) => {
   }
 
   try {
-    // 🔹 Find the user that has this refresh token in their `refreshTokens` array
-    const user = await User.findOne({ "refreshTokens.token": token });
+    // 🔹 Find the user who has this refresh token inside their refreshTokens array
+    const user = await User.findOne({ refreshTokens: { $in: [token] } });
 
     if (!user) {
       console.error("Refresh token not found in database.");
@@ -140,9 +134,9 @@ router.post("/refresh-token", async (req, res) => {
     const newAccessToken = generateAccessToken(decoded.id);
     const newRefreshToken = generateRefreshToken(decoded.id);
 
-    // 🔹 Remove old refresh token & add new one
-    user.refreshTokens = user.refreshTokens.filter((t) => t.token !== token);
-    user.refreshTokens.push({ token: newRefreshToken });
+    // 🔹 Remove old token and add new one
+    user.refreshTokens = user.refreshTokens.filter((t) => t !== token); // Remove old token
+    user.refreshTokens.push(newRefreshToken); // Add new token
     await user.save();
 
     console.log("Updated Refresh Tokens:", user.refreshTokens);
@@ -164,17 +158,11 @@ router.post("/logout", async (req, res) => {
   }
 
   try {
-    // 🔹 Find the user that has this refresh token
-    const user = await User.findOne({ "refreshTokens.token": token });
-
-    if (!user) {
+    const deletedToken = await RefreshToken.findOneAndDelete({ token });
+    if (!deletedToken) {
       console.error("Refresh token not found during logout.");
       return res.status(404).json({ message: "Refresh token not found." });
     }
-
-    // 🔹 Remove the token from the user's refreshTokens array
-    user.refreshTokens = user.refreshTokens.filter((t) => t.token !== token);
-    await user.save();
 
     console.log("Refresh token deleted successfully for logout.");
     res.json({ message: "Logged out successfully." });

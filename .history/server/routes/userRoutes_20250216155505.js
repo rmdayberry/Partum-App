@@ -164,17 +164,11 @@ router.post("/logout", async (req, res) => {
   }
 
   try {
-    // 🔹 Find the user that has this refresh token
-    const user = await User.findOne({ "refreshTokens.token": token });
-
-    if (!user) {
+    const deletedToken = await RefreshToken.findOneAndDelete({ token });
+    if (!deletedToken) {
       console.error("Refresh token not found during logout.");
       return res.status(404).json({ message: "Refresh token not found." });
     }
-
-    // 🔹 Remove the token from the user's refreshTokens array
-    user.refreshTokens = user.refreshTokens.filter((t) => t.token !== token);
-    await user.save();
 
     console.log("Refresh token deleted successfully for logout.");
     res.json({ message: "Logged out successfully." });
