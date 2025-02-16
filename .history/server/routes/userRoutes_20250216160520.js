@@ -92,6 +92,14 @@ router.post("/login", async (req, res) => {
 
     console.log("Updated User Refresh Tokens:", user.refreshTokens);
 
+    // Check if a refresh token already exists for this user
+    await RefreshToken.findOneAndUpdate(
+      { userId: user._id },
+      { token: refreshToken },
+      { upsert: true, new: true }
+    );
+    console.log("Login successful for user:", user._id); // ✅ Step 8: Final confirmation
+
     res.json({
       message: "Login successful",
       authToken: accessToken,
