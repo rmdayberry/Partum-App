@@ -27,7 +27,6 @@ app.use(express.json());
 // CORS Configuration
 const allowedOrigins = [
   "http://localhost:3000", // Frontend React
-  "https://expo.dev/@rdayberry/partum", // Expo EAS Frontend
   "https://partum-app.onrender.com", // Backend
   "http://10.0.0.106:19000", // Expo development server
 ];
