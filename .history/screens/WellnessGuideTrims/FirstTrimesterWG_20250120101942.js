@@ -1,0 +1,238 @@
+import React, { useState, useEffect, useContext } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
+import { UserContext } from "../../contexts/UserContext";
+import { translations } from "../../translations/firstTrimesterWGTranslations";
+import axios from "axios";
+import { Ionicons } from "@expo/vector-icons"; // For icons
+
+const { width: screenWidth } = Dimensions.get("window");
+
+const topicImages = {
+  sleep: require("../../assets/SleepWG.png"),
+  nutrition: require("../../assets/NutritionWG.png"),
+  mentalHealth: require("../../assets/MentalHealthWG.png"),
+  exercise: require("../../assets/ExerciseWG.png"),
+  symptoms: require("../../assets/SymptomsWG.png"),
+};
+
+const FirstTrimester = () => {
+  const { userId } = useContext(UserContext);
+  const [languagePreference, setLanguagePreference] = useState("English");
+  const [activeTab, setActiveTab] = useState("sleep");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchLanguagePreference = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5002/users/${userId}`
+        );
+        setLanguagePreference(response.data.languagePreference || "English");
+      } catch (error) {
+        console.error("Error fetching language preference:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLanguagePreference();
+  }, [userId]);
+
+  const renderContent = () => {
+    const tabContent =
+      translations[activeTab]?.[languagePreference] ||
+      translations[activeTab]?.English ||
+      {};
+  
+    const {
+      heading,
+      content,
+      title1,
+      content1,
+      title2,
+      content2,
+      title3,
+      content3,
+      title4,
+      content4,
+      vitamins, // May not exist for all tabs
+      avoidTitle,
+      avoid,
+      nuggetTitle,
+      nuggetContent,
+      tipsTitle,
+      tips,
+      bottomText,
+    } = tabContent;
+  
+    const renderSection = (title, contentArrayOrText) => {
+      if (!title || (!contentArrayOrText && !Array.isArray(contentArrayOrText))) {
+        return null;
+      }
+  
+      return (
+        <>
+          <Text style={styles.subheading}>{title}</Text>
+          {Array.isArray(contentArrayOrText) ? (
+            contentArrayOrText.map((item, index) => (
+              <Text key={index} style={styles.bulletPoint}>
+                • {item}
+              </Text>
+            ))
+          ) : (
+            <Text style={styles.content}>{contentArrayOrText}</Text>
+          )}
+        </>
+      );
+    };
+  
+    return (
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <Image source={topicImages[activeTab]} style={styles.image} />
+        <View style={styles.card}>
+          {/* Heading */}
+          <Text style={styles.heading}>{heading || "Content Unavailable"}</Text>
+  
+          {/* Main Content */}
+          {content && <Text style={styles.content}>{content}</Text>}
+  
+          {/* Dynamic Sections */}
+          {renderSection(title1, content1)}
+          {renderSection(title2, content2)}
+          {renderSection(title3, content3)}
+          {renderSection(title4, content4)}
+  
+          {/* Vitamins & Supplements */}
+          {vitamins?.length > 0 && renderSection("Vitamins & Supplements", vitamins)}
+  
+          {/* Avoid List */}
+          {renderSection(avoidTitle, avoid)}
+  
+          {/* Nutrition Nugget */}
+          {nuggetTitle && <Text style={styles.subheading}>{nuggetTitle}</Text>}
+          {nuggetContent && <Text style={styles.content}>{nuggetContent}</Text>}
+  
+          {/* Quick Tips */}
+          {renderSection(tipsTitle, tips)}
+  
+          {/* Bottom Text */}
+          {bottomText && (
+            <Text style={[styles.content, styles.bottomText]}>
+              {bottomText}
+            </Text>
+          )}
+        </View>
+      </ScrollView>
+    );
+  };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F9FAFF",
+  },
+  tabBar: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
+    backgroundColor: "#FFF",
+  },
+  tabBarContent: {
+    flexDirection: "row",
+    paddingHorizontal: 10,
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  tabButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginHorizontal: 5,
+    backgroundColor: "#F9FAFF",
+  },
+  activeTabButton: {
+    backgroundColor: "#E0E7FF",
+  },
+  tabText: {
+    fontSize: 14,
+    marginLeft: 5,
+    color: "#777",
+    fontWeight: "500",
+  },
+  activeTabText: {
+    color: "#6200EE",
+    fontWeight: "bold",
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  contentContainer: {
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    width: screenWidth * 0.8,
+    height: screenWidth * 0.5,
+    resizeMode: "contain",
+    marginBottom: 20,
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 5,
+    width: "95%",
+    marginBottom: 20,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  subheading: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#444",
+    marginTop: 15,
+    marginBottom: 5,
+  },
+  content: {
+    fontSize: 14,
+    color: "#555",
+    lineHeight: 22,
+    textAlign: "left",
+    marginBottom: 10,
+  },
+  bulletPoint: {
+    fontSize: 14,
+    color: "#555",
+    marginBottom: 8,
+    lineHeight: 22,
+    marginLeft: 10,
+  },
+  bottomText: {
+    marginTop: 20,
+    fontStyle: "italic",
+    color: "#777",
+  },
+});
+
+export default FirstTrimester;
