@@ -65,31 +65,33 @@ Expo CLI installed globally (npm install -g expo-cli)
 MongoDB Atlas account for database storage
 
 **1. Clone the Repository**
-
-git clone https://github.com/YOUR_USERNAME/Partum-App.git
+```bash
+git clone https://github.com/rmdayberry/Partum-App
 cd Partum-App
-
+```
 **2. Install Dependencies
 **
+```bash
 npm install
-
+```
 **3. Set Up Environment Variables**
 
 Create a .env file in the root directory with the following variables:
-
+```inti
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-
+```
 **4. Start the Backend Server**
-
+```bash
 cd server
 npm start
-
+```
 Backend will be running on http://localhost:5002
 
 **5. Start the React Native App**
-
+```bash
 npm start
+```
 
 Use Expo Go (on mobile) or an emulator to preview the app.
 
