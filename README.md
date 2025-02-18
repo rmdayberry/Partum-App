@@ -6,7 +6,7 @@ Partum is a cross-platform pregnancy and postpartum education app built with the
 
 **Live Demo**
 
-**Frontend (Expo EAS):** https://expo.dev/@rdayberry/partum
+**Frontend (Expo EAS):** https://expo.dev/@rdayberry/Partum
 
 **Backend (Render):** https://partum-app.onrender.com
 
