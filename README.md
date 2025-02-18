@@ -1,36 +1,36 @@
-Partum - Pregnancy & Postpartum Education App
+**Partum - Pregnancy & Postpartum Education App**
 
-Overview
+**Overview**
 
 Partum is a cross-platform pregnancy and postpartum education app built with the MERN stack, using React Native for mobile development. It provides users with evidence-based health education in multiple languages, appointment tracking with reminders, and a structured notes section linked to visits. The dashboard includes a pregnancy progress tracker and an interactive sliding card UI for quick access to key information.
 
-Live Demo
+**Live Demo**
 
-Frontend (Expo EAS): https://expo.dev/@rdayberry/partum
+**Frontend (Expo EAS):** https://expo.dev/@rdayberry/partum
 
-Backend (Render): https://partum-app.onrender.com
+**Backend (Render):** https://partum-app.onrender.com
 
-API Health Check: https://partum-app.onrender.com/api/health
+**API Health Check:** https://partum-app.onrender.com/api/health
 
-Features
+**Features**
 
-User authentication: Register and log in with JWT/Auth0/Firebase
+-User authentication: Register and log in with JWT/Auth0/Firebase
 
-Pregnancy progress tracker: Displays gestational progress with weekly updates
+-Pregnancy progress tracker: Displays gestational progress with weekly updates
 
-Appointment tracking: Schedule and manage medical visits with reminders
+-Appointment tracking: Schedule and manage medical visits with reminders
 
-Structured notes section: Users can add notes linked to specific appointments
+-Structured notes section: Users can add notes linked to specific appointments
 
-Multi-language support: Health education content available in multiple languages
+-Multi-language support: Health education content available in multiple languages
 
-Sliding card UI: Interactive dashboard for easy access to key information
+-Sliding card UI: Interactive dashboard for easy access to key information
 
-Mobile-first design: Built with React Native for both iOS and Android support
+-Mobile-first design: Built with React Native for both iOS and Android support
 
-Tech Stack
+**Tech Stack**
 
-Frontend:
+**Frontend:**
 
 React Native (Expo)
 
@@ -38,7 +38,7 @@ Context API for state management
 
 React Navigation
 
-Backend:
+**Backend:**
 
 Node.js with Express
 
@@ -48,15 +48,15 @@ JWT for authentication
 
 CORS-enabled API (for secure cross-origin requests)
 
-Deployment:
+**Deployment:**
 
 Frontend: Expo EAS
 
 Backend: Render
 
-Installation & Setup
+**Installation & Setup**
 
-Prerequisites
+**Prerequisites**
 
 Node.js & npm installed
 
@@ -64,80 +64,48 @@ Expo CLI installed globally (npm install -g expo-cli)
 
 MongoDB Atlas account for database storage
 
-1. Clone the Repository
+**1. Clone the Repository**
 
 git clone https://github.com/YOUR_USERNAME/Partum-App.git
 cd Partum-App
 
-2. Install Dependencies
-
+**2. Install Dependencies
+**
 npm install
 
-3. Set Up Environment Variables
+**3. Set Up Environment Variables**
 
 Create a .env file in the root directory with the following variables:
 
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 
-4. Start the Backend Server
+**4. Start the Backend Server**
 
 cd server
 npm start
 
 Backend will be running on http://localhost:5002
 
-5. Start the React Native App
+**5. Start the React Native App**
 
 npm start
 
 Use Expo Go (on mobile) or an emulator to preview the app.
 
-API Endpoints
+## API Endpoints
 
-Method
+| Method  | Endpoint              | Description                     |
+|---------|-----------------------|---------------------------------|
+| **GET** | `/api/health`         | Check if API is running        |
+| **POST** | `/users/register`     | Register a new user            |
+| **POST** | `/users/login`        | Log in a user                  |
+| **GET** | `/appointments`       | Fetch user appointments        |
+| **POST** | `/appointments`       | Create a new appointment       |
+| **GET** | `/pregnancy`          | Get pregnancy week info        |
 
-Endpoint
 
-Description
-
-GET
-
-/api/health
-
-Check if API is running
-
-POST
-
-/users/register
-
-Register a new user
-
-POST
-
-/users/login
-
-Log in a user
-
-GET
-
-/appointments
-
-Fetch user appointments
-
-POST
-
-/appointments
-
-Create a new appointment
-
-GET
-
-/pregnancy
-
-Get pregnancy week info
-
-Future Enhancements
+**Future Enhancements**
 
 Push notifications for upcoming appointments
 
@@ -147,11 +115,11 @@ Offline mode for viewing content without internet
 
 Community support forum
 
-License
+**License**
 
 This project is licensed under the MIT License.
 
-Acknowledgments
+**Acknowledgments**
 
 Special thanks to healthcare professionals who provided content guidance.
 
