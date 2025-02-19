@@ -1,7 +1,8 @@
-const express = require("express");
-const User = require("../models/userModel");
-const WhatToExpectWeekly = require("../models/WhatToExpect");
-const DailyPregnancyTip = require("../models/DailyPregnancyTips");
+import express from "express";
+import User from "../models/userModel.js";
+import WhatToExpectWeekly from "../models/WhatToExpect.js";
+import DailyPregnancyTip from "../models/DailyPregnancyTips.js";
+
 const router = express.Router();
 
 // Pregnancy progress endpoint
@@ -167,4 +168,4 @@ router.get("/daily-tip/:userId", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
