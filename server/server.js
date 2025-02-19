@@ -1,15 +1,14 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const userRoutes = require("./routes/userRoutes");
-const pregnancyRoutes = require("./routes/pregnancyRoutes");
-const appointmentsRoutes = require("./routes/appointmentsRoutes");
-const feedbackRoutes = require("./routes/feedbackRoutes");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import userRoutes from "./routes/userRoutes.js";
+import pregnancyRoutes from "./routes/pregnancyRoutes.js";
+import appointmentsRoutes from "./routes/appointmentsRoutes.js";
+import feedbackRoutes from "./routes/feedbackRoutes.js";
 
 // Load environment variables
 dotenv.config();
-require("dotenv").config();
 console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 
 // Validate required environment variables
@@ -30,8 +29,9 @@ const allowedOrigins = [
   "https://expo.dev/@rdayberry/partum", // Expo EAS Frontend
   "https://partum-app.onrender.com", // Backend
   "http://10.0.0.106:19000", // Expo development server
-  "https://partum-7qo0sao4z-reagans-projects-2fcbf7b0.vercel.app", //Vercel Frontend,
+  "https://partum-7qo0sao4z-reagans-projects-2fcbf7b0.vercel.app", // Vercel Frontend
 ];
+
 app.use(
   cors({
     origin: allowedOrigins,
@@ -48,8 +48,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Routes
 app.use("/users", userRoutes);
@@ -57,6 +57,7 @@ app.use("/api", pregnancyRoutes);
 app.use("/appointments", appointmentsRoutes);
 app.use("/feedback", feedbackRoutes);
 
+// API Health Check
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
@@ -66,11 +67,11 @@ app.get("/api/health", (req, res) => {
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error("Error:", err.stack);
   res
     .status(err.status || 500)
-    .json({ message: err.message || "Server Error" });
+    .json({ message: err.message || "Internal Server Error" });
 });
 
 // Start server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

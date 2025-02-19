@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const dailyPregnancyTipSchema = new mongoose.Schema({
   day: { type: Number, required: true, unique: true },
@@ -12,4 +12,4 @@ const DailyTip = mongoose.model(
   "dailyPregnancyTips"
 );
 
-module.exports = DailyTip;
+export default DailyTip;

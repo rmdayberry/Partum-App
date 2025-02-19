@@ -1,7 +1,8 @@
-const express = require("express");
-const User = require("../models/userModel");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import express from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import User from "../models/userModel.js";
+
 const router = express.Router();
 
 // Helper function to generate tokens
@@ -68,25 +69,25 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("Login attempt received"); //  Step 1: Confirm request reached the backend
-  console.log("Request Body:", req.body); // Step 2: See what data is being sent
+  console.log("Login attempt received");
+  console.log("Request Body:", req.body);
 
   try {
     const user = await User.findOne({ email });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      console.log("User not found for email:", email); // Step 3: Debug if user not found
+      console.log("User not found for email:", email);
       return res.status(401).json({ message: "Invalid credentials." });
     }
-    console.log("User authenticated:", user._id); // Step 5: User authentication successful
+
+    console.log("User authenticated:", user._id);
 
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
 
-    console.log("Access Token Generated:", accessToken); //  Step 6: Confirm token creation
-    console.log("Refresh Token Generated:", refreshToken); //  Step 7: Confirm refresh token creation
+    console.log("Access Token Generated:", accessToken);
+    console.log("Refresh Token Generated:", refreshToken);
 
-    // 🔹 Store refresh token inside the `User` document instead of separate model
     user.refreshTokens.push({ token: refreshToken });
     await user.save();
 
@@ -115,7 +116,6 @@ router.post("/refresh-token", async (req, res) => {
   }
 
   try {
-    // 🔹 Find the user that has this refresh token in their `refreshTokens` array
     const user = await User.findOne({ "refreshTokens.token": token });
 
     if (!user) {
@@ -123,15 +123,12 @@ router.post("/refresh-token", async (req, res) => {
       return res.status(403).json({ message: "Invalid refresh token." });
     }
 
-    // 🔹 Verify the token
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
     console.log("Token verified for user:", decoded.id);
 
-    // 🔹 Generate new tokens
     const newAccessToken = generateAccessToken(decoded.id);
     const newRefreshToken = generateRefreshToken(decoded.id);
 
-    // 🔹 Remove old refresh token & add new one
     user.refreshTokens = user.refreshTokens.filter((t) => t.token !== token);
     user.refreshTokens.push({ token: newRefreshToken });
     await user.save();
@@ -155,7 +152,6 @@ router.post("/logout", async (req, res) => {
   }
 
   try {
-    // 🔹 Find the user that has this refresh token
     const user = await User.findOne({ "refreshTokens.token": token });
 
     if (!user) {
@@ -163,7 +159,6 @@ router.post("/logout", async (req, res) => {
       return res.status(404).json({ message: "Refresh token not found." });
     }
 
-    // 🔹 Remove the token from the user's refreshTokens array
     user.refreshTokens = user.refreshTokens.filter((t) => t.token !== token);
     await user.save();
 
@@ -175,6 +170,7 @@ router.post("/logout", async (req, res) => {
   }
 });
 
+// Get pregnancy progress
 router.get("/:id/progress", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -186,7 +182,6 @@ router.get("/:id/progress", async (req, res) => {
     const currentDate = new Date();
     const totalPregnancyDays = 280; // Approx. 40 weeks
 
-    // Calculate progress
     const daysElapsed = Math.floor(
       (currentDate - dueDate + totalPregnancyDays * 24 * 60 * 60 * 1000) /
         (1000 * 60 * 60 * 24)
@@ -203,4 +198,5 @@ router.get("/:id/progress", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
+

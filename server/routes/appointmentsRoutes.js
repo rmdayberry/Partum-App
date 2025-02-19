@@ -1,6 +1,7 @@
-const express = require("express");
-const Appointment = require("../models/appointmentsModel");
-const authenticate = require("../middleware/authMiddleware");
+import express from "express";
+import Appointment from "../models/appointmentsModel.js";
+import authenticate from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
 // Add a new appointment
@@ -131,4 +132,4 @@ router.delete("/:id", authenticate, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

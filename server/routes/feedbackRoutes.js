@@ -1,5 +1,5 @@
-const express = require("express");
-const Feedback = require("../models/feedbackModel");
+import express from "express";
+import Feedback from "../models/feedbackModel.js";
 
 const router = express.Router();
 
@@ -32,4 +32,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const whatToExpectWeeklySchema = new mongoose.Schema({
   week: { type: Number, required: true, unique: true },
@@ -12,4 +12,4 @@ const WhatToExpect = mongoose.model(
   "whatToExpectWeekly"
 );
 
-module.exports = WhatToExpect;
+export default WhatToExpect;

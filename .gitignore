@@ -66,3 +66,4 @@ ios/
 android/
 *.keystore
 .vercel
+.history/
