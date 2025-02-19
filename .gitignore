@@ -65,3 +65,4 @@ ios/
 *.xcuserstate
 android/
 *.keystore
+.vercel
