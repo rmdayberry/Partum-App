@@ -10,8 +10,9 @@ pids
 *.seed
 *.log
 
-# Directory used by npm for globally installed node modules
+
 node_modules
+server/node_modules/
 
 # Yarn Integrity file
 .yarn-integrity
@@ -37,7 +38,8 @@ Thumbs.db
 # Expo OTA update
 .expo/
 .expo-shared/
-
+eas.json
+metro.config.js
 # Turtle
 turtle-build/
 
@@ -58,7 +60,7 @@ metro-cache/
 *.db-wal
 *.db-shm
 
-# iOS & Android (If you ever eject from Expo)
+# iOS & Android
 ios/
 *.xcworkspace
 *.xcodeproj
@@ -67,3 +69,14 @@ android/
 *.keystore
 .vercel
 .history/
+
+#Build & output directories
+web-build/
+build/
+dist/
+
+#Temporary & cache files
+.cache/
+tmp/
+temp/
+coverage/
