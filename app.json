@@ -15,9 +15,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/64d21b9c-81d0-449e-a972-527a6f5c4e62"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.partum.app",
@@ -32,10 +30,11 @@
       },
       "package": "com.partum.app"
     },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
     "newArchEnabled": true,
-    "plugins": [
-      "expo-font"
-    ],
+    "plugins": ["expo-font"],
     "extra": {
       "eas": {
         "projectId": "64d21b9c-81d0-449e-a972-527a6f5c4e62"
@@ -45,11 +44,5 @@
     "runtimeVersion": {
       "policy": "appVersion"
     }
-  },
-  "web": {
-    "favicon": "./assets/favicon.png"
-  },
-  "plugins": [
-    "expo-font"
-  ]
+  }
 }
