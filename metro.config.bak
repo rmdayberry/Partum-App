@@ -1,0 +1,7 @@
+import { getDefaultConfig } from "expo/metro-config";
+
+export default (() => {
+  const config = getDefaultConfig(__dirname);
+  config.resolver.assetExts.push("ttf");
+  return config;
+})();
