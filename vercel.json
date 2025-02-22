@@ -1,8 +1,9 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/manifest.json",
-      "dest": "/public/manifest.json"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  ]
+  ],
+  "cleanUrls": true
 }

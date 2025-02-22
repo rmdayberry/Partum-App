@@ -9,13 +9,15 @@
     "splash": {
       "image": "./assets/Riverland.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "assets": ["./node_modules/react-native-vector-icons/Fonts"]
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/64d21b9c-81d0-449e-a972-527a6f5c4e62"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": ["**/*", "node_modules/@expo/vector-icons/fonts/*"],
+
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.partum.app",
@@ -31,9 +33,9 @@
       "package": "com.partum.app"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "webpack"
     },
-    "newArchEnabled": true,
     "plugins": ["expo-font"],
     "extra": {
       "eas": {

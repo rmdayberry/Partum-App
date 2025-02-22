@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { UserContext } from "./contexts/UserContext";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 import "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -230,6 +230,7 @@ const fetchFonts = async () => {
   try {
     await Font.loadAsync({
       ArimoRegular: require("./assets/fonts/Arimo-Regular.ttf"),
+      ...Ionicons.font, // Ensures Ionicons font is loaded
     });
   } catch (error) {
     console.warn("Font loading error:", error);

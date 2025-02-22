@@ -1,0 +1,10 @@
+diff --git a/node_modules/react-native-modal-dropdown/index.js b/node_modules/react-native-modal-dropdown/index.js
+index 2246cb1..c12945a 100644
+--- a/node_modules/react-native-modal-dropdown/index.js
++++ b/node_modules/react-native-modal-dropdown/index.js
+@@ -4,4 +4,4 @@
+ 
+ import ModalDropdown from './components/ModalDropdown';
+ export default ModalDropdown;
+-module.exports = ModalDropdown;
++
