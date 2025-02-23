@@ -21,11 +21,12 @@ if (!process.env.MONGO_URI) {
 const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
+app.use(express.json()); // Parses JSON bodies
 
 // CORS Configuration
 const allowedOrigins = [
-  "http://localhost:3000", // Frontend React
+  "http://localhost:3000", // Local frontend development
   "https://expo.dev/@rdayberry/partum", // Expo EAS Frontend
   "https://partum-app.onrender.com", // Backend
   "http://10.0.0.106:19000", // Expo development server
@@ -34,13 +35,20 @@ const allowedOrigins = [
   "http://localhost:19006",
 ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.error("🚫 Blocked by CORS:", origin);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // MongoDB connection
 const PORT = process.env.PORT || 5002;
