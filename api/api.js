@@ -150,16 +150,25 @@ export const deleteAppointment = async (appointmentId) => {
     const token = await AsyncStorage.getItem("authToken");
 
     console.log("Deleting appointment:", appointmentId);
+    console.log("Using Auth Token:", token);
 
-    const response = await axios.delete(
-      `${API_BASE_URL}/appointments/${appointmentId}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    try {
+      const response = await axios.delete(
+        `${API_BASE_URL}/appointments/${appointmentId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-    console.log("Delete Response:", response.data);
-    return response.data;
+      console.log("Delete Response from API:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error(
+        "Error in API delete request:",
+        error.response?.data || error.message
+      );
+      throw error;
+    }
   });
 };
 

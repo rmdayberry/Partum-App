@@ -110,6 +110,8 @@ router.put("/:id", authenticate, async (req, res) => {
 // Delete an appointment
 router.delete("/:id", authenticate, async (req, res) => {
   const { id } = req.params;
+  console.log("Received DELETE request for appointment ID:", id);
+  console.log("User ID from token:", req.user.id);
 
   try {
     const deletedAppointment = await Appointment.findOneAndDelete({
@@ -118,14 +120,17 @@ router.delete("/:id", authenticate, async (req, res) => {
     });
 
     if (!deletedAppointment) {
+      console.log("Appointment not found or user unauthorized");
       return res.status(404).json({ message: "Appointment not found" });
     }
 
+    console.log("Appointment successfully deleted:", deletedAppointment);
     res.json({
       message: "Appointment deleted successfully",
       appointment: deletedAppointment,
     });
   } catch (error) {
+    console.error("Error deleting appointment:", error.message);
     res
       .status(500)
       .json({ message: "Failed to delete appointment", error: error.message });
