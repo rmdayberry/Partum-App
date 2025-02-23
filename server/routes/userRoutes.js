@@ -1,6 +1,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import User from "../models/userModel.js";
 
 const router = express.Router();
@@ -8,7 +9,7 @@ const router = express.Router();
 // Helper function to generate tokens
 const generateAccessToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-    expiresIn: "24hr",
+    expiresIn: "24h",
   });
 };
 
@@ -18,21 +19,43 @@ const generateRefreshToken = (userId) => {
   });
 };
 
-// Fetch user data
-router.get("/:id", async (req, res) => {
+// 🛑 Prevent "Cast to ObjectId failed" error by ensuring login/register routes are FIRST
+// 🔹 LOGIN (POST /users/login)
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log("Login attempt received:", email);
+
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const user = await User.findOne({ email });
+
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      console.log("Invalid login attempt for:", email);
+      return res.status(401).json({ message: "Invalid credentials." });
     }
-    res.json(user);
-  } catch (err) {
-    console.error("Error fetching user data:", err.message);
-    res.status(500).json({ message: "Server error", error: err.message });
+
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    user.refreshTokens.push({ token: refreshToken });
+    await user.save();
+
+    console.log("User logged in:", user._id);
+
+    res.json({
+      message: "Login successful",
+      authToken: accessToken,
+      refreshToken,
+      userId: user._id,
+      languagePreference: user.languagePreference,
+    });
+  } catch (error) {
+    console.error("Login error:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
-// Register a new user
+// 🔹 REGISTER (POST /users/register)
 router.post("/register", async (req, res) => {
   const { name, email, password, dueDate, languagePreference } = req.body;
 
@@ -65,48 +88,28 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login a user
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+// 🔹 GET USER BY ID (GET /users/:id)
+router.get("/:id", async (req, res) => {
+  const userId = req.params.id;
 
-  console.log("Login attempt received");
-  console.log("Request Body:", req.body);
+  // Validate if the ID is a valid MongoDB ObjectId before querying
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid user ID format." });
+  }
 
   try {
-    const user = await User.findOne({ email });
-
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      console.log("User not found for email:", email);
-      return res.status(401).json({ message: "Invalid credentials." });
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-
-    console.log("User authenticated:", user._id);
-
-    const accessToken = generateAccessToken(user._id);
-    const refreshToken = generateRefreshToken(user._id);
-
-    console.log("Access Token Generated:", accessToken);
-    console.log("Refresh Token Generated:", refreshToken);
-
-    user.refreshTokens.push({ token: refreshToken });
-    await user.save();
-
-    console.log("Updated User Refresh Tokens:", user.refreshTokens);
-
-    res.json({
-      message: "Login successful",
-      authToken: accessToken,
-      refreshToken,
-      userId: user._id,
-      languagePreference: user.languagePreference,
-    });
+    res.json(user);
   } catch (error) {
-    console.error("Login error:", error.message);
+    console.error("Error fetching user data:", error.message);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
-// Refresh token endpoint
+// 🔹 REFRESH TOKEN (POST /users/refresh-token)
 router.post("/refresh-token", async (req, res) => {
   const { token } = req.body;
 
@@ -124,7 +127,6 @@ router.post("/refresh-token", async (req, res) => {
     }
 
     const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
-    console.log("Token verified for user:", decoded.id);
 
     const newAccessToken = generateAccessToken(decoded.id);
     const newRefreshToken = generateRefreshToken(decoded.id);
@@ -133,8 +135,6 @@ router.post("/refresh-token", async (req, res) => {
     user.refreshTokens.push({ token: newRefreshToken });
     await user.save();
 
-    console.log("Updated Refresh Tokens:", user.refreshTokens);
-
     res.json({ authToken: newAccessToken, refreshToken: newRefreshToken });
   } catch (error) {
     console.error("Error refreshing token:", error.message);
@@ -142,7 +142,7 @@ router.post("/refresh-token", async (req, res) => {
   }
 });
 
-// Logout endpoint
+// 🔹 LOGOUT (POST /users/logout)
 router.post("/logout", async (req, res) => {
   const { token } = req.body;
 
@@ -162,7 +162,7 @@ router.post("/logout", async (req, res) => {
     user.refreshTokens = user.refreshTokens.filter((t) => t.token !== token);
     await user.save();
 
-    console.log("Refresh token deleted successfully for logout.");
+    console.log("User logged out successfully.");
     res.json({ message: "Logged out successfully." });
   } catch (error) {
     console.error("Logout error:", error.message);
@@ -170,10 +170,16 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// Get pregnancy progress
+// 🔹 GET PREGNANCY PROGRESS (GET /users/:id/progress)
 router.get("/:id/progress", async (req, res) => {
+  const userId = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(400).json({ message: "Invalid user ID format." });
+  }
+
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -192,11 +198,10 @@ router.get("/:id/progress", async (req, res) => {
     );
 
     res.json({ progress });
-  } catch (err) {
-    console.error("Error fetching progress:", err.message);
-    res.status(500).json({ message: "Server error", error: err.message });
+  } catch (error) {
+    console.error("Error fetching progress:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
 export default router;
-
