@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Platform,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -100,30 +101,65 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
         />
       </View>
 
+      {/* Date Picker */}
       <View style={styles.formGroup}>
         <Text style={styles.label}>{labels.pickDate}</Text>
-        <TouchableOpacity style={styles.dateButton} onPress={showDatePicker}>
-          <Text style={styles.dateText}>{formattedDate}</Text>
-        </TouchableOpacity>
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleDateConfirm}
-          onCancel={hideDatePicker}
-        />
+        {Platform.OS === "web" ? (
+          <input
+            type="date"
+            value={date.toISOString().split("T")[0]}
+            onChange={(e) => setDate(new Date(e.target.value))}
+            style={styles.webInput}
+          />
+        ) : (
+          <>
+            <TouchableOpacity
+              style={styles.dateButton}
+              onPress={showDatePicker}
+            >
+              <Text style={styles.dateText}>{formattedDate}</Text>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleDateConfirm}
+              onCancel={hideDatePicker}
+            />
+          </>
+        )}
       </View>
 
+      {/* Time Picker */}
       <View style={styles.formGroup}>
         <Text style={styles.label}>{labels.pickTime}</Text>
-        <TouchableOpacity style={styles.dateButton} onPress={showTimePicker}>
-          <Text style={styles.dateText}>{formattedTime}</Text>
-        </TouchableOpacity>
-        <DateTimePickerModal
-          isVisible={isTimePickerVisible}
-          mode="time"
-          onConfirm={handleTimeConfirm}
-          onCancel={hideTimePicker}
-        />
+        {Platform.OS === "web" ? (
+          <input
+            type="time"
+            value={formattedTime}
+            onChange={(e) => {
+              const [hours, minutes] = e.target.value.split(":");
+              const updatedDate = new Date(date);
+              updatedDate.setHours(hours, minutes);
+              setDate(updatedDate);
+            }}
+            style={styles.webInput}
+          />
+        ) : (
+          <>
+            <TouchableOpacity
+              style={styles.dateButton}
+              onPress={showTimePicker}
+            >
+              <Text style={styles.dateText}>{formattedTime}</Text>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isTimePickerVisible}
+              mode="time"
+              onConfirm={handleTimeConfirm}
+              onCancel={hideTimePicker}
+            />
+          </>
+        )}
       </View>
 
       <View style={styles.formGroup}>
@@ -182,35 +218,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: "#555",
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
+  webInput: {
+    width: "100%",
     padding: 10,
-    backgroundColor: "#fff",
     fontSize: 16,
-  },
-  textarea: {
-    borderWidth: 1,
-    borderColor: "#ddd",
     borderRadius: 8,
-    padding: 10,
-    backgroundColor: "#fff",
-    fontSize: 16,
-    textAlignVertical: "top",
-  },
-  dropdown: {
     borderWidth: 1,
     borderColor: "#ddd",
-    borderRadius: 8,
     backgroundColor: "#fff",
-  },
-  dropdownContainer: {
-    zIndex: 500,
-  },
-  dropdownMenu: {
-    borderWidth: 1,
-    borderColor: "#ddd",
   },
   dateButton: {
     borderWidth: 1,
