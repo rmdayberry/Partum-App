@@ -84,7 +84,7 @@ const Appointments = () => {
   };
 
   const handleDelete = async (appointmentId) => {
-    console.log("Attempting to delete appointment with ID:", appointmentId);
+    console.log(`🗑 Attempting to delete appointment with ID: ${appointmentId}`);
 
     Alert.alert(
       "Delete Appointment",
@@ -97,26 +97,19 @@ const Appointments = () => {
           onPress: async () => {
             try {
               const response = await deleteAppointment(appointmentId);
-              console.log("Delete API Response:", response);
+              console.log(`✅ Delete Success Response:`, response);
 
-              if (
-                response &&
-                response.message === "Appointment deleted successfully"
-              ) {
-                // Remove the deleted appointment from state
-                setUpcomingAppointments((prev) =>
-                  prev.filter((appt) => appt._id !== appointmentId)
-                );
-                setPastAppointments((prev) =>
-                  prev.filter((appt) => appt._id !== appointmentId)
-                );
+              // Update UI after successful deletion
+              setUpcomingAppointments((prev) =>
+                prev.filter((appt) => appt._id !== appointmentId)
+              );
+              setPastAppointments((prev) =>
+                prev.filter((appt) => appt._id !== appointmentId)
+              );
 
-                Alert.alert("Success", "Appointment deleted successfully.");
-              } else {
-                Alert.alert("Error", "Failed to delete appointment.");
-              }
+              Alert.alert("Success", "Appointment deleted.");
             } catch (error) {
-              console.error("Error deleting appointment:", error);
+              console.error("❗ Error deleting appointment:", error);
               Alert.alert("Error", "Failed to delete appointment.");
             }
           },

@@ -148,21 +148,22 @@ export const deleteAppointment = async (appointmentId) => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
 
-    console.log("Sending DELETE request to API for ID:", appointmentId);
-    console.log("Authorization Token:", token);
+    console.log(`🗑 Sending DELETE request to API for ID: ${appointmentId}`);
+    console.log(`🔑 Authorization Token: ${token}`);
 
     try {
       const response = await axios.delete(
         `${API_BASE_URL}/appointments/${appointmentId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      console.log("Delete API response:", response.data);
+      console.log(`✅ Delete API Response:`, response.data);
       return response.data;
     } catch (error) {
-      console.error("Error from API:", error.response?.data || error.message);
+      console.error(
+        "❌ Error deleting appointment:",
+        error.response?.data || error.message
+      );
       throw error;
     }
   });
