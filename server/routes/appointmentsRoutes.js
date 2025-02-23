@@ -1,6 +1,7 @@
 import express from "express";
 import Appointment from "../models/appointmentsModel.js";
 import authenticate from "../middleware/authMiddleware.js";
+import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -114,26 +115,20 @@ router.delete("/:id", authenticate, async (req, res) => {
   console.log("Authenticated User ID:", req.user.id);
 
   try {
-    const appointment = await Appointment.findById(id);
-    if (!appointment) {
-      console.log(" Appointment not found in DB.");
-      return res.status(404).json({ message: "Appointment not found" });
-    }
-    console.log("✅ Found appointment:", appointment);
+    // Ensure the ID is a valid MongoDB ObjectId
+    const objectId = new mongoose.Types.ObjectId(id);
 
     const deletedAppointment = await Appointment.findOneAndDelete({
-      _id: id,
-      userId: req.user.id, // Ensure user is deleting their own appointment
+      _id: objectId,
+      userId: req.user.id, // Ensure the user is deleting their own appointment
     });
 
     if (!deletedAppointment) {
-      console.log("Appointment not deleted. Possible user mismatch.");
-      return res
-        .status(404)
-        .json({ message: "Appointment not found or unauthorized." });
+      console.log("Appointment not found or user mismatch.");
+      return res.status(404).json({ message: "Appointment not found" });
     }
 
-    console.log("Successfully deleted appointment:", deletedAppointment);
+    console.log(" Successfully deleted appointment:", deletedAppointment);
     res.json({ message: "Appointment deleted successfully" });
   } catch (error) {
     console.error("Error deleting appointment:", error.message);
