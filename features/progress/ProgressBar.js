@@ -1,40 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { CircularProgress } from "react-native-svg-circular-progress";
-import { fetchPregnancyProgress } from "../../api/api";
+import * as Progress from "react-native-progress";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ProgressBar = ({ userId }) => {
-  const [progress, setProgress] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const getProgress = async () => {
       try {
-        const progressValue = await fetchPregnancyProgress(userId);
-        setProgress(progressValue);
+        const progressValue = 85; // Example: 85% for 34 weeks
+        setProgress(progressValue / 100); // Normalize to 0 - 1 range
       } catch (error) {
         console.error("Error fetching progress:", error);
-      } finally {
-        setLoading(false);
       }
     };
+
     getProgress();
   }, [userId]);
 
-  if (loading || progress === null) {
-    return null;
-  }
-
   return (
     <View style={styles.container}>
-      <CircularProgress
-        size={140} // Diameter of the circle
-        width={20} // Thickness of the circle
-        fill={progress} // Progress value (0 to 100)
-        tintColor="#6A5ACD" // Enforce desired purple color
-        backgroundColor="#e0e0e0" // Light gray background
-        lineCap="round" // Smooth edge for progress line
-      />
+      <View style={styles.progressContainer}>
+        {/* Background Progress Track */}
+        <Progress.Bar
+          progress={1} // Full length (100%)
+          width={300}
+          height={15}
+          borderRadius={12}
+          borderWidth={0}
+          unfilledColor="#D3D3D3" // Light Gray background track
+          color="transparent"
+        />
+
+        {/* Foreground Gradient Progress */}
+        <View style={[styles.progressOverlay, { width: `${progress * 100}%` }]}>
+          <LinearGradient
+            colors={["#6A5ACD", "#8A2BE2"]} // Purple to Blue-Violet
+            style={styles.gradient}
+          />
+        </View>
+      </View>
     </View>
   );
 };
@@ -42,8 +48,25 @@ const ProgressBar = ({ userId }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    justifyContent: "center",
     marginVertical: 20,
+  },
+  progressContainer: {
+    width: 300,
+    height: 15,
+    borderRadius: 12,
+    backgroundColor: "#D3D3D3", // Light Gray for visibility
+    position: "relative",
+  },
+  progressOverlay: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    height: "100%",
+    borderRadius: 12,
+  },
+  gradient: {
+    flex: 1,
+    borderRadius: 12,
   },
 });
 
