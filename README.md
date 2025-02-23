@@ -1,130 +1,133 @@
-**Partum - Pregnancy & Postpartum Education App**
+## **Partum - Pregnancy & Postpartum Education App**
 
-**Overview**
+### **Overview**
 
 Partum is a cross-platform pregnancy and postpartum education app built with the MERN stack, using React Native for mobile development. It provides users with evidence-based health education in multiple languages, appointment tracking with reminders, and a structured notes section linked to visits. The dashboard includes a pregnancy progress tracker and an interactive sliding card UI for quick access to key information.
 
-**Live Demo**
+### **Live Demo**
 
-**Frontend (Expo EAS):** https://expo.dev/@rdayberry/Partum
+**Frontend (Vercel):** [Partum Web App](https://partum-f29ksf0cm-reagans-projects-2fcbf7b0.vercel.app)  
+**Backend (Render):** [API Server](https://partum-app.onrender.com)  
+**API Health Check:** [Check API Status](https://partum-app.onrender.com/api/health)
 
-**Backend (Render):** https://partum-app.onrender.com
+---
 
-**API Health Check:** https://partum-app.onrender.com/api/health
+## **Features**
 
-**Features**
+✔ **Pregnancy Progress Tracker** - Displays gestational progress with weekly updates  
+✔ **Appointment Tracking** - Schedule and manage medical visits with reminders  
+✔ **Structured Notes Section** - Users can add notes linked to specific appointments  
+✔ **Multi-Language Support** - Health education content available in multiple languages  
+✔ **Sliding Card UI** - Interactive dashboard for easy access to key information  
+✔ **Mobile-First Design** - Built with React Native for both iOS and Android support
 
--User authentication: Register and log in with JWT/Auth0/Firebase
+---
 
--Pregnancy progress tracker: Displays gestational progress with weekly updates
+## **Tech Stack**
 
--Appointment tracking: Schedule and manage medical visits with reminders
+### **Frontend:**
 
--Structured notes section: Users can add notes linked to specific appointments
+- React Native (Expo)
+- Context API for state management
+- React Navigation
 
--Multi-language support: Health education content available in multiple languages
+### **Backend:**
 
--Sliding card UI: Interactive dashboard for easy access to key information
+- Node.js with Express
+- MongoDB & Mongoose for database management
+- JWT for authentication
+- CORS-enabled API (for secure cross-origin requests)
 
--Mobile-first design: Built with React Native for both iOS and Android support
+### **Deployment:**
 
-**Tech Stack**
+- **Frontend:** Vercel
+- **Backend:** Render
 
-**Frontend:**
+---
 
-React Native (Expo)
+## **Installation & Setup**
 
-Context API for state management
+### **Prerequisites**
 
-React Navigation
+✔ **Node.js & npm** installed  
+✔ **MongoDB Atlas** account for database storage  
+✔ **Vercel CLI** (optional, for local testing of deployment)
 
-**Backend:**
+### **1. Clone the Repository**
 
-Node.js with Express
-
-MongoDB & Mongoose for database management
-
-JWT for authentication
-
-CORS-enabled API (for secure cross-origin requests)
-
-**Deployment:**
-
-Frontend: Expo EAS
-
-Backend: Render
-
-**Installation & Setup**
-
-**Prerequisites**
-
-Node.js & npm installed
-
-Expo CLI installed globally (npm install -g expo-cli)
-
-MongoDB Atlas account for database storage
-
-**1. Clone the Repository**
 ```bash
-git clone https://github.com/rmdayberry/Partum-App
+git clone https://github.com/rmdayberry/Partum-App.git
 cd Partum-App
 ```
-**2. Install Dependencies
-**
+
+### **2. Install Dependencies**
+
 ```bash
 npm install
 ```
-**3. Set Up Environment Variables**
 
-Create a .env file in the root directory with the following variables:
-```inti
+### **3. Set Up Environment Variables**
+
+Create a `.env` file in the root directory and add the following:
+
+```bash
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 ```
-**4. Start the Backend Server**
+
+### **4. Start the Backend Server**
+
 ```bash
 cd server
+npm install
 npm start
 ```
-Backend will be running on http://localhost:5002
 
-**5. Start the React Native App**
+- The backend will run at **http://localhost:5002**
+
+### **5. Start the Frontend (Web Version)**
+
 ```bash
-npm start
+npm run dev
 ```
 
-Use Expo Go (on mobile) or an emulator to preview the app.
+- Open **http://localhost:3000** to view the app in your browser
 
-## API Endpoints
+---
 
-| Method  | Endpoint              | Description                     |
-|---------|-----------------------|---------------------------------|
-| **GET** | `/api/health`         | Check if API is running        |
-| **POST** | `/users/register`     | Register a new user            |
-| **POST** | `/users/login`        | Log in a user                  |
-| **GET** | `/appointments`       | Fetch user appointments        |
-| **POST** | `/appointments`       | Create a new appointment       |
-| **GET** | `/pregnancy`          | Get pregnancy week info        |
+## **API Endpoints**
 
+| Method   | Endpoint          | Description              |
+| -------- | ----------------- | ------------------------ |
+| **GET**  | `/api/health`     | Check if API is running  |
+| **POST** | `/users/register` | Register a new user      |
+| **POST** | `/users/login`    | Log in a user            |
+| **GET**  | `/appointments`   | Fetch user appointments  |
+| **POST** | `/appointments`   | Create a new appointment |
+| **GET**  | `/pregnancy`      | Get pregnancy week info  |
 
-**Future Enhancements**
+---
 
-Push notifications for upcoming appointments
+## **Future Enhancements**
 
-Dark mode support
+**Push Notifications** for upcoming appointments  
+ **Dark Mode Support**  
+ **Offline Mode** – View content without an internet connection  
+ **Community Forum** for support and discussions
 
-Offline mode for viewing content without internet
+---
 
-Community support forum
+## **License**
 
-**License**
+This project is licensed under the **MIT License**.
 
-This project is licensed under the MIT License.
+## **Acknowledgments**
 
-**Acknowledgments**
+Special thanks to healthcare professionals who provided content guidance.  
+Built as a **Software Engineering Capstone Project**.
 
-Special thanks to healthcare professionals who provided content guidance.
+---
 
-Built as a Software Engineering Capstone Project.
+### **Ready to Test?**
 
-Ready to Test? Open https://expo.dev/@rdayberry/partum on your mobile device!
+Open **[Partum on Vercel](https://partum-f29ksf0cm-reagans-projects-2fcbf7b0.vercel.app)** and explore the app! 🚀
