@@ -29,7 +29,7 @@ const allowedOrigins = [
   "https://expo.dev/@rdayberry/partum", // Expo EAS Frontend
   "https://partum-app.onrender.com", // Backend
   "http://10.0.0.106:19000", // Expo development server
-  "https://partum-7qo0sao4z-reagans-projects-2fcbf7b0.vercel.app", // Vercel Frontend
+  "https://partum-q9wvd43mv-reagans-projects-2fcbf7b0.vercel.app", // Vercel Frontend
   "http://localhost:8081",
   "http://localhost:19006",
 ];
