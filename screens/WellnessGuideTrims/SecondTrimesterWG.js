@@ -175,11 +175,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: screenWidth * 0.8,
-    height: screenWidth * 0.5,
-    resizeMode: "cover",
+    width: screenWidth * 0.7, // Responsive width (70% of screen)
+    maxWidth: 300, // Prevents images from becoming huge
+    height: undefined, // Auto-scale height
+    aspectRatio: 16 / 9, // Keeps a consistent shape
+    resizeMode: "contain", // No stretching
     marginBottom: 20,
-    borderRadius: 10,
   },
   card: {
     backgroundColor: "#FFFFFF",

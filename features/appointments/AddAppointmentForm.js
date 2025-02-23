@@ -15,20 +15,26 @@ import { addAppointment } from "../../api/api";
 
 const AddAppointmentForm = ({ onAppointmentAdded }) => {
   const { languagePreference } = useContext(UserContext);
+
+  // Form State
   const [form, setForm] = useState({
     title: "",
-    location: "Riverland Clinic", // Default value
+    location: "Riverland Clinic", // Default location
     notes: "",
   });
 
+  // Date & Time State
   const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState(""); // Store selected time separately
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+
   const [locations, setLocations] = useState([
     { label: "Riverland Clinic", value: "Riverland Clinic" },
   ]);
 
+  // Labels based on Language
   const labels = {
     title: languagePreference === "English" ? "Title" : "Título",
     location: languagePreference === "English" ? "Location" : "Ubicación",
@@ -39,6 +45,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
     pickTime: languagePreference === "English" ? "Pick a Time" : "Elegir Hora",
   };
 
+  // Date Picker Handlers
   const showDatePicker = () => setDatePickerVisibility(true);
   const hideDatePicker = () => setDatePickerVisibility(false);
 
@@ -47,19 +54,24 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
     hideDatePicker();
   };
 
+  // Time Picker Handlers
   const showTimePicker = () => setTimePickerVisibility(true);
   const hideTimePicker = () => setTimePickerVisibility(false);
 
   const handleTimeConfirm = (selectedTime) => {
-    const updatedDate = new Date(date);
-    updatedDate.setHours(selectedTime.getHours(), selectedTime.getMinutes());
-    setDate(updatedDate);
+    const formattedTime = selectedTime.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true, // Ensures AM/PM format
+    });
+    setTime(formattedTime);
     hideTimePicker();
   };
 
+  // Handle Form Submission
   const handleSubmit = async () => {
-    if (!form.title || !form.location) {
-      Alert.alert("Error", "Title and location are required.");
+    if (!form.title || !form.location || !time) {
+      Alert.alert("Error", "Title, location, and time are required.");
       return;
     }
 
@@ -67,7 +79,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
       title: form.title,
       location: form.location,
       date: date.toISOString(),
-      time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time,
       notes: form.notes,
     };
 
@@ -81,11 +93,8 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
     }
   };
 
+  // Format for display
   const formattedDate = date.toDateString();
-  const formattedTime = date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
   return (
     <View style={styles.container}>
@@ -135,13 +144,8 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
         {Platform.OS === "web" ? (
           <input
             type="time"
-            value={formattedTime}
-            onChange={(e) => {
-              const [hours, minutes] = e.target.value.split(":");
-              const updatedDate = new Date(date);
-              updatedDate.setHours(hours, minutes);
-              setDate(updatedDate);
-            }}
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
             style={styles.webInput}
           />
         ) : (
@@ -150,7 +154,7 @@ const AddAppointmentForm = ({ onAppointmentAdded }) => {
               style={styles.dateButton}
               onPress={showTimePicker}
             >
-              <Text style={styles.dateText}>{formattedTime}</Text>
+              <Text style={styles.dateText}>{time || "Select Time"}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isTimePickerVisible}

@@ -6,19 +6,26 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  Platform,
 } from "react-native";
 import { UserContext } from "../../contexts/UserContext";
 import axios from "axios";
 
 const { width: screenWidth } = Dimensions.get("window");
 
-// Placeholder images
+// Image paths for web compatibility
 const graphics = {
-  periBottle: require("../../assets/graphic_periBottle.png"),
-  recoveryTips: require("../../assets/graphic_recoveryTips.png"),
+  periBottle:
+    Platform.OS === "web"
+      ? "/assets/graphic_periBottle.png"
+      : require("../../assets/graphic_periBottle.png"),
+  recoveryTips:
+    Platform.OS === "web"
+      ? "/assets/graphic_recoveryTips.png"
+      : require("../../assets/graphic_recoveryTips.png"),
 };
 
-// Content for Postpartum page
+// Postpartum Content
 const content = {
   English: {
     header: "Postpartum Care",
@@ -124,7 +131,12 @@ const Postpartum = () => {
               {section.carouselItems.map((item, i) => (
                 <View key={i} style={styles.carouselItem}>
                   {item.image && (
-                    <Image source={item.image} style={styles.carouselImage} />
+                    <Image
+                      source={
+                        Platform.OS === "web" ? { uri: item.image } : item.image
+                      }
+                      style={styles.carouselImage}
+                    />
                   )}
                   <Text style={styles.carouselTitle}>{item.title}</Text>
                   <Text style={styles.carouselDescription}>
