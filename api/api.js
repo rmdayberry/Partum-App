@@ -144,13 +144,12 @@ export const addAppointment = async (appointmentData) => {
   });
 };
 //Delete an appointment
-
 export const deleteAppointment = async (appointmentId) => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
 
-    console.log("Deleting appointment:", appointmentId);
-    console.log("Using Auth Token:", token);
+    console.log("Sending DELETE request to API for ID:", appointmentId);
+    console.log("Authorization Token:", token);
 
     try {
       const response = await axios.delete(
@@ -160,13 +159,10 @@ export const deleteAppointment = async (appointmentId) => {
         }
       );
 
-      console.log("Delete Response from API:", response.data);
+      console.log("Delete API response:", response.data);
       return response.data;
     } catch (error) {
-      console.error(
-        "Error in API delete request:",
-        error.response?.data || error.message
-      );
+      console.error("Error from API:", error.response?.data || error.message);
       throw error;
     }
   });
