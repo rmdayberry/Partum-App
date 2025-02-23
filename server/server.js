@@ -21,31 +21,32 @@ if (!process.env.MONGO_URI) {
 const app = express();
 
 // Middleware
-app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
-app.use(express.json()); // Parses JSON bodies
+app.use(express.json());
 
 // CORS Configuration
-const allowedOrigins = [
-  "http://localhost:3000", // Local frontend development
-  "https://expo.dev/@rdayberry/partum", // Expo EAS Frontend
-  "https://partum-app.onrender.com", // Backend
-  "http://10.0.0.106:19000", // Expo development server
-  "https://partum-q9wvd43mv-reagans-projects-2fcbf7b0.vercel.app", // Vercel Frontend
-  "http://localhost:8081",
-  "http://localhost:19006",
-];
-
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    const allowedOrigins = [
+      "http://localhost:3000", // Local frontend
+      "https://expo.dev/@rdayberry/partum", // Expo EAS Frontend
+      "https://partum-app.onrender.com", // Backend (Render)
+      "http://10.0.0.106:19000", // Expo development
+      "http://localhost:8081",
+      "http://localhost:19006",
+    ];
+
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      origin.endsWith(".vercel.app")
+    ) {
       callback(null, true);
     } else {
-      console.error("🚫 Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true,
+  credentials: true, // ✅ Allow cookies/authentication headers
 };
 
 app.use(cors(corsOptions));
