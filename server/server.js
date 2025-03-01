@@ -9,7 +9,6 @@ import feedbackRoutes from "./routes/feedbackRoutes.js";
 
 // Load environment variables
 dotenv.config();
-console.log("JWT_SECRET Loaded:", process.env.JWT_SECRET);
 
 // Validate required environment variables
 if (!process.env.MONGO_URI) {
@@ -32,7 +31,7 @@ const corsOptions = {
       "https://partum-app.onrender.com", // Backend (Render)
       "http://10.0.0.106:19000", // Expo development
       "http://localhost:8081",
-      "http://localhost:19006",
+      "http://localhost:19006", //Vercel
     ];
 
     if (
@@ -85,4 +84,8 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+export default app; // Export app for Jest tests

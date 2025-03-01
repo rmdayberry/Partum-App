@@ -148,24 +148,18 @@ export const deleteAppointment = async (appointmentId) => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
 
-    console.log(`🗑 Sending DELETE request to API for ID: ${appointmentId}`);
-    console.log(`🔑 Authorization Token: ${token}`);
+    console.log(" Sending DELETE request for appointment ID:", appointmentId);
+    console.log("Using Auth Token:", token);
 
-    try {
-      const response = await axios.delete(
-        `${API_BASE_URL}/appointments/${appointmentId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    const response = await axios.delete(
+      `${API_BASE_URL}/appointments/${appointmentId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
-      console.log(`✅ Delete API Response:`, response.data);
-      return response.data;
-    } catch (error) {
-      console.error(
-        "❌ Error deleting appointment:",
-        error.response?.data || error.message
-      );
-      throw error;
-    }
+    console.log("Backend Response:", response.data);
+    return response.data;
   });
 };
 

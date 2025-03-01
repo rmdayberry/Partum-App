@@ -84,22 +84,24 @@ const Appointments = () => {
   };
 
   const handleDelete = async (appointmentId) => {
-    console.log(`🗑 Attempting to delete appointment with ID: ${appointmentId}`);
+    console.log("🗑 Attempting to delete appointment with ID:", appointmentId);
 
     Alert.alert(
       "Delete Appointment",
       "Are you sure you want to delete this appointment?",
       [
-        { text: "Cancel", style: "cancel" },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
         {
           text: "Delete",
           style: "destructive",
           onPress: async () => {
             try {
               const response = await deleteAppointment(appointmentId);
-              console.log(`✅ Delete Success Response:`, response);
+              console.log("✅ Delete API Response:", response);
 
-              // Update UI after successful deletion
               setUpcomingAppointments((prev) =>
                 prev.filter((appt) => appt._id !== appointmentId)
               );
@@ -109,7 +111,7 @@ const Appointments = () => {
 
               Alert.alert("Success", "Appointment deleted.");
             } catch (error) {
-              console.error("❗ Error deleting appointment:", error);
+              console.error("Error deleting appointment:", error);
               Alert.alert("Error", "Failed to delete appointment.");
             }
           },

@@ -50,7 +50,7 @@ const tabTranslations = {
   },
 };
 
-// 1) Dedicated stack for Dashboard stuff
+// 1) Dedicated stack for Dashboard stuff-- main screen
 const DashboardStack = ({ userId }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Dashboard">
