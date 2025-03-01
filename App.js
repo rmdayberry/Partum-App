@@ -162,7 +162,7 @@ function MoreFlow() {
 }
 
 // 5) The Bottom Tabs combining the sub-stacks
-const BottomTabs = ({ userId }) => {
+const BottomTabs = React.memo(({ userId }) => {
   const { languagePreference } = React.useContext(UserContext); // Access the language preference
   const t = tabTranslations[languagePreference] || tabTranslations.English;
 
@@ -221,19 +221,29 @@ const BottomTabs = ({ userId }) => {
       />
     </Tab.Navigator>
   );
-};
+});
 
 // ---------------------------------------------------------
 const StackRoot = createNativeStackNavigator();
 
 const fetchFonts = async () => {
   try {
+    const fontsLoaded = await AsyncStorage.getItem("fontsLoaded");
+
+    if (fontsLoaded === "true") {
+      console.log("Fonts already loaded, skipping fetch.");
+      return;
+    }
+
     await Font.loadAsync({
       ArimoRegular: require("./assets/fonts/Arimo-Regular.ttf"),
-      ...Ionicons.font, // Ensures Ionicons font is loaded
+      ...Ionicons.font,
     });
+
+    await AsyncStorage.setItem("fontsLoaded", "true");
+    console.log("Fonts loaded and stored in AsyncStorage.");
   } catch (error) {
-    console.warn("Font loading error:", error);
+    console.warn("⚠️ Font loading error:", error);
   }
 };
 
