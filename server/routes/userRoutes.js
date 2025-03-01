@@ -24,13 +24,10 @@ const generateRefreshToken = (userId) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  console.log("Login attempt received:", email);
-
   try {
     const user = await User.findOne({ email });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      console.log("Invalid login attempt for:", email);
       return res.status(401).json({ message: "Invalid credentials." });
     }
 
@@ -40,7 +37,6 @@ router.post("/login", async (req, res) => {
     user.refreshTokens.push({ token: refreshToken });
     await user.save();
 
-    console.log("User logged in:", user._id);
 
     res.json({
       message: "Login successful",
@@ -162,7 +158,6 @@ router.post("/logout", async (req, res) => {
     user.refreshTokens = user.refreshTokens.filter((t) => t.token !== token);
     await user.save();
 
-    console.log("User logged out successfully.");
     res.json({ message: "Logged out successfully." });
   } catch (error) {
     console.error("Logout error:", error.message);
