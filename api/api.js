@@ -7,9 +7,7 @@ const API_BASE_URL = "https://partum-app.onrender.com";
 const refreshAuthToken = async () => {
   try {
     const refreshToken = await AsyncStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      throw new Error("No refresh token available.");
-    }
+    if (!refreshToken) throw new Error("No refresh token available.");
 
     const response = await axios.post(`${API_BASE_URL}/users/refresh-token`, {
       token: refreshToken,
@@ -17,20 +15,19 @@ const refreshAuthToken = async () => {
 
     const { authToken, refreshToken: newRefreshToken } = response.data;
 
-    // Save new tokens to AsyncStorage
-    if (authToken) {
-      await AsyncStorage.setItem("authToken", authToken);
-    }
-    if (newRefreshToken) {
-      await AsyncStorage.setItem("refreshToken", newRefreshToken);
-    }
+    await AsyncStorage.setItem("authToken", authToken);
+    await AsyncStorage.setItem("refreshToken", newRefreshToken);
 
-    return authToken; // Return the new access token
+    return authToken;
   } catch (error) {
     console.error(
       "Error refreshing auth token:",
       error.response?.data || error.message
     );
+
+    //  Remove invalid refresh token
+    await AsyncStorage.removeItem("refreshToken");
+
     throw new Error("Failed to refresh auth token.");
   }
 };
@@ -41,7 +38,6 @@ const authorizedRequest = async (callback) => {
     return await callback();
   } catch (error) {
     if (error.response?.status === 401) {
-      console.log("Access token expired. Attempting to refresh...");
       const newToken = await refreshAuthToken();
 
       if (newToken) {
@@ -57,11 +53,9 @@ const authorizedRequest = async (callback) => {
 // Fetch pregnancy progress
 export const fetchPregnancyProgress = async (userId) => {
   try {
-    console.log("Fetching pregnancy progress for user:", userId);
     const response = await axios.get(
       `${API_BASE_URL}/users/${userId}/progress`
     );
-    console.log("Pregnancy Progress Response:", response.data);
     return response.data.progress; // Assuming API response has { progress: value }
   } catch (error) {
     console.error(
@@ -75,11 +69,9 @@ export const fetchPregnancyProgress = async (userId) => {
 // Fetch weekly tip
 export const fetchWeeklyTip = async (week, language = "English") => {
   try {
-    console.log(`Fetching weekly tip for week: ${week}, language: ${language}`);
     const response = await axios.get(
       `${API_BASE_URL}/api/whatToExpectWeekly/week/${week}?language=${language}`
     );
-    console.log("Weekly Tip Response:", response.data);
     return response.data; // Assuming API response has { week: currentWeek, tip: "Your tip for the week" }
   } catch (error) {
     console.error(
@@ -93,9 +85,7 @@ export const fetchWeeklyTip = async (week, language = "English") => {
 // Fetch daily tip
 export const fetchDailyTip = async (userId) => {
   try {
-    console.log("Fetching daily tip for user:", userId);
     const response = await axios.get(`${API_BASE_URL}/api/daily-tip/${userId}`);
-    console.log("Daily Tip Response:", response.data);
     return response.data; // Ensure it returns the response data
   } catch (error) {
     console.error("Error fetching daily tip:", error.response || error.message);
@@ -107,11 +97,10 @@ export const fetchDailyTip = async (userId) => {
 export const fetchAppointments = async () => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
-    console.log("Auth Token in Fetch Appointments:", token);
+
     const response = await axios.get(`${API_BASE_URL}/appointments`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Appointments Response:", response.data);
     return response.data;
   });
 };
@@ -123,7 +112,6 @@ export const fetchNextAppointment = async () => {
     const response = await axios.get(`${API_BASE_URL}/appointments/next`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log("Next Appointment Response:", response.data);
     return response.data;
   });
 };
@@ -139,7 +127,6 @@ export const addAppointment = async (appointmentData) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log("Add Appointment Response:", response.data);
     return response.data.appointment;
   });
 };
@@ -148,24 +135,13 @@ export const deleteAppointment = async (appointmentId) => {
   return await authorizedRequest(async () => {
     const token = await AsyncStorage.getItem("authToken");
 
-    console.log(`🗑 Sending DELETE request to API for ID: ${appointmentId}`);
-    console.log(`🔑 Authorization Token: ${token}`);
-
-    try {
-      const response = await axios.delete(
-        `${API_BASE_URL}/appointments/${appointmentId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      console.log(`✅ Delete API Response:`, response.data);
-      return response.data;
-    } catch (error) {
-      console.error(
-        "❌ Error deleting appointment:",
-        error.response?.data || error.message
-      );
-      throw error;
-    }
+    const response = await axios.delete(
+      `${API_BASE_URL}/appointments/${appointmentId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
   });
 };
 
@@ -183,7 +159,6 @@ export const submitFeedback = async (userId, message) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log("Feedback submitted:", response.data);
     return response.data;
   });
 };

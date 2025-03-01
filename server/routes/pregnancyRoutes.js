@@ -66,10 +66,9 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
 
     // Extract language preference and default to English
     const { languagePreference = "English" } = user;
-    console.log(
-      "User's language preference for weekly tip:",
-      languagePreference
-    );
+    if (process.env.NODE_ENV === "development") {
+      console.log("User's language preference:", languagePreference);
+    }
 
     // Calculate the current week of pregnancy
     const dueDate = new Date(user.dueDate); // User's due date
@@ -96,12 +95,9 @@ router.get("/whatToExpectWeekly/:userId", async (req, res) => {
     const tip =
       languagePreference === "Español" ? weeklyTip.tipSpanish : weeklyTip.tip;
 
-    console.log("Selected tip for language:", tip);
-
     // Return the current week and the selected tip
     res.json({ week: currentWeek, tip });
   } catch (err) {
-    console.error("Error fetching weekly tip:", err.message);
     res.status(500).json({ message: "Server error", error: err.message });
   }
 });

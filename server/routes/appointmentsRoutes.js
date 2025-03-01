@@ -41,7 +41,6 @@ router.post("/", authenticate, async (req, res) => {
 // Fetch the user's next appointment
 router.get("/next", authenticate, async (req, res) => {
   const { id: userId } = req.user;
-  console.log("Fetching appointments for user:", userId);
 
   try {
     const nextAppointment = await Appointment.findOne({
@@ -109,29 +108,26 @@ router.put("/:id", authenticate, async (req, res) => {
 });
 
 // Delete an appointment
+// Delete an appointment
 router.delete("/:id", authenticate, async (req, res) => {
   const { id } = req.params;
-  console.log("Delete request received for appointment ID:", id);
-  console.log("Authenticated User ID:", req.user.id);
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ message: "Invalid appointment ID format" });
+  }
 
   try {
-    // Ensure the ID is a valid MongoDB ObjectId
-    const objectId = new mongoose.Types.ObjectId(id);
-
     const deletedAppointment = await Appointment.findOneAndDelete({
-      _id: objectId,
-      userId: req.user.id, // Ensure the user is deleting their own appointment
+      _id: id,
+      userId: req.user.id,
     });
 
     if (!deletedAppointment) {
-      console.log("Appointment not found or user mismatch.");
       return res.status(404).json({ message: "Appointment not found" });
     }
 
-    console.log(" Successfully deleted appointment:", deletedAppointment);
     res.json({ message: "Appointment deleted successfully" });
   } catch (error) {
-    console.error("Error deleting appointment:", error.message);
     res.status(500).json({ message: "Failed to delete appointment" });
   }
 });
