@@ -20,7 +20,6 @@ import {
 } from "../api/api";
 
 const Dashboard = () => {
-  // 1) Destructure *both* userId **and** languagePreference from context
   const { userId, languagePreference } = useContext(UserContext);
 
   const [currentWeek, setCurrentWeek] = useState(null);
@@ -28,15 +27,23 @@ const Dashboard = () => {
   const [dailyTip, setDailyTip] = useState(null);
   const [loadingWeeklyTip, setLoadingWeeklyTip] = useState(true);
   const [loadingDailyTip, setLoadingDailyTip] = useState(true);
-  const fadeAnim = useState(new Animated.Value(0))[0]; // Animation for fade-in
+  const fadeAnim = useState(new Animated.Value(0))[0];
 
-  // 2) Then you can read from dashboardTranslations using languagePreference
-  const t =
-    dashboardTranslations[languagePreference] || dashboardTranslations.English;
+  const t = dashboardTranslations[languagePreference] ??
+    dashboardTranslations.English ?? {
+      pregnancyOverview: "Pregnancy Overview",
+      whatToExpectHeader: "What to Expect",
+      dailyTipHeader: "Daily Tip",
+      loading: "Loading...",
+      noTip: "No weekly tip available",
+      noDailyTip: "No daily tip available",
+      youAre: "You are",
+      weeksAlong: "weeks along",
+    };
 
   useEffect(() => {
     if (!userId) {
-      console.error("No userId provided to Dashboard");
+      console.error(" No userId provided to Dashboard");
       return;
     }
 
@@ -62,7 +69,6 @@ const Dashboard = () => {
 
     fetchProgressAndTips();
 
-    // Trigger fade-in animation
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 1000,
@@ -74,7 +80,6 @@ const Dashboard = () => {
     <View style={styles.container}>
       <Header />
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Pregnancy Overview with Progress Bar and Weekly Tip */}
         <Animated.View
           style={[styles.pregnancyOverviewContainer, { opacity: fadeAnim }]}
         >
@@ -83,9 +88,7 @@ const Dashboard = () => {
           <Text style={styles.pregnancyText}>
             {t.youAre}{" "}
             <Text style={styles.highlight}>
-              {currentWeek !== null && currentWeek !== undefined
-                ? currentWeek
-                : t.loading}
+              {String(currentWeek ?? t.loading)}
             </Text>{" "}
             {t.weeksAlong}
           </Text>
@@ -101,35 +104,32 @@ const Dashboard = () => {
 
             {loadingWeeklyTip ? (
               <Text style={styles.loadingText}>{t.loading}</Text>
-            ) : weeklyTip && weeklyTip.tip ? (
-              <Text style={styles.tipText}>{weeklyTip.tip}</Text>
             ) : (
-              <Text style={styles.noTipText}>{t.noTip}</Text>
+              <Text style={styles.tipText}>
+                {weeklyTip?.tip ? weeklyTip.tip : t.noTip}
+              </Text>
             )}
           </View>
         </Animated.View>
 
-        {/* Appointment Container */}
         <Animated.View style={[styles.card, { opacity: fadeAnim }]}>
           <AppointmentContainer />
         </Animated.View>
 
-        {/* Daily Tip */}
         <Animated.View style={[styles.dailyTipFrame, { opacity: fadeAnim }]}>
           <View style={styles.dailyTipHeaderContainer}>
             <Image
               source={require("../assets/wateringCan.png")}
               style={styles.dailyTipIcon}
             />
-            <Text style={styles.sectionHeader2}>{t.dailyTipHeader}</Text>{" "}
-            {/* Purple title */}
+            <Text style={styles.sectionHeader2}>{t.dailyTipHeader}</Text>
           </View>
           {loadingDailyTip ? (
             <Text style={styles.loadingText}>{t.loading}</Text>
-          ) : dailyTip && dailyTip.tip ? (
-            <Text style={styles.dailyTipText}>{dailyTip.tip}</Text>
           ) : (
-            <Text style={styles.noTipText}>{t.noDailyTip}</Text>
+            <Text style={styles.dailyTipText}>
+              {dailyTip?.tip ? dailyTip.tip : t.noDailyTip}
+            </Text>
           )}
         </Animated.View>
 
@@ -211,11 +211,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginVertical: 10,
   },
-  noTipText: {
-    fontSize: 14,
-    color: "#888",
-    textAlign: "center",
-  },
   card: {
     backgroundColor: "#fff",
     borderRadius: 12,
@@ -231,35 +226,23 @@ const styles = StyleSheet.create({
   dailyTipFrame: {
     backgroundColor: "#FFEFE8",
     borderRadius: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-    paddingHorizontal: 24, //
-    paddingVertical: 16, //
+    paddingHorizontal: 24,
+    paddingVertical: 16,
     marginVertical: 10,
     width: "90%",
     alignItems: "center",
     marginBottom: 20,
   },
-
   dailyTipHeaderContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 12,
   },
-
   dailyTipIcon: {
     width: 40,
     height: 40,
     marginRight: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
   },
-
   dailyTipText: {
     fontSize: 14,
     color: "#4A4A4A",
