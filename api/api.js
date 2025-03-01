@@ -7,9 +7,7 @@ const API_BASE_URL = "https://partum-app.onrender.com";
 const refreshAuthToken = async () => {
   try {
     const refreshToken = await AsyncStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      throw new Error("No refresh token available.");
-    }
+    if (!refreshToken) throw new Error("No refresh token available.");
 
     const response = await axios.post(`${API_BASE_URL}/users/refresh-token`, {
       token: refreshToken,
@@ -17,20 +15,19 @@ const refreshAuthToken = async () => {
 
     const { authToken, refreshToken: newRefreshToken } = response.data;
 
-    // Save new tokens to AsyncStorage
-    if (authToken) {
-      await AsyncStorage.setItem("authToken", authToken);
-    }
-    if (newRefreshToken) {
-      await AsyncStorage.setItem("refreshToken", newRefreshToken);
-    }
+    await AsyncStorage.setItem("authToken", authToken);
+    await AsyncStorage.setItem("refreshToken", newRefreshToken);
 
-    return authToken; // Return the new access token
+    return authToken;
   } catch (error) {
     console.error(
       "Error refreshing auth token:",
       error.response?.data || error.message
     );
+
+    //  Remove invalid refresh token
+    await AsyncStorage.removeItem("refreshToken");
+
     throw new Error("Failed to refresh auth token.");
   }
 };
