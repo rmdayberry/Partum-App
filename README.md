@@ -6,7 +6,7 @@ Partum is a cross-platform pregnancy and postpartum education app built with the
 
 ### **Live Demo**
 
-**Frontend (Vercel):** [Partum Web App](https://partum-f29ksf0cm-reagans-projects-2fcbf7b0.vercel.app)  
+**Frontend (Expo EAS):** [Partum App](https://expo.dev/preview/update?message=Updated%20registration%20page%20UI%20%26%20date%20picker&updateRuntimeVersion=1.0.0&createdAt=2025-03-02T13%3A24%3A26.185Z&slug=exp&projectId=64d21b9c-81d0-449e-a972-527a6f5c4e62&group=66e83c42-9873-4925-823d-231c4019d6c7)  
 **Backend (Render):** [API Server](https://partum-app.onrender.com)  
 **API Health Check:** [Check API Status](https://partum-app.onrender.com/api/health)
 
@@ -117,7 +117,6 @@ npm run dev
 
 ---
 
-
 ## **Acknowledgments**
 
 Special thanks to healthcare professionals who provided content guidance.  
@@ -127,4 +126,4 @@ Built as a **Software Engineering Capstone Project**.
 
 ### **Ready to Test?**
 
-Open **[Partum on Vercel](https://partum-f29ksf0cm-reagans-projects-2fcbf7b0.vercel.app)** and explore the app! 🚀
+Open **[Partum on Expo EAS](https://expo.dev/accounts/rdayberry/projects/Partum)** and explore the app! 🚀
