@@ -7,36 +7,35 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   StyleSheet,
+  Platform,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
-import { FontSize, FontFamily, Color } from "../GlobalStyles";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const translations = {
   English: {
     registerTitle: "Register",
-    namePlaceholder: "Name",
-    emailPlaceholder: "Email",
+    namePlaceholder: "Full Name",
+    emailPlaceholder: "Email Address",
     passwordPlaceholder: "Password",
-    dueDatePlaceholder: "Due Date (YYYY-MM-DD)",
-    languagePreferencePlaceholder: "Language Preference",
-    registerButton: "Register",
+    dueDatePlaceholder: "Select Due Date",
+    languagePreferencePlaceholder: "Preferred Language",
+    registerButton: "Create Account",
     toggleToSpanish: "Español",
     allFieldsError: "All fields are required.",
-    dateFormatError: "Due Date must be in the format YYYY-MM-DD.",
     success: "User registered successfully!",
     error: "Error",
   },
   Español: {
     registerTitle: "Registro",
-    namePlaceholder: "Nombre",
-    emailPlaceholder: "Correo electrónico",
+    namePlaceholder: "Nombre Completo",
+    emailPlaceholder: "Correo Electrónico",
     passwordPlaceholder: "Contraseña",
-    dueDatePlaceholder: "Fecha de parto (AAAA-MM-DD)",
-    languagePreferencePlaceholder: "Preferencia de idioma",
-    registerButton: "Registrar",
+    dueDatePlaceholder: "Seleccionar Fecha de Parto",
+    languagePreferencePlaceholder: "Idioma Preferido",
+    registerButton: "Crear Cuenta",
     toggleToSpanish: "English",
     allFieldsError: "Todos los campos son obligatorios.",
-    dateFormatError: "La Fecha de Parto debe estar en el formato AAAA-MM-DD.",
     success: "¡Usuario registrado con éxito!",
     error: "Error",
   },
@@ -47,22 +46,16 @@ const Registration = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState(null);
   const [languagePreference, setLanguagePreference] = useState("");
   const [open, setOpen] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const t = translations[language];
 
   const handleRegister = async () => {
     if (!name || !email || !password || !dueDate || !languagePreference) {
       Alert.alert(t.error, t.allFieldsError);
-      return;
-    }
-
-    // Validate due date format (YYYY-MM-DD)
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (!dateRegex.test(dueDate)) {
-      Alert.alert(t.error, t.dateFormatError);
       return;
     }
 
@@ -97,20 +90,17 @@ const Registration = ({ navigation }) => {
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      {/* Language toggle */}
       <Text
         style={styles.languageToggle}
         onPress={() =>
           setLanguage(language === "English" ? "Español" : "English")
         }
       >
-        {language === "English" ? t.toggleToSpanish : t.toggleToSpanish}
+        {t.toggleToSpanish}
       </Text>
 
-      {/* Header */}
       <Text style={styles.title}>{t.registerTitle}</Text>
 
-      {/* Name Input */}
       <TextInput
         style={styles.input}
         placeholder={t.namePlaceholder}
@@ -118,7 +108,6 @@ const Registration = ({ navigation }) => {
         onChangeText={setName}
       />
 
-      {/* Email Input */}
       <TextInput
         style={styles.input}
         placeholder={t.emailPlaceholder}
@@ -127,7 +116,6 @@ const Registration = ({ navigation }) => {
         onChangeText={setEmail}
       />
 
-      {/* Password Input */}
       <TextInput
         style={styles.input}
         placeholder={t.passwordPlaceholder}
@@ -136,13 +124,28 @@ const Registration = ({ navigation }) => {
         onChangeText={setPassword}
       />
 
-      {/* Due Date Input */}
-      <TextInput
+      {/* Due Date Picker */}
+      <TouchableOpacity
         style={styles.input}
-        placeholder={t.dueDatePlaceholder}
-        value={dueDate}
-        onChangeText={setDueDate}
-      />
+        onPress={() => setShowDatePicker(true)}
+      >
+        <Text style={dueDate ? styles.selectedDate : styles.placeholderText}>
+          {dueDate ? dueDate.toDateString() : t.dueDatePlaceholder}
+        </Text>
+      </TouchableOpacity>
+      {showDatePicker && (
+        <DateTimePicker
+          value={dueDate || new Date()}
+          mode="date"
+          display="spinner"
+          onChange={(event, selectedDate) => {
+            setShowDatePicker(false);
+            if (selectedDate) {
+              setDueDate(selectedDate);
+            }
+          }}
+        />
+      )}
 
       {/* Language Preference Dropdown */}
       <DropDownPicker
@@ -159,7 +162,7 @@ const Registration = ({ navigation }) => {
         dropDownContainerStyle={styles.dropdownContainer}
       />
 
-      {/* Register Button (Custom Touchable for styling) */}
+      {/* Register Button */}
       <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
         <Text style={styles.registerButtonText}>{t.registerButton}</Text>
       </TouchableOpacity>
@@ -176,7 +179,6 @@ const styles = StyleSheet.create({
   },
   languageToggle: {
     alignSelf: "flex-end",
-    marginBottom: 10,
     fontSize: 16,
     color: "#6A5ACD",
     fontWeight: "600",
@@ -193,17 +195,21 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 10,
+    paddingHorizontal: 12,
     backgroundColor: "#fff",
     fontSize: 16,
+    justifyContent: "center",
     marginBottom: 15,
   },
-  dropdown: {
-    borderColor: "#ddd",
-    borderRadius: 8,
+  selectedDate: {
+    fontSize: 16,
+    color: "#000",
+    textAlign: "center",
   },
-  dropdownContainer: {
-    borderColor: "#ddd",
+  placeholderText: {
+    fontSize: 16,
+    color: "#888",
+    textAlign: "center",
   },
   registerButton: {
     backgroundColor: "#6A5ACD",
