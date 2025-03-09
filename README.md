@@ -14,12 +14,13 @@ The easiest way to test the app is using **Expo Go**.
 
 1. **Download Expo Go** on your **iOS** or **Android** device:
 
-   - 📱 [Download for iOS](https://apps.apple.com/us/app/expo-go/id982107779)
+   -[Download for iOS](https://apps.apple.com/us/app/expo-go/id982107779)
+
    - 📱 [Download for Android](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
 2. **Sign in or create an Expo account.**
 3. **Open the app link in your mobile browser** and follow the prompts:  
-   👉 **[Partum on Expo EAS](https://expo.dev/accounts/rdayberry/projects/Partum)**
+   **[Partum on Expo EAS](https://expo.dev/accounts/rdayberry/projects/Partum)**
 4. Tap **"Open project in Expo Go"** to launch the app.
 
 ---
@@ -35,7 +36,7 @@ Since there’s currently no **public build**, follow these steps to run the app
 
 ````bash
 npm install -g expo-cli
-
+```
 
 ✔ **MongoDB Atlas** (or a local MongoDB instance)
 ✔ **Expo Go** installed on your phone:
@@ -47,20 +48,20 @@ npm install -g expo-cli
 ```bash
 git clone https://github.com/rmdayberry/Partum-App.git
 cd Partum-App
-
+```
 ## **2. Install Dependencies**
 Navigate to the project directory and install all required dependencies:
 
 ```bash
 npm install
-
+```
 ## **3. Set Up Environment Variables**
 Create a `.env` file in the root directory and add the following:
 
 ```bash
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-
+```
 ## **4. Start the Backend Server**
 
 ### ***Navigate to the backend directory and install dependencies:
@@ -68,22 +69,22 @@ JWT_SECRET=your_jwt_secret
 ```bash
 cd server
 npm install
-
+```
 ### **Start the Backend Server**
 ```bash
 npm start
-
+```
 By default, the backend will run at http://localhost:5002.
 
 ### **Start the Expo Development Server**
 Navigate back to the root project directory:
 ```bash
 cd ..
-
+```
 Start the Expo development server:
 ```bash
 npx expo start
-
+```
 ### **Open the App on a Device or Emulator**
 #### **Option 1: Run on a Physical Device (Recommended)**
 1. Ensure you have **Expo Go** installed on your phone:
