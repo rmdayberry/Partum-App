@@ -16,7 +16,7 @@ The easiest way to test the app is using **Expo Go**.
 
    -[Download for iOS](https://apps.apple.com/us/app/expo-go/id982107779)
 
-   - 📱 [Download for Android](https://play.google.com/store/apps/details?id=host.exp.exponent)
+   -[Download for Android](https://play.google.com/store/apps/details?id=host.exp.exponent)
 
 2. **Sign in or create an Expo account.**
 3. **Open the app link in your mobile browser** and follow the prompts:  
@@ -34,7 +34,7 @@ Since there’s currently no **public build**, follow these steps to run the app
 ✔ Install **Node.js (LTS version) & npm**  
 ✔ Install **Expo CLI** globally:
 
-````bash
+```bash
 npm install -g expo-cli
 ```
 
@@ -45,48 +45,64 @@ npm install -g expo-cli
 ✔ **Xcode (for iOS Simulator) or Android Studio (for Android Emulator)** (optional)
 
 ## **1. Clone the Repository**
+
 ```bash
 git clone https://github.com/rmdayberry/Partum-App.git
 cd Partum-App
 ```
+
 ## **2. Install Dependencies**
+
 Navigate to the project directory and install all required dependencies:
 
 ```bash
 npm install
 ```
+
 ## **3. Set Up Environment Variables**
+
 Create a `.env` file in the root directory and add the following:
 
 ```bash
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
 ```
+
 ## **4. Start the Backend Server**
 
-### ***Navigate to the backend directory and install dependencies:
+### **Navigate to the backend directory and install dependencies:**
 
 ```bash
 cd server
 npm install
 ```
+
 ### **Start the Backend Server**
+
 ```bash
 npm start
 ```
+
 By default, the backend will run at http://localhost:5002.
 
 ### **Start the Expo Development Server**
+
 Navigate back to the root project directory:
+
 ```bash
 cd ..
 ```
+
 Start the Expo development server:
+
 ```bash
 npx expo start
 ```
+
 ### **Open the App on a Device or Emulator**
+
 #### **Option 1: Run on a Physical Device (Recommended)**
+
 1. Ensure you have **Expo Go** installed on your phone:
    - 📱 **iOS** - [Download from the App Store](https://apps.apple.com/app/expo-go/id982107779)
    - 📱 **Android** - [Download from Google Play](https://play.google.com/store/apps/details?id=host.exp.exponent)
@@ -94,7 +110,9 @@ npx expo start
 3. The app will open on your device.
 
 #### **Option 2: Run on an Emulator or Simulator**
+
 - **iOS Simulator (Mac only)**
+
   1. Install **Xcode** from the Mac App Store.
   2. In the Expo Developer Tools, click **"Run on iOS simulator"**.
 
@@ -102,10 +120,6 @@ npx expo start
   1. Install **Android Studio** and set up a virtual device.
   2. Ensure the emulator is running.
   3. In the Expo Developer Tools, click **"Run on Android device/emulator"**.
-
-
-
-
 
 **Backend (Render):** [API Server](https://partum-app.onrender.com)
 **API Health Check:** [Check API Status](https://partum-app.onrender.com/api/health)
@@ -143,7 +157,7 @@ npx expo start
 - **Frontend:** Expo EAS
 - **Backend:** Render
 
-----
+---
 
 ## **API Endpoints**
 
@@ -161,9 +175,9 @@ npx expo start
 ## **Future Enhancements**
 
 **Push Notifications** for upcoming appointments
- **Dark Mode Support**
- **Offline Mode** – View content without an internet connection
- **Community Forum** for support and discussions
+**Dark Mode Support**
+**Offline Mode** – View content without an internet connection
+**Community Forum** for support and discussions
 
 ---
 
@@ -176,4 +190,3 @@ Special thanks to healthcare professionals who provided content guidance.
 ### **Ready to Test?**
 
 Open **[Partum on Expo EAS](https://expo.dev/accounts/rdayberry/projects/Partum)** and explore the app!
-````
