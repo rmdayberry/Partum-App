@@ -19,8 +19,8 @@ const generateRefreshToken = (userId) => {
   });
 };
 
-// 🛑 Prevent "Cast to ObjectId failed" error by ensuring login/register routes are FIRST
-// 🔹 LOGIN (POST /users/login)
+// Prevent "Cast to ObjectId failed" error by ensuring login/register routes are FIRST
+// LOGIN (POST /users/login)
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -36,7 +36,6 @@ router.post("/login", async (req, res) => {
 
     user.refreshTokens.push({ token: refreshToken });
     await user.save();
-
 
     res.json({
       message: "Login successful",
@@ -84,7 +83,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// 🔹 GET USER BY ID (GET /users/:id)
+// GET USER BY ID (GET /users/:id)
 router.get("/:id", async (req, res) => {
   const userId = req.params.id;
 
@@ -105,7 +104,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// 🔹 REFRESH TOKEN (POST /users/refresh-token)
+//  REFRESH TOKEN (POST /users/refresh-token)
 router.post("/refresh-token", async (req, res) => {
   const { token } = req.body;
 
@@ -138,7 +137,7 @@ router.post("/refresh-token", async (req, res) => {
   }
 });
 
-// 🔹 LOGOUT (POST /users/logout)
+//  LOGOUT (POST /users/logout)
 router.post("/logout", async (req, res) => {
   const { token } = req.body;
 
@@ -165,7 +164,7 @@ router.post("/logout", async (req, res) => {
   }
 });
 
-// 🔹 GET PREGNANCY PROGRESS (GET /users/:id/progress)
+//  GET PREGNANCY PROGRESS (GET /users/:id/progress)
 router.get("/:id/progress", async (req, res) => {
   const userId = req.params.id;
 

@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/", authenticate, async (req, res) => {
   const { id: userId } = req.user; // Extract userId from the authenticated user
   const { title, date, time, location, notes } = req.body;
-  console.log("Received appointment request:", req.body);
+  
 
   if (!title || !date || !time || !location) {
     return res
